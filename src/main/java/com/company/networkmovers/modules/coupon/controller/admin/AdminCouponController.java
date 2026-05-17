@@ -1,0 +1,45 @@
+package com.company.networkmovers.modules.coupon.controller.admin;
+
+import com.company.networkmovers.modules.coupon.dto.request.CouponRequest;
+import com.company.networkmovers.modules.coupon.dto.response.CouponResponse;
+import com.company.networkmovers.modules.coupon.service.CouponService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/admin/coupon")
+public class AdminCouponController {
+
+    private final CouponService service;
+
+    public AdminCouponController(CouponService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public ResponseEntity<CouponResponse> create(@RequestBody CouponRequest request) {
+        return ResponseEntity.ok(service.create(request));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CouponResponse> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CouponResponse>> findAll() {
+        return ResponseEntity.ok(service.findAll());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CouponResponse> update(@PathVariable Long id, @RequestBody CouponRequest request) {
+        return ResponseEntity.ok(service.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+}
