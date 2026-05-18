@@ -3,16 +3,18 @@ package com.company.networkmovers.config.security;
 import com.company.networkmovers.security.jwt.JwtFilter;
 import com.company.networkmovers.security.handler.AccessDeniedHandler;
 import com.company.networkmovers.security.handler.AuthenticationEntryPoint;
+import com.company.networkmovers.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -24,12 +26,33 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
     private final AccessDeniedHandler accessDeniedHandler;
     private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomUserDetailsService userDetailsService;
 
-    public SecurityConfig(JwtFilter jwtFilter, AccessDeniedHandler accessDeniedHandler,
-                          AuthenticationEntryPoint authenticationEntryPoint) {
+    public SecurityConfig(@org.springframework.context.annotation.Lazy JwtFilter jwtFilter,
+                          AccessDeniedHandler accessDeniedHandler,
+                          AuthenticationEntryPoint authenticationEntryPoint,
+                          CustomUserDetailsService userDetailsService) {
         this.jwtFilter = jwtFilter;
         this.accessDeniedHandler = accessDeniedHandler;
         this.authenticationEntryPoint = authenticationEntryPoint;
+        this.userDetailsService = userDetailsService;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        return authProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
     }
 
     @Bean
@@ -47,23 +70,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             );
 
+        http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails adminUser = User.withUsername("admin")
-            .password("{noop}admin123")
-            .roles("ADMIN")
-            .build();
-        
-        UserDetails customerUser = User.withUsername("customer")
-            .password("{noop}customer123")
-            .roles("CUSTOMER")
-            .build();
-
-        return new InMemoryUserDetailsManager(adminUser, customerUser);
     }
 }
