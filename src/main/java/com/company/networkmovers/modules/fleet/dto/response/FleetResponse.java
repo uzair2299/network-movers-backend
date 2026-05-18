@@ -13,5 +13,5 @@ public class FleetResponse {
     private String name;
     private String description;
     private LocalDateTime createdAt;
-    private String createdBy;
+    private Long createdBy;
 }

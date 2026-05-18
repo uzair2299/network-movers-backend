@@ -1,12 +1,12 @@
 package com.company.networkmovers.config.database;
 
+import com.company.networkmovers.security.context.CustomUserDetails;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 
@@ -15,21 +15,19 @@ import java.util.Optional;
 public class JpaAuditingConfig {
 
     @Bean
-    public AuditorAware<String> auditorProvider() {
+    public AuditorAware<Long> auditorProvider() {
         return () -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-                return Optional.of("system");
+                return Optional.empty();
             }
 
             Object principal = authentication.getPrincipal();
-            if (principal instanceof UserDetails) {
-                return Optional.of(((UserDetails) principal).getUsername());
-            } else if (principal instanceof String) {
-                return Optional.of((String) principal);
+            if (principal instanceof CustomUserDetails) {
+                return Optional.of(((CustomUserDetails) principal).getId());
             }
 
-            return Optional.of("system");
+            return Optional.empty();
         };
     }
 }

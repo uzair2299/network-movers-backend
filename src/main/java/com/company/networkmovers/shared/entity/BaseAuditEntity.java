@@ -31,7 +31,7 @@ public abstract class BaseAuditEntity extends BaseEntity {
 
     @CreatedBy
     @Column(name = "created_by", updatable = false)
-    private String createdBy;
+    private Long createdBy;
 
     @LastModifiedDate
     @Column(name = "updated_at")
@@ -39,5 +39,5 @@ public abstract class BaseAuditEntity extends BaseEntity {
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    private String updatedBy;
+    private Long updatedBy;
 }

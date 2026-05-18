@@ -2,6 +2,7 @@ package com.company.networkmovers.security.service;
 
 import com.company.networkmovers.modules.identity.entity.User;
 import com.company.networkmovers.modules.identity.repository.UserRepository;
+import com.company.networkmovers.security.context.CustomUserDetails;
 import com.company.networkmovers.security.rbac.UserRole;
 import com.company.networkmovers.security.rbac.UserRoleRepository;
 import org.springframework.security.core.GrantedAuthority;
@@ -38,10 +39,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .map(userRole -> new SimpleGrantedAuthority(userRole.getRole().getName()))
                 .collect(Collectors.toList());
 
-        return org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
-                .password(user.getPassword())
-                .disabled(!user.isEnabled())
-                .authorities(authorities)
-                .build();
+        return new CustomUserDetails(
+                user.getId(),
+                user.getUsername(),
+                user.getPassword(),
+                user.isEnabled(),
+                authorities
+        );
     }
 }

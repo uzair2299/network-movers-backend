@@ -25,9 +25,9 @@ public abstract class BaseSoftDeleteEntity extends BaseAuditEntity {
     private LocalDateTime deletedAt;
 
     @Column(name = "deleted_by")
-    private String deletedBy;
+    private Long deletedBy;
 
-    public void delete(String deletedBy) {
+    public void delete(Long deletedBy) {
         this.deleted = true;
         this.deletedAt = LocalDateTime.now();
         this.deletedBy = deletedBy;
