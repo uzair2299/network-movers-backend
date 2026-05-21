@@ -18,12 +18,20 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+ 
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Authentication", description = "Endpoints for user authentication and registration")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -48,7 +56,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    @Operation(summary = "Login", description = "Authenticate user and return JWT token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful login",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request or bad credentials", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+    })
+    public ResponseEntity<LoginResponse> login(@org.springframework.web.bind.annotation.RequestBody LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
         );
@@ -68,7 +83,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+    @Operation(summary = "Register", description = "Register a new user account")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User registered successfully", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "Username or email already in use", content = @Content)
+    })
+    public ResponseEntity<?> register(@org.springframework.web.bind.annotation.RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             return ResponseEntity.badRequest().body("Error: Username is already taken!");
         }

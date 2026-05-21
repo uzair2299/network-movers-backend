@@ -66,7 +66,27 @@ public class SecurityConfig {
                 .accessDeniedHandler(accessDeniedHandler)
             )
             .authorizeHttpRequests(auth -> auth
+                // public API endpoints
                 .requestMatchers("/api/v1/auth/**", "/api/v1/public/**").permitAll()
+                // OpenAPI / Swagger endpoints (allow anonymous access)
+                .requestMatchers(
+                    // non-prefixed
+                    "/v3/api-docs/**",
+                    "/v3/api-docs",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html",
+                    "/swagger-ui/index.html",
+                    "/swagger-resources/**",
+                    "/webjars/**",
+                    // context-path prefixed (when server.servlet.context-path is set)
+                    "/api/v1/v3/api-docs/**",
+                    "/api/v1/v3/api-docs",
+                    "/api/v1/swagger-ui/**",
+                    "/api/v1/swagger-ui.html",
+                    "/api/v1/swagger-ui/index.html",
+                    "/api/v1/swagger-resources/**",
+                    "/api/v1/webjars/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             );
 
