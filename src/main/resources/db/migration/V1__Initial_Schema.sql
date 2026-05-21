@@ -320,7 +320,6 @@ CREATE TABLE IF NOT EXISTS tbl_fraud (
 );
 CREATE INDEX IF NOT EXISTS idx_tbl_fraud_name ON tbl_fraud(name);
 
--- Dashboard table
 CREATE TABLE IF NOT EXISTS tbl_dashboard (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -332,6 +331,123 @@ CREATE TABLE IF NOT EXISTS tbl_dashboard (
     version BIGINT DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_tbl_dashboard_name ON tbl_dashboard(name);
+
+-- Accounting table
+CREATE TABLE IF NOT EXISTS tbl_accounting (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_accounting_name ON tbl_accounting(name);
+
+-- Insurance table
+CREATE TABLE IF NOT EXISTS tbl_insurance (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_insurance_name ON tbl_insurance(name);
+
+-- Inventory table
+CREATE TABLE IF NOT EXISTS tbl_inventory (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_inventory_name ON tbl_inventory(name);
+
+-- Finance table
+CREATE TABLE IF NOT EXISTS tbl_finance (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_finance_name ON tbl_finance(name);
+
+-- Trip table
+CREATE TABLE IF NOT EXISTS tbl_trip (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_trip_name ON tbl_trip(name);
+
+-- Configuration table
+CREATE TABLE IF NOT EXISTS tbl_configuration (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_configuration_name ON tbl_configuration(name);
+
+-- Contract table
+CREATE TABLE IF NOT EXISTS tbl_contract (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_contract_name ON tbl_contract(name);
+
+-- Ticket table
+CREATE TABLE IF NOT EXISTS tbl_ticket (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_ticket_name ON tbl_ticket(name);
+
+-- Tracking table (extends BaseAuditEntity)
+CREATE TABLE IF NOT EXISTS tbl_tracking (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP,
+    created_by BIGINT,
+    updated_at TIMESTAMP,
+    updated_by BIGINT,
+    version BIGINT DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_tbl_tracking_name ON tbl_tracking(name);
 
 -- ===================================================================
 -- MIGRATION END
