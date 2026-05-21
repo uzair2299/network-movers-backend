@@ -1,0 +1,21 @@
+-- Flyway Initial Schema Migration
+-- This is the initial database schema setup for Network Movers application
+-- Add your CREATE TABLE statements and schema definitions below
+
+-- Example table structure (replace with your actual schema):
+-- 
+-- CREATE TABLE IF NOT EXISTS users (
+--     id BIGSERIAL PRIMARY KEY,
+--     username VARCHAR(255) NOT NULL UNIQUE,
+--     email VARCHAR(255) NOT NULL UNIQUE,
+--     password VARCHAR(255) NOT NULL,
+--     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- );
+--
+-- CREATE INDEX idx_users_email ON users(email);
+-- CREATE INDEX idx_users_username ON users(username);
+
+-- TODO: Add your actual database schema DDL statements here
+-- For existing tables, you can export the current schema using:
+-- pg_dump --schema-only -d network_movers -U postgres > schema.sql
