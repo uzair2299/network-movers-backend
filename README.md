@@ -4,13 +4,21 @@ Spring Boot Enterprise Moving Services platform.
 
 ## Swagger Docs
 
-- Local (when running locally on default port 8080):
-	- Swagger UI: http://localhost:8080/swagger-ui.html
-	- OpenAPI JSON: http://localhost:8080/v3/api-docs
+- Local (when running locally on default port 8081):
+	- Swagger UI: http://localhost:8081/api/v1/swagger-ui.html
+	- OpenAPI JSON: http://localhost:8081/api/v1/v3/api-docs
 
 - Common (replace <host> with your environment domain):
-	- Swagger UI: https://<host>/swagger-ui.html
-	- OpenAPI JSON: https://<host>/v3/api-docs
+	- Swagger UI: https://<host>/api/v1/swagger-ui.html
+	- OpenAPI JSON: https://<host>/api/v1/v3/api-docs
+
+## Actuator Endpoints
+
+- Local health: http://localhost:8081/api/v1/actuator/health
+- Local info: http://localhost:8081/api/v1/actuator/info
+- Local Prometheus metrics: http://localhost:8081/api/v1/actuator/prometheus
+
+Health and info are permitted anonymously; all other API routes remain protected behind application authentication.
 
 If your project uses a different Swagger path (for example `/swagger-ui/index.html`), replace the path accordingly.
 
