@@ -1,26 +1,69 @@
-﻿# network-movers-backend
+# network-movers-backend
 
 Spring Boot Enterprise Moving Services platform.
 
-## Swagger Docs
+## Swagger Docs & OpenAPI Specification
 
-- Local (when running locally on default port 8081):
-	- Swagger UI: http://localhost:8081/api/v1/swagger-ui.html
-	- OpenAPI JSON: http://localhost:8081/api/v1/v3/api-docs
+- **Local Development** (when running locally on port 8081):
+  - Swagger UI: [http://localhost:8081/swagger-ui/index.html](http://localhost:8081/swagger-ui/index.html)
+  - OpenAPI JSON: [http://localhost:8081/v3/api-docs](http://localhost:8081/v3/api-docs)
 
-- Common (replace <host> with your environment domain):
-	- Swagger UI: https://<host>/api/v1/swagger-ui.html
-	- OpenAPI JSON: https://<host>/api/v1/v3/api-docs
+- **Production Server (Railway)**:
+  - Base URL: `https://network-movers-backend-production.up.railway.app`
+  - Swagger UI: [https://network-movers-backend-production.up.railway.app/swagger-ui/index.html](https://network-movers-backend-production.up.railway.app/swagger-ui/index.html)
+  - OpenAPI JSON: [https://network-movers-backend-production.up.railway.app/v3/api-docs](https://network-movers-backend-production.up.railway.app/v3/api-docs)
 
 ## Actuator Endpoints
 
-- Local health: http://localhost:8081/api/v1/actuator/health
-- Local info: http://localhost:8081/api/v1/actuator/info
-- Local Prometheus metrics: http://localhost:8081/api/v1/actuator/prometheus
+- Local health: [http://localhost:8081/actuator/health](http://localhost:8081/actuator/health)
+- Local info: [http://localhost:8081/actuator/info](http://localhost:8081/actuator/info)
+- Local Prometheus metrics: [http://localhost:8081/actuator/prometheus](http://localhost:8081/actuator/prometheus)
 
-Health and info are permitted anonymously; all other API routes remain protected behind application authentication.
+Health and info endpoints are permitted anonymously; all other API routes are protected.
 
-If your project uses a different Swagger path (for example `/swagger-ui/index.html`), replace the path accordingly.
+## Project Directory Structure
+
+```text
+network-movers/
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/company/networkmovers/
+│   │   │       ├── bootstrap/          # Startup classes and seed data logic
+│   │   │       │   └── seeder/         # Seeding default roles/users (e.g. SecurityDataSeeder.java)
+│   │   │       ├── config/             # Configuration beans
+│   │   │       │   ├── database/       # Database & JPA auditing configurations
+│   │   │       │   ├── openapi/        # OpenAPI/Swagger API doc customization
+│   │   │       │   └── security/       # Spring Security filters and configurations
+│   │   │       ├── modules/            # Enterprise modules (Features & Domains)
+│   │   │       │   ├── identity/       # Identity management (Users, Roles, Permissions)
+│   │   │       │   ├── accounting/     # Financial ledger & accounting module
+│   │   │       │   ├── mover/          # Movers and personnel details
+│   │   │       │   ├── vehicle/        # Fleet vehicles and status
+│   │   │       │   └── ...             # 40+ other business domain packages
+│   │   │       │       # (Each module uses standard JPA layering: Controller, Service, DTO, Repository, Entity)
+│   │   │       │       ├── controller/
+│   │   │       │       │   ├── admin/  # Secured operations (requires ROLE_ADMIN)
+│   │   │       │       │   └── open/   # Unsecured public operations
+│   │   │       │       ├── service/
+│   │   │       │       ├── dto/
+│   │   │       │       ├── repository/
+│   │   │       │       └── entity/
+│   │   │       ├── security/           # JWT infrastructure and RBAC handlers
+│   │   │       │   ├── controller/     # AuthController (Login / Register)
+│   │   │       │   ├── jwt/            # Token provider, validation, filters
+│   │   │       │   ├── rbac/           # Role-Based Access Control logic
+│   │   │       │   └── handler/        # Entry point for access-denied handling
+│   │   │       └── shared/             # Audit bases, shared annotations/utils
+│   │   └── resources/
+│   │       ├── db/migration/           # Flyway DB migration SQL scripts (V1__Initial_Schema.sql, etc.)
+│   │       ├── templates/              # View/HTML rendering templates
+│   │       ├── application.properties   # Shared base properties
+│   │       └── application-*.properties # Profile properties (dev, stage, prod, qa)
+├── pom.xml                             # Maven build configuration
+└── README.md                           # Documentation
+```
+
 
 ## Database Configuration
 
