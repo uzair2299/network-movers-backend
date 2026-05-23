@@ -65,6 +65,113 @@ network-movers/
 ```
 
 
+## Dynamic Navigation & Sidebar Workflow
+
+To manage the comprehensive enterprise modular sidebar and other layouts (Sidebar, Topbar, Profile), the system uses a scalable, recursive, database-driven navigation design that filters visibility dynamically based on user permissions and UI layout placement.
+
+### Classifications
+Every menu category, subsection, and clickable page is stored in a single table `sec_menu_items` using a self-referencing relationship:
+- **Modules (Level 1 - Categories)**: Form the main sections in the layout. Defined by having `parent_id = NULL`.
+- **Menus (Level 2 - Headers)**: Form the collapsible headers under a module. `parent_id` references a Level 1 module.
+- **Submenus (Level 3 - Links)**: Clickable leaf links leading to frontend routes. `parent_id` references a Level 2 menu.
+- **Layout Sections**: Distinguishes where the menu should be rendered:
+  - `SIDEBAR`: The main sidebar navigation tree.
+  - `TOPBAR`: The quick utility action links on the top menu header.
+  - `PROFILE`: Settings and utilities (e.g., Change Password, Logout) in the user's avatar dropdown.
+
+### Relational Schema (DDL)
+```sql
+CREATE TABLE IF NOT EXISTS sec_menu_items (
+    id            BIGSERIAL      PRIMARY KEY,
+    name          VARCHAR(255)   NOT NULL,
+    icon          VARCHAR(255),
+    path          VARCHAR(255),
+    section       VARCHAR(50)    NOT NULL DEFAULT 'SIDEBAR',
+    parent_id     BIGINT,
+    sort_order    INT            NOT NULL DEFAULT 0,
+    permission_id BIGINT,
+    active        BOOLEAN        NOT NULL DEFAULT TRUE,
+    CONSTRAINT fk_menu_parent     FOREIGN KEY (parent_id)     REFERENCES sec_menu_items(id) ON DELETE CASCADE,
+    CONSTRAINT fk_menu_permission FOREIGN KEY (permission_id) REFERENCES sec_permissions(id) ON DELETE SET NULL,
+    CONSTRAINT chk_menu_section   CHECK (section IN ('SIDEBAR', 'TOPBAR', 'PROFILE'))
+);
+
+CREATE INDEX idx_menu_parent ON sec_menu_items(parent_id);
+CREATE INDEX idx_menu_section_active ON sec_menu_items(section, active, sort_order);
+```
+
+### Dynamic Tree Processing
+1. **Fetch Flat Permitted Items**: On calling `/api/v1/navigation`, the server gets the user permissions and filters items by layout section:
+   - **Filtered by Query Parameter** (`GET /api/v1/navigation?section=SIDEBAR`):
+     ```sql
+     SELECT DISTINCT m FROM MenuItem m 
+     LEFT JOIN FETCH m.permission p 
+     LEFT JOIN FETCH m.parent 
+     WHERE m.active = true 
+       AND m.section = :section
+       AND (p IS NULL OR p.name IN :permissions) 
+     ORDER BY m.sortOrder ASC
+     ```
+   - **Grouped Layouts** (when `section` is omitted): Retrieves all permitted items and groups them into a JSON object containing keys `SIDEBAR`, `TOPBAR`, and `PROFILE`.
+2. **Build Hierarchy Tree**: The `NavigationService` processes the flat database results into a hierarchical JSON response by nesting child items into their respective parent `children` arrays, sorting them in memory by `sortOrder` to guarantee layout stability.
+3. **Permission Cascading**: 
+   - If a user lacks access to a Level 1 Module (e.g. *Administration*), the module and all its nested sub-items are excluded.
+   - If they have access to the parent module but lack permission for a specific submenu link (e.g. *HR Reports*), only that leaf node is removed.
+
+### JSON Payload Schema (Example)
+```json
+{
+  "SIDEBAR": [
+    {
+      "id": 1,
+      "name": "CRM",
+      "icon": "users-icon",
+      "path": "/crm",
+      "sortOrder": 20,
+      "children": [
+        {
+          "id": 2,
+          "name": "Leads",
+          "icon": "funnel-icon",
+          "path": "/crm/leads",
+          "sortOrder": 10,
+          "children": [
+            {
+              "id": 3,
+              "name": "All Leads",
+              "icon": "list-icon",
+              "path": "/crm/leads/all",
+              "sortOrder": 10,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TOPBAR": [
+    {
+      "id": 101,
+      "name": "Quick Estimation",
+      "icon": "calculator",
+      "path": "/estimate/quick",
+      "sortOrder": 10,
+      "children": []
+    }
+  ],
+  "PROFILE": [
+    {
+      "id": 201,
+      "name": "My Profile",
+      "icon": "user-avatar",
+      "path": "/user/profile",
+      "sortOrder": 10,
+      "children": []
+    }
+  ]
+}
+```
+
 ## Database Configuration
 
 This application uses **Flyway** for database migrations instead of Hibernate's auto DDL generation. This ensures version-controlled, reproducible schema changes across all environments.
