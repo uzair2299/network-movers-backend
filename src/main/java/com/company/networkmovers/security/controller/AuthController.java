@@ -24,7 +24,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
- 
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +32,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/auth")
 @Tag(name = "Authentication", description = "Endpoints for user authentication and registration")
+@SecurityRequirements
 public class AuthController {
+
 
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;

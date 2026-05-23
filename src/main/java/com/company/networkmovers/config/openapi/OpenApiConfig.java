@@ -9,6 +9,9 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springdoc.core.customizers.OpenApiCustomizer;
+import java.util.Collections;
+
 @Configuration
 public class OpenApiConfig {
 
@@ -34,4 +37,20 @@ public class OpenApiConfig {
                 )
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));
     }
+
+    @Bean
+    public OpenApiCustomizer openApiCustomizer() {
+        return openApi -> {
+            if (openApi.getPaths() != null) {
+                openApi.getPaths().forEach((path, pathItem) -> {
+                    if (path.contains("/auth/") || path.contains("/public/")) {
+                        pathItem.readOperations().forEach(operation -> 
+                            operation.setSecurity(Collections.emptyList())
+                        );
+                    }
+                });
+            }
+        };
+    }
 }
+
