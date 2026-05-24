@@ -13,6 +13,14 @@ Spring Boot Enterprise Moving Services platform.
   - Swagger UI: [https://network-movers-backend-production.up.railway.app/swagger-ui/index.html](https://network-movers-backend-production.up.railway.app/swagger-ui/index.html)
   - OpenAPI JSON: [https://network-movers-backend-production.up.railway.app/v3/api-docs](https://network-movers-backend-production.up.railway.app/v3/api-docs)
 
+### Authentication
+Swagger UI is configured with **HTTP Basic Authentication** (`basicAuth`). To access secured endpoints:
+1. Click the **Authorize** button in Swagger UI.
+2. Enter the default database-seeded admin credentials:
+   - **Username**: `admin`
+   - **Password**: `adminpassword`
+3. Click **Authorize**. Authorizations are persisted across page refreshes.
+
 ## Actuator Endpoints
 
 - Local health: [http://localhost:8081/actuator/health](http://localhost:8081/actuator/health)
