@@ -17,7 +17,7 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI customOpenAPI() {
-        final String securitySchemeName = "basicAuth";
+        final String securitySchemeName = "oauth2Password";
 
         return new OpenAPI()
                 .info(new Info()
@@ -30,8 +30,12 @@ public class OpenApiConfig {
                         .addSecuritySchemes(securitySchemeName,
                                 new SecurityScheme()
                                         .name(securitySchemeName)
-                                        .type(SecurityScheme.Type.HTTP)
-                                        .scheme("basic")
+                                        .type(SecurityScheme.Type.OAUTH2)
+                                        .flows(new io.swagger.v3.oas.models.security.OAuthFlows()
+                                                .password(new io.swagger.v3.oas.models.security.OAuthFlow()
+                                                        .tokenUrl("/api/v1/auth/login")
+                                                )
+                                        )
                         )
                 )
                 .addSecurityItem(new SecurityRequirement().addList(securitySchemeName));

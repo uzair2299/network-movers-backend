@@ -14,12 +14,13 @@ Spring Boot Enterprise Moving Services platform.
   - OpenAPI JSON: [https://network-movers-backend-production.up.railway.app/v3/api-docs](https://network-movers-backend-production.up.railway.app/v3/api-docs)
 
 ### Authentication
-Swagger UI is configured with **HTTP Basic Authentication** (`basicAuth`). To access secured endpoints:
+Swagger UI is configured with **OAuth2 Password Grant Flow** (`oauth2Password`) for JWT-based security. To access secured endpoints:
 1. Click the **Authorize** button in Swagger UI.
-2. Enter the default database-seeded admin credentials:
+2. Enter the default database-seeded admin credentials in the login fields:
    - **Username**: `admin`
    - **Password**: `adminpassword`
-3. Click **Authorize**. Authorizations are persisted across page refreshes.
+3. Click **Authorize**. Swagger UI will automatically call `/api/v1/auth/login` to retrieve the JWT token and apply it as a Bearer token for subsequent requests.
+4. Authorizations are persisted across page refreshes.
 
 ## Actuator Endpoints
 

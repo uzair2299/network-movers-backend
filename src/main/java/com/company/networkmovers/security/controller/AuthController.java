@@ -57,7 +57,10 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login", consumes = {
+            org.springframework.http.MediaType.APPLICATION_JSON_VALUE,
+            org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE
+    })
     @Operation(summary = "Login", description = "Authenticate user and return JWT token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successful login",
@@ -65,9 +68,20 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid request or bad credentials", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
     })
-    public ResponseEntity<LoginResponse> login(@org.springframework.web.bind.annotation.RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponse> login(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password,
+            @org.springframework.web.bind.annotation.RequestBody(required = false) LoginRequest request) {
+
+        String finalUsername = (request != null && request.getUsername() != null) ? request.getUsername() : username;
+        String finalPassword = (request != null && request.getPassword() != null) ? request.getPassword() : password;
+
+        if (finalUsername == null || finalPassword == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
+                new UsernamePasswordAuthenticationToken(finalUsername, finalPassword)
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();

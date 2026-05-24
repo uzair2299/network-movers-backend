@@ -114,8 +114,7 @@ public class SecurityConfig {
                     "/api/v1/actuator/prometheus"
                 ).permitAll()
                 .anyRequest().authenticated()
-            )
-            .httpBasic(org.springframework.security.config.Customizer.withDefaults());
+            );
 
         http.authenticationProvider(authenticationProvider());
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
