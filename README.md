@@ -298,3 +298,21 @@ Then create a Flyway migration file with the exported schema:
 **Baseline migrations (existing database):**
 - If importing existing database: `spring.flyway.baseline-on-migrate=true`
 - This allows Flyway to work with pre-existing schemas
+
+### Resetting / Dropping Database
+
+If you need to force-drop the database (e.g. `railway` database) when active connection pools prevent dropping it:
+
+```sql
+-- STEP 1 : Connect to another DB first
+
+-- STEP 2: terminate sessions (stronger version)
+SELECT pg_terminate_backend(pg_stat_activity.pid)
+FROM pg_stat_activity
+WHERE datname = 'railway'
+  AND pid <> pg_backend_pid();
+
+
+-- STEP 3: drop
+DROP DATABASE railway;
+```

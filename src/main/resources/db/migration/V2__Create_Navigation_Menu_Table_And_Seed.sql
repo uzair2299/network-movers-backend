@@ -221,7 +221,7 @@ INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order
 -- 3. Operations -> Inventory Assessment Submenus (Level 3)
 INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order, permission_id, active) VALUES
 (351, 'Property Inventory', 'home', '/operations/inventory/property', 'SIDEBAR', 305, 10, NULL, TRUE),
-(352, 'Room Inventory', 'columns', '/operations/inventory/room', 'SIDEBAR', 352, 20, NULL, TRUE),
+(352, 'Room Inventory', 'columns', '/operations/inventory/room', 'SIDEBAR', 305, 20, NULL, TRUE),
 (353, 'Special Items', 'star', '/operations/inventory/special', 'SIDEBAR', 305, 30, NULL, TRUE),
 (354, 'Weight Estimation', 'activity', '/operations/inventory/weight', 'SIDEBAR', 305, 40, NULL, TRUE);
 
