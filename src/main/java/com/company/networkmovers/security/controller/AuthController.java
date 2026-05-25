@@ -57,31 +57,13 @@ public class AuthController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostMapping(value = "/login", consumes = {
-            org.springframework.http.MediaType.APPLICATION_JSON_VALUE,
-            org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE
-    })
-    @Operation(summary = "Login", description = "Authenticate user and return JWT token")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successful login",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid request or bad credentials", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
-    })
-    public ResponseEntity<LoginResponse> login(
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String password,
-            @org.springframework.web.bind.annotation.RequestBody(required = false) LoginRequest request) {
-
-        String finalUsername = (request != null && request.getUsername() != null) ? request.getUsername() : username;
-        String finalPassword = (request != null && request.getPassword() != null) ? request.getPassword() : password;
-
-        if (finalUsername == null || finalPassword == null) {
+    private ResponseEntity<LoginResponse> performLogin(String username, String password) {
+        if (username == null || password == null) {
             return ResponseEntity.badRequest().build();
         }
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(finalUsername, finalPassword)
+                new UsernamePasswordAuthenticationToken(username, password)
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -96,6 +78,35 @@ public class AuthController {
                 .username(userDetails.getUsername())
                 .roles(roles)
                 .build());
+    }
+
+    @PostMapping(value = "/login", consumes = org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Login (JSON)", description = "Authenticate user via JSON request body and return JWT token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful login",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request or bad credentials", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+    })
+    public ResponseEntity<LoginResponse> loginJson(@org.springframework.web.bind.annotation.RequestBody LoginRequest request) {
+        if (request == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return performLogin(request.getUsername(), request.getPassword());
+    }
+
+    @PostMapping(value = "/login", consumes = org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @Operation(summary = "Login (Form)", description = "Authenticate user via Form parameters and return JWT token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful login",
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid request or bad credentials", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+    })
+    public ResponseEntity<LoginResponse> loginForm(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String password) {
+        return performLogin(username, password);
     }
 
     @PostMapping("/register")
