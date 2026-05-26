@@ -52,8 +52,9 @@ network-movers/
 │   │   │       │   └── ...             # 40+ other business domain packages
 │   │   │       │       # (Each module uses standard JPA layering: Controller, Service, DTO, Repository, Entity)
 │   │   │       │       ├── controller/
-│   │   │       │       │   ├── admin/  # Secured operations (requires ROLE_ADMIN)
-│   │   │       │       │   └── open/   # Unsecured public operations
+│   │   │       │       │   ├── admin/  # Secured write/read operations (requires admin role)
+│   │   │       │       │   ├── public/ # Unsecured public-facing read-only operations
+│   │   │       │       │   └── mobile/ # Secured mobile app read-only operations (requires mobile JWT)
 │   │   │       │       ├── service/
 │   │   │       │       ├── dto/
 │   │   │       │       ├── repository/
@@ -73,6 +74,21 @@ network-movers/
 └── README.md                           # Documentation
 ```
 
+## API Endpoint Strategy: Admin, Mobile, and Public
+
+To support diverse clients (Web Admin portals, Mobile apps, and Public guest sites) cleanly and securely, we utilize a triple-controller mapping structure in each module:
+
+| Context | URL Prefix | Security / Auth | Allowed Operations | Client Use-case |
+| :--- | :--- | :--- | :--- | :--- |
+| **Admin** | `/api/v1/admin/*` | **Secured** (Requires JWT + Admin privileges e.g. `ROLE_ADMIN`) | Full CRUD (`GET`, `POST`, `PUT`, `DELETE`) | Admin Panel & Back-Office Dashboards |
+| **Mobile** | `/api/v1/mobile/*` | **Secured** (Requires JWT Mobile token) | Read-Only (`GET` Active items) | Drivers, Estimators, Crew, and Customer Apps |
+| **Public** | `/api/v1/public/*` | **Unsecured** (PermitAll / Anonymous access) | Read-Only (`GET` Active items) | Unauthenticated Landing Pages & Quote Calculators |
+
+### Generic Controller Inheritance
+For Lookup / Master data tables, these controllers inherit from generic base controllers to reduce boilerplate code:
+- **Admin**: Inherits from [AbstractLookupController](file:///C:/Users/Expertflow/Downloads/network-movers/network-movers/src/main/java/com/company/networkmovers/shared/controller/AbstractLookupController.java) (supports full CRUD).
+- **Mobile**: Inherits from [AbstractMobileLookupController](file:///C:/Users/Expertflow/Downloads/network-movers/network-movers/src/main/java/com/company/networkmovers/shared/controller/AbstractMobileLookupController.java) (supports read-only access to active records).
+- **Public**: Inherits from [AbstractPublicLookupController](file:///C:/Users/Expertflow/Downloads/network-movers/network-movers/src/main/java/com/company/networkmovers/shared/controller/AbstractPublicLookupController.java) (supports unauthenticated read-only access to active records).
 
 ## Dynamic Navigation & Sidebar Workflow
 
