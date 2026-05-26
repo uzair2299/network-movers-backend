@@ -7,11 +7,8 @@ import com.company.networkmovers.modules.property.repository.PropertyTypeReposit
 import com.company.networkmovers.modules.property.service.PropertyTypeService;
 import com.company.networkmovers.modules.property.dto.request.PropertyTypeRequest;
 import com.company.networkmovers.modules.property.dto.response.PropertyTypeResponse;
-import com.company.networkmovers.shared.dto.RequestParamDto;
 import com.company.networkmovers.shared.mapper.GenericMapper;
 import com.company.networkmovers.shared.service.AbstractLookupService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,30 +45,6 @@ public class PropertyTypeServiceImpl
         
         PropertyType saved = repository.save(entity);
         return mapper.toResponse(saved);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Page<PropertyTypeResponse> getAll(RequestParamDto requestParams) {
-        Pageable pageable = createPageable(requestParams);
-        String search = requestParams.getSearch();
-        java.util.UUID categoryId = requestParams.getCategoryId();
-        
-        Page<PropertyType> entityPage;
-        if (categoryId == null) {
-            if (search == null || search.trim().isEmpty()) {
-                entityPage = repository.findAll(pageable);
-            } else {
-                entityPage = repository.findBySearch(search.trim(), pageable);
-            }
-        } else {
-            if (search == null || search.trim().isEmpty()) {
-                entityPage = repository.findByCategoryId(categoryId, pageable);
-            } else {
-                entityPage = repository.findByCategoryIdAndSearch(categoryId, search.trim(), pageable);
-            }
-        }
-        return entityPage.map(mapper::toResponse);
     }
 
     @Override

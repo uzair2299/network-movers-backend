@@ -26,12 +26,6 @@ public class RequestParamDto {
     @Schema(description = "Dynamic search term to match against name or code (case-insensitive)", example = "office")
     private String search;
     
-    @Schema(description = "Optional category UUID filter (used for property-type querying)")
-    private UUID categoryId;
-    
-    @Schema(description = "Optional type UUID filter (used for property-size querying)")
-    private UUID typeId;
-    
     @Builder.Default
     @Schema(description = "Sorting criteria in the format: property,(asc|desc).", defaultValue = "name,asc", example = "name,asc")
     private String sort = "name,asc";
