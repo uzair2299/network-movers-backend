@@ -13,13 +13,15 @@ import java.util.UUID;
 @Repository
 public interface PropertyTypeRepository extends BaseLookupRepository<PropertyType> {
 
+    @Query("SELECT t FROM PropertyType t WHERE t.category.id = :categoryId")
+    Page<PropertyType> findByCategoryId(@Param("categoryId") UUID categoryId, Pageable pageable);
+
     @Query("SELECT t FROM PropertyType t " +
-           "WHERE (:categoryId IS NULL OR t.category.id = :categoryId) " +
-           "AND (:search IS NULL OR " +
-           "     LOWER(t.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "WHERE t.category.id = :categoryId " +
+           "AND (LOWER(t.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
            "     LOWER(t.code) LIKE LOWER(CONCAT('%', :search, '%')))")
-    Page<PropertyType> searchPageWithCategory(
-            @Param("search") String search,
+    Page<PropertyType> findByCategoryIdAndSearch(
             @Param("categoryId") UUID categoryId,
+            @Param("search") String search,
             Pageable pageable);
 }

@@ -13,13 +13,15 @@ import java.util.UUID;
 @Repository
 public interface PropertySizeRepository extends BaseLookupRepository<PropertySize> {
 
+    @Query("SELECT s FROM PropertySize s WHERE s.type.id = :typeId")
+    Page<PropertySize> findByTypeId(@Param("typeId") UUID typeId, Pageable pageable);
+
     @Query("SELECT s FROM PropertySize s " +
-           "WHERE (:typeId IS NULL OR s.type.id = :typeId) " +
-           "AND (:search IS NULL OR " +
-           "     LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "WHERE s.type.id = :typeId " +
+           "AND (LOWER(s.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
            "     LOWER(s.code) LIKE LOWER(CONCAT('%', :search, '%')))")
-    Page<PropertySize> searchPageWithType(
-            @Param("search") String search,
+    Page<PropertySize> findByTypeIdAndSearch(
             @Param("typeId") UUID typeId,
+            @Param("search") String search,
             Pageable pageable);
 }

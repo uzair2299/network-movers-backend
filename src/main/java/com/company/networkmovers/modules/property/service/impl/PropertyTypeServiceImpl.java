@@ -54,8 +54,24 @@ public class PropertyTypeServiceImpl
     @Transactional(readOnly = true)
     public Page<PropertyTypeResponse> getAll(RequestParamDto requestParams) {
         Pageable pageable = createPageable(requestParams);
-        return repository.searchPageWithCategory(requestParams.getSearch(), requestParams.getCategoryId(), pageable)
-                .map(mapper::toResponse);
+        String search = requestParams.getSearch();
+        java.util.UUID categoryId = requestParams.getCategoryId();
+        
+        Page<PropertyType> entityPage;
+        if (categoryId == null) {
+            if (search == null || search.trim().isEmpty()) {
+                entityPage = repository.findAll(pageable);
+            } else {
+                entityPage = repository.findBySearch(search.trim(), pageable);
+            }
+        } else {
+            if (search == null || search.trim().isEmpty()) {
+                entityPage = repository.findByCategoryId(categoryId, pageable);
+            } else {
+                entityPage = repository.findByCategoryIdAndSearch(categoryId, search.trim(), pageable);
+            }
+        }
+        return entityPage.map(mapper::toResponse);
     }
 
     @Override

@@ -28,8 +28,7 @@ public interface BaseLookupRepository<E extends BaseLookupEntity> extends JpaRep
     boolean existsByCodeAndIdNot(@Param("code") String code, @Param("id") UUID id);
 
     @Query("SELECT e FROM #{#entityName} e " +
-           "WHERE (:search IS NULL OR " +
-           "       LOWER(e.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
-           "       LOWER(e.code) LIKE LOWER(CONCAT('%', :search, '%')))")
-    Page<E> searchPage(@Param("search") String search, Pageable pageable);
+           "WHERE LOWER(e.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+           "      LOWER(e.code) LIKE LOWER(CONCAT('%', :search, '%'))")
+    Page<E> findBySearch(@Param("search") String search, Pageable pageable);
 }

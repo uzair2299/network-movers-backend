@@ -80,8 +80,14 @@ public abstract class AbstractLookupService<E extends BaseLookupEntity, REQ, RES
     @Transactional(readOnly = true)
     public Page<RES> getAll(RequestParamDto requestParams) {
         Pageable pageable = createPageable(requestParams);
-        return repository.searchPage(requestParams.getSearch(), pageable)
-                .map(mapper::toResponse);
+        String search = requestParams.getSearch();
+        Page<E> entityPage;
+        if (search == null || search.trim().isEmpty()) {
+            entityPage = repository.findAll(pageable);
+        } else {
+            entityPage = repository.findBySearch(search.trim(), pageable);
+        }
+        return entityPage.map(mapper::toResponse);
     }
 
     protected Pageable createPageable(RequestParamDto requestParams) {

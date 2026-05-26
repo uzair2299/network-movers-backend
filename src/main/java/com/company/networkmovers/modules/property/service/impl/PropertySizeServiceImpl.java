@@ -54,8 +54,24 @@ public class PropertySizeServiceImpl
     @Transactional(readOnly = true)
     public Page<PropertySizeResponse> getAll(RequestParamDto requestParams) {
         Pageable pageable = createPageable(requestParams);
-        return repository.searchPageWithType(requestParams.getSearch(), requestParams.getTypeId(), pageable)
-                .map(mapper::toResponse);
+        String search = requestParams.getSearch();
+        java.util.UUID typeId = requestParams.getTypeId();
+        
+        Page<PropertySize> entityPage;
+        if (typeId == null) {
+            if (search == null || search.trim().isEmpty()) {
+                entityPage = repository.findAll(pageable);
+            } else {
+                entityPage = repository.findBySearch(search.trim(), pageable);
+            }
+        } else {
+            if (search == null || search.trim().isEmpty()) {
+                entityPage = repository.findByTypeId(typeId, pageable);
+            } else {
+                entityPage = repository.findByTypeIdAndSearch(typeId, search.trim(), pageable);
+            }
+        }
+        return entityPage.map(mapper::toResponse);
     }
 
     @Override
