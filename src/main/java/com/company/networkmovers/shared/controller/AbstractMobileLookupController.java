@@ -1,6 +1,8 @@
 package com.company.networkmovers.shared.controller;
 
 import com.company.networkmovers.shared.service.GenericLookupService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +18,14 @@ public abstract class AbstractMobileLookupController<REQ, RES> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RES> getById(@PathVariable UUID id) {
+    @Operation(summary = "Get active record by ID for mobile app", description = "Retrieves details of an active lookup record by UUID. Access requires a valid mobile user JWT session.")
+    public ResponseEntity<RES> getById(
+            @Parameter(description = "UUID of the active record", required = true) @PathVariable UUID id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
     @GetMapping
+    @Operation(summary = "List all active records for mobile app", description = "Retrieves all currently active lookup records. Access requires a valid mobile user JWT session.")
     public ResponseEntity<List<RES>> getAllActive() {
         return ResponseEntity.ok(service.getAllActive());
     }
