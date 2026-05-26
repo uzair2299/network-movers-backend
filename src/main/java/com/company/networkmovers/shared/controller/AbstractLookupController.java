@@ -44,6 +44,12 @@ public abstract class AbstractLookupController<REQ, RES> {
         return ResponseEntity.ok(service.getAllActive());
     }
 
+    @GetMapping
+    @Operation(summary = "Pageable search of records", description = "Query, filter, paginate, and sort lookup records with dynamic search.")
+    public ResponseEntity<org.springframework.data.domain.Page<RES>> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        return ResponseEntity.ok(service.getAll(requestParams));
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Soft delete master data record", description = "Soft deletes (deactivates) a master data record by its UUID. Requires administrative privileges.")
     public ResponseEntity<Void> delete(

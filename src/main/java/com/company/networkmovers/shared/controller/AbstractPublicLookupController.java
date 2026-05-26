@@ -25,8 +25,8 @@ public abstract class AbstractPublicLookupController<REQ, RES> {
     }
 
     @GetMapping
-    @Operation(summary = "List all active records for public client", description = "Retrieves all currently active lookup records. Access is public and does not require authentication.")
-    public ResponseEntity<List<RES>> getAllActive() {
-        return ResponseEntity.ok(service.getAllActive());
+    @Operation(summary = "List all active records for public client with pagination", description = "Query, filter, paginate, and sort active lookup records anonymously.")
+    public ResponseEntity<org.springframework.data.domain.Page<RES>> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        return ResponseEntity.ok(service.getAll(requestParams));
     }
 }

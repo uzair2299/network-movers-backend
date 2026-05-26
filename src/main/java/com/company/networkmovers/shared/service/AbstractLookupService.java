@@ -1,8 +1,13 @@
 package com.company.networkmovers.shared.service;
 
+import com.company.networkmovers.shared.dto.RequestParamDto;
 import com.company.networkmovers.shared.entity.BaseLookupEntity;
 import com.company.networkmovers.shared.mapper.GenericMapper;
 import com.company.networkmovers.shared.repository.BaseLookupRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -69,6 +74,28 @@ public abstract class AbstractLookupService<E extends BaseLookupEntity, REQ, RES
                 .orElseThrow(() -> new RuntimeException("Record not found with id: " + id));
         entity.setActive(false);
         repository.save(entity);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<RES> getAll(RequestParamDto requestParams) {
+        Pageable pageable = createPageable(requestParams);
+        return repository.searchPage(requestParams.getSearch(), pageable)
+                .map(mapper::toResponse);
+    }
+
+    protected Pageable createPageable(RequestParamDto requestParams) {
+        String[] sortParams = requestParams.getSort().split(",");
+        String sortField = sortParams[0];
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1])) {
+            direction = Sort.Direction.DESC;
+        }
+        return PageRequest.of(
+                requestParams.getPage(),
+                requestParams.getSize(),
+                Sort.by(direction, sortField)
+        );
     }
 
     protected abstract String getCodeFromRequest(REQ request);
