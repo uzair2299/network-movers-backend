@@ -26,7 +26,8 @@ public abstract class AbstractMobileLookupController<REQ, RES> {
 
     @GetMapping
     @Operation(summary = "List all active records for mobile app with pagination", description = "Query, filter, paginate, and sort active lookup records. Access requires a valid mobile user JWT session.")
-    public ResponseEntity<org.springframework.data.domain.Page<RES>> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+    public ResponseEntity<org.springframework.data.domain.Page<RES>> getAll(
+            @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         return ResponseEntity.ok(service.getAll(requestParams));
     }
 }

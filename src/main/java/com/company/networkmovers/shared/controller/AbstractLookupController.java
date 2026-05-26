@@ -46,7 +46,8 @@ public abstract class AbstractLookupController<REQ, RES> {
 
     @GetMapping
     @Operation(summary = "Pageable search of records", description = "Query, filter, paginate, and sort lookup records with dynamic search.")
-    public ResponseEntity<org.springframework.data.domain.Page<RES>> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+    public ResponseEntity<org.springframework.data.domain.Page<RES>> getAll(
+            @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         return ResponseEntity.ok(service.getAll(requestParams));
     }
 
