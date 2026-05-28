@@ -1,6 +1,7 @@
 package com.company.networkmovers.security.controller;
 
 import com.company.networkmovers.modules.identity.entity.User;
+import com.company.networkmovers.modules.identity.entity.UserProfile;
 import com.company.networkmovers.modules.identity.repository.UserRepository;
 import com.company.networkmovers.security.dto.LoginRequest;
 import com.company.networkmovers.security.dto.LoginResponse;
@@ -73,10 +74,19 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        User user = userRepository.findByUsernameWithProfile(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found: " + userDetails.getUsername()));
+
         return ResponseEntity.ok(LoginResponse.builder()
                 .token(token)
                 .username(userDetails.getUsername())
                 .roles(roles)
+                .firstName(user.getProfile() != null ? user.getProfile().getFirstName() : null)
+                .lastName(user.getProfile() != null ? user.getProfile().getLastName() : null)
+                .email(user.getEmail())
+                .phoneNumber(user.getProfile() != null ? user.getProfile().getPhoneNumber() : null)
+                .profilePictureUrl(user.getProfile() != null ? user.getProfile().getProfilePictureUrl() : null)
+                .address(user.getProfile() != null ? user.getProfile().getAddress() : null)
                 .build());
     }
 
@@ -131,6 +141,11 @@ public class AuthController {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .enabled(true)
                 .build();
+
+        UserProfile profile = UserProfile.builder()
+                .user(user)
+                .build();
+        user.setProfile(profile);
 
         User savedUser = userRepository.save(user);
 

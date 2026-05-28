@@ -1,6 +1,7 @@
 package com.company.networkmovers.bootstrap.seeder;
 
 import com.company.networkmovers.modules.identity.entity.User;
+import com.company.networkmovers.modules.identity.entity.UserProfile;
 import com.company.networkmovers.modules.identity.repository.UserRepository;
 import com.company.networkmovers.security.rbac.Role;
 import com.company.networkmovers.security.rbac.RoleRepository;
@@ -52,6 +53,15 @@ public class SecurityDataSeeder implements CommandLineRunner {
                     .enabled(true)
                     .build();
 
+            UserProfile profile = UserProfile.builder()
+                    .user(admin)
+                    .firstName("Admin")
+                    .lastName("User")
+                    .phoneNumber("+123456789")
+                    .address("Admin HQ")
+                    .build();
+            admin.setProfile(profile);
+
             User savedAdmin = userRepository.save(admin);
 
             // Link ROLE_ADMIN to default admin user
@@ -70,6 +80,15 @@ public class SecurityDataSeeder implements CommandLineRunner {
                     .password(passwordEncoder.encode("customerpassword"))
                     .enabled(true)
                     .build();
+
+            UserProfile profile = UserProfile.builder()
+                    .user(customer)
+                    .firstName("Customer")
+                    .lastName("User")
+                    .phoneNumber("+987654321")
+                    .address("Customer Address")
+                    .build();
+            customer.setProfile(profile);
 
             User savedCustomer = userRepository.save(customer);
 

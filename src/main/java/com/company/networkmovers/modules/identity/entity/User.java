@@ -1,9 +1,7 @@
 package com.company.networkmovers.modules.identity.entity;
 
 import com.company.networkmovers.shared.entity.BaseAuditEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -28,4 +26,7 @@ public class User extends BaseAuditEntity {
     @Column(name = "enabled", nullable = false)
     @Builder.Default
     private boolean enabled = true;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserProfile profile;
 }
