@@ -32,8 +32,10 @@ public class JwtTokenUtil implements Serializable {
         byte[] keyBytes;
         try {
             keyBytes = Decoders.BASE64.decode(secret);
+            System.out.println("[JWT] Initialized JWT signing key using persistent Base64 secret from application.properties.");
         } catch (IllegalArgumentException e) {
             keyBytes = secret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            System.out.println("[JWT] Initialized JWT signing key using raw secret string.");
         }
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
