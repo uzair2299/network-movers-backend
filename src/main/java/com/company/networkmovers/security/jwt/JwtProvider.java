@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtProvider {
 
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JwtProvider.class);
+
     private final JwtTokenUtil jwtTokenUtil;
     private final UserDetailsService userDetailsService;
 
@@ -27,8 +29,13 @@ public class JwtProvider {
         try {
             String username = jwtTokenUtil.getUsernameFromToken(token);
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            return jwtTokenUtil.validateToken(token, userDetails);
+            boolean isValid = jwtTokenUtil.validateToken(token, userDetails);
+            if (!isValid) {
+                log.warn("Token is invalid or expired for user: {}", username);
+            }
+            return isValid;
         } catch (Exception e) {
+            log.error("Token validation error: {}", e.getMessage(), e);
             return false;
         }
     }
