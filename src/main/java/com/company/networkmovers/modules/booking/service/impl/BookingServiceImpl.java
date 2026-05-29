@@ -78,6 +78,22 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<BookingResponse> findAllByUserId(Long userId) {
+        return repository.findAllByUserIdWithDetails(userId).stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BookingResponse findByIdAndUserId(Long id, Long userId) {
+        BookingEntity entity = repository.findByIdAndUserIdWithDetails(id, userId)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id + " for user: " + userId));
+        return mapper.toResponse(entity);
+    }
+
+    @Override
     public BookingResponse update(Long id, BookingRequest request) {
         BookingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));

@@ -42,4 +42,36 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "LEFT JOIN FETCH b.destinationBuildingAccess " +
            "LEFT JOIN FETCH b.destinationParkingAccess")
     List<BookingEntity> findAllWithDetails();
+
+    @Query("SELECT b FROM BookingEntity b " +
+           "LEFT JOIN FETCH b.user " +
+           "LEFT JOIN FETCH b.currentStatus cs " +
+           "LEFT JOIN FETCH cs.phase " +
+           "LEFT JOIN FETCH b.propertyCategory " +
+           "LEFT JOIN FETCH b.propertyType " +
+           "LEFT JOIN FETCH b.propertySize " +
+           "LEFT JOIN FETCH b.pickupFloorType " +
+           "LEFT JOIN FETCH b.pickupBuildingAccess " +
+           "LEFT JOIN FETCH b.pickupParkingAccess " +
+           "LEFT JOIN FETCH b.destinationFloorType " +
+           "LEFT JOIN FETCH b.destinationBuildingAccess " +
+           "LEFT JOIN FETCH b.destinationParkingAccess " +
+           "WHERE b.user.id = :userId")
+    List<BookingEntity> findAllByUserIdWithDetails(@Param("userId") Long userId);
+
+    @Query("SELECT b FROM BookingEntity b " +
+           "LEFT JOIN FETCH b.user " +
+           "LEFT JOIN FETCH b.currentStatus cs " +
+           "LEFT JOIN FETCH cs.phase " +
+           "LEFT JOIN FETCH b.propertyCategory " +
+           "LEFT JOIN FETCH b.propertyType " +
+           "LEFT JOIN FETCH b.propertySize " +
+           "LEFT JOIN FETCH b.pickupFloorType " +
+           "LEFT JOIN FETCH b.pickupBuildingAccess " +
+           "LEFT JOIN FETCH b.pickupParkingAccess " +
+           "LEFT JOIN FETCH b.destinationFloorType " +
+           "LEFT JOIN FETCH b.destinationBuildingAccess " +
+           "LEFT JOIN FETCH b.destinationParkingAccess " +
+           "WHERE b.id = :id AND b.user.id = :userId")
+    Optional<BookingEntity> findByIdAndUserIdWithDetails(@Param("id") Long id, @Param("userId") Long userId);
 }

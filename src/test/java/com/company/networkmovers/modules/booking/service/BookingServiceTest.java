@@ -189,4 +189,71 @@ class BookingServiceTest {
             SecurityContextHolder.clearContext();
         }
     }
+
+    @Test
+    void testFindAllByUserId_Success() {
+        // Arrange
+        Long userId = 99L;
+        BookingEntity entity = BookingEntity.builder()
+                .id(1L)
+                .pickupAddress("Pickup Address")
+                .build();
+        BookingResponse response = BookingResponse.builder()
+                .id(1L)
+                .userId(userId)
+                .build();
+
+        java.util.List<BookingEntity> entities = Collections.singletonList(entity);
+        when(repository.findAllByUserIdWithDetails(userId)).thenReturn(entities);
+        when(mapper.toResponse(entity)).thenReturn(response);
+
+        // Act
+        java.util.List<BookingResponse> result = bookingService.findAllByUserId(userId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(1L, result.get(0).getId());
+        assertEquals(userId, result.get(0).getUserId());
+        verify(repository, times(1)).findAllByUserIdWithDetails(userId);
+    }
+
+    @Test
+    void testFindByIdAndUserId_Success() {
+        // Arrange
+        Long bookingId = 1L;
+        Long userId = 99L;
+        BookingEntity entity = BookingEntity.builder()
+                .id(bookingId)
+                .build();
+        BookingResponse response = BookingResponse.builder()
+                .id(bookingId)
+                .userId(userId)
+                .build();
+
+        when(repository.findByIdAndUserIdWithDetails(bookingId, userId)).thenReturn(Optional.of(entity));
+        when(mapper.toResponse(entity)).thenReturn(response);
+
+        // Act
+        BookingResponse result = bookingService.findByIdAndUserId(bookingId, userId);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(bookingId, result.getId());
+        assertEquals(userId, result.getUserId());
+        verify(repository, times(1)).findByIdAndUserIdWithDetails(bookingId, userId);
+    }
+
+    @Test
+    void testFindByIdAndUserId_NotFound() {
+        // Arrange
+        Long bookingId = 1L;
+        Long userId = 99L;
+
+        when(repository.findByIdAndUserIdWithDetails(bookingId, userId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        assertThrows(RuntimeException.class, () -> bookingService.findByIdAndUserId(bookingId, userId));
+        verify(repository, times(1)).findByIdAndUserIdWithDetails(bookingId, userId);
+    }
 }
