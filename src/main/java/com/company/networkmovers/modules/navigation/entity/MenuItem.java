@@ -1,8 +1,10 @@
 package com.company.networkmovers.modules.navigation.entity;
 
 import com.company.networkmovers.security.rbac.Permission;
+import com.company.networkmovers.shared.entity.BaseSoftDeleteEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +14,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class MenuItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+public class MenuItem extends BaseSoftDeleteEntity {
 
     @Column(nullable = false)
     private String name;

@@ -1,5 +1,6 @@
 package com.company.networkmovers.shared.exception;
 
+import com.company.networkmovers.modules.navigation.exception.NavigationException;
 import com.company.networkmovers.shared.dto.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,18 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+
+    @ExceptionHandler(NavigationException.class)
+    public ResponseEntity<ErrorResponse> handleNavigationException(NavigationException ex) {
+        log.error("Navigation validation failed: {}", ex.getMessage());
+        ErrorResponse response = ErrorResponse.builder()
+                .timestamp(LocalDateTime.now())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .error("Bad Request")
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadable(HttpMessageNotReadableException ex) {
