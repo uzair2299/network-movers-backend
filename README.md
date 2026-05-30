@@ -326,18 +326,73 @@ Then create a Flyway migration file with the exported schema:
 
 ### Resetting / Dropping Database
 
-If you need to force-drop the database (e.g. `railway` database) when active connection pools prevent dropping it:
+#### Method 1 — Using pgAdmin UI (Easy)
+
+1. Open **pgAdmin**
+2. In the left sidebar, navigate to:
+   ```
+   Servers → PostgreSQL → Databases
+   ```
+3. **Right-click** the database you want to delete
+4. Click **Delete/Drop**
+5. Enable **Cascade** if prompted (removes dependent objects)
+6. Click **Save**
+
+> ⚠️ **Important:** You cannot drop a database if:
+> - You are currently connected to it
+> - Active sessions exist on it
+>
+> If you see *"database is being accessed by other users"*, follow **Method 2** below first.
+
+---
+
+#### Method 2 — Using Query Tool (When Active Sessions Exist)
+
+> **Critical:** Connect to the **`postgres`** database first — NOT the database you want to drop.
+
+**Step 1 — Terminate all active connections to the target database:**
 
 ```sql
--- STEP 1 : Connect to another DB first
-
--- STEP 2: terminate sessions (stronger version)
-SELECT pg_terminate_backend(pg_stat_activity.pid)
+SELECT pg_terminate_backend(pid)
 FROM pg_stat_activity
-WHERE datname = 'railway'
+WHERE datname = 'network_movers'
+  AND pid <> pg_backend_pid();
+```
+
+**Step 2 — Drop the database:**
+
+```sql
+DROP DATABASE network_movers;
+```
+
+**Full example (copy-paste ready):**
+
+```sql
+-- Run this while connected to 'postgres' database, NOT 'network_movers'
+
+SELECT pg_terminate_backend(pid)
+FROM pg_stat_activity
+WHERE datname = 'network_movers'
   AND pid <> pg_backend_pid();
 
-
--- STEP 3: drop
-DROP DATABASE railway;
+DROP DATABASE network_movers;
 ```
+
+---
+
+#### After Dropping — Recreate & Re-run Migrations
+
+Once dropped, recreate the database and let Flyway re-apply all migrations from scratch:
+
+```sql
+-- In pgAdmin Query Tool (connected to 'postgres')
+CREATE DATABASE network_movers;
+```
+
+Then restart the Spring Boot application — Flyway will automatically execute all `V1__` through `VN__` migration scripts in order:
+
+```bash
+.\mvnw.cmd spring-boot:run
+```
+
+> ✅ All schema, seed data, and navigation menu items will be recreated cleanly.
