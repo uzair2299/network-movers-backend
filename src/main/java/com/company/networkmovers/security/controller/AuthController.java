@@ -122,10 +122,12 @@ public class AuthController {
     @PostMapping("/register")
     @Operation(summary = "Register", description = "Register a new user account")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User registered successfully", content = @Content(mediaType = "application/json")),
-            @ApiResponse(responseCode = "400", description = "Username or email already in use", content = @Content)
+            @ApiResponse(responseCode = "200", description = "User registered successfully",
+                    content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "User registered successfully!"))),
+            @ApiResponse(responseCode = "400", description = "Username or email already in use",
+                    content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Error: Username is already taken!")))
     })
-    public ResponseEntity<?> register(@org.springframework.web.bind.annotation.RequestBody RegisterRequest request) {
+    public ResponseEntity<Object> register(@org.springframework.web.bind.annotation.RequestBody RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
             return ResponseEntity.badRequest().body("Error: Username is already taken!");
         }

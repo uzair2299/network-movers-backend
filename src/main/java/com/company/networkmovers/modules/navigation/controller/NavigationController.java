@@ -5,6 +5,8 @@ import com.company.networkmovers.modules.navigation.dto.response.MenuItemRespons
 import com.company.networkmovers.modules.navigation.service.NavigationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,10 +43,12 @@ public class NavigationController {
                       "filtered by the current user's roles and permissions. Pass ?section=SIDEBAR to get one section."
     )
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Navigation tree returned successfully"),
-        @ApiResponse(responseCode = "401", description = "Unauthorized — missing or invalid JWT token")
+        @ApiResponse(responseCode = "200", description = "Navigation tree returned successfully",
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(description = "Map of section (SIDEBAR/TOPBAR/PROFILE) to list of MenuItemResponse, or a single list when ?section= is provided"))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized — missing or invalid JWT token", content = @Content)
     })
-    public ResponseEntity<?> getUserNavigation(
+    public ResponseEntity<Object> getUserNavigation(
             @Parameter(description = "Optional section filter: SIDEBAR, TOPBAR, or PROFILE")
             @RequestParam(value = "section", required = false) String section,
             @AuthenticationPrincipal UserDetails userDetails) {
@@ -52,10 +56,10 @@ public class NavigationController {
         if (section != null) {
             List<MenuItemResponse> menu = navigationService.getNavigationMenuForUser(
                     section.toUpperCase(), userDetails);
-            return ResponseEntity.ok(menu);
+            return ResponseEntity.ok((Object) menu);
         }
         Map<String, List<MenuItemResponse>> menus = navigationService.getAllNavigationMenusForUser(userDetails);
-        return ResponseEntity.ok(menus);
+        return ResponseEntity.ok((Object) menus);
     }
 
     // =========================================================================
