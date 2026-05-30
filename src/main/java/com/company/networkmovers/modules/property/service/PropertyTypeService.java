@@ -5,4 +5,5 @@ import com.company.networkmovers.modules.property.dto.response.PropertyTypeRespo
 import com.company.networkmovers.shared.service.GenericLookupService;
 
 public interface PropertyTypeService extends GenericLookupService<PropertyTypeRequest, PropertyTypeResponse> {
+    java.util.List<PropertyTypeResponse> getActiveByCategoryId(java.util.UUID categoryId);
 }

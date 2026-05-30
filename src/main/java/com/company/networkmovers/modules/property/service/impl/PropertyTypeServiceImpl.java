@@ -63,4 +63,11 @@ public class PropertyTypeServiceImpl
             entity.setCategory(category);
         }
     }
+
+    @Override
+    public java.util.List<PropertyTypeResponse> getActiveByCategoryId(java.util.UUID categoryId) {
+        return repository.findByCategoryIdAndActiveTrue(categoryId).stream()
+                .map(mapper::toResponse)
+                .toList();
+    }
 }
