@@ -36,6 +36,7 @@ public class BookingServiceImpl implements BookingService {
         this.moveStatusRepository = moveStatusRepository;
     }
 
+    //add commit
     @Override
     public BookingResponse create(BookingRequest request) {
         BookingEntity entity = mapper.toEntity(request);
