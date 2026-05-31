@@ -26,8 +26,7 @@ public class AdminUserController {
     @PostMapping
     @Operation(summary = "Create master data record", description = "Creates a new master data lookup entry. Requires administrative privileges.")
     public ResponseEntity<AdminUserResponse> create(@RequestBody AdminUserRequest request) {
-        Long currentUserId = SecurityUtils.getCurrentUserId();
-        return ResponseEntity.ok(adminUserService.create(request, currentUserId));
+        return ResponseEntity.ok(adminUserService.create(request));
     }
 
     @GetMapping("/{id}")
@@ -55,24 +54,21 @@ public class AdminUserController {
     public ResponseEntity<AdminUserResponse> update(
             @Parameter(description = "ID of the record to update", required = true) @PathVariable Long id, 
             @RequestBody AdminUserRequest request) {
-        Long currentUserId = SecurityUtils.getCurrentUserId();
-        return ResponseEntity.ok(adminUserService.update(id, request, currentUserId));
+        return ResponseEntity.ok(adminUserService.update(id, request));
     }
 
     @PutMapping("/{id}/activate")
     @Operation(summary = "Toggle user activation status", description = "Toggles the enabled status of the user.")
     public ResponseEntity<AdminUserResponse> toggleActive(
             @Parameter(description = "ID of the record", required = true) @PathVariable Long id) {
-        Long currentUserId = SecurityUtils.getCurrentUserId();
-        return ResponseEntity.ok(adminUserService.toggleActive(id, currentUserId));
+        return ResponseEntity.ok(adminUserService.toggleActive(id));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Soft delete master data record", description = "Soft deletes (deactivates) a master data record by its ID. Requires administrative privileges.")
     public ResponseEntity<Void> softDelete(
             @Parameter(description = "ID of the record to delete", required = true) @PathVariable Long id) {
-        Long currentUserId = SecurityUtils.getCurrentUserId();
-        adminUserService.softDelete(id, currentUserId);
+        adminUserService.softDelete(id);
         return ResponseEntity.noContent().build();
     }
 }

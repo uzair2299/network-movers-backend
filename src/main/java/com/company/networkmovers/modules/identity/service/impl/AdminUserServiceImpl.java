@@ -41,7 +41,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserResponse create(AdminUserRequest request, Long currentUserId) {
+    public AdminUserResponse create(AdminUserRequest request) {
+        Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new RuntimeException("Username already exists");
         }
@@ -78,7 +79,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserResponse update(Long id, AdminUserRequest request, Long currentUserId) {
+    public AdminUserResponse update(Long id, AdminUserRequest request) {
+        Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -122,7 +124,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserResponse toggleActive(Long id, Long currentUserId) {
+    public AdminUserResponse toggleActive(Long id) {
+        Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.setEnabled(!user.isEnabled());
@@ -136,7 +139,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void softDelete(Long id, Long currentUserId) {
+    public void softDelete(Long id) {
+        Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         user.delete(currentUserId);

@@ -6,6 +6,7 @@ import com.company.networkmovers.modules.booking.service.BookingService;
 import com.company.networkmovers.integration.thirdparty.n8n.N8nWebhookClient;
 import com.company.networkmovers.security.context.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -44,8 +45,9 @@ public class MobileBookingController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get booking by ID for the authenticated user", description = "Retrieves details of a specific booking belonging to the currently authenticated user.")
-    public ResponseEntity<BookingResponse> findByIdForCurrentUser(@PathVariable Long id) {
+    @Operation(summary = "Get booking by ID", description = "Retrieves details of a specific booking belonging to the currently authenticated user.")
+    public ResponseEntity<BookingResponse> findByIdForCurrentUser(
+            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id) {
         Long userId = getCurrentUserId();
         return ResponseEntity.ok(service.findByIdAndUserId(id, userId));
     }
