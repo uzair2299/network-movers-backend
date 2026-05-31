@@ -86,11 +86,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookingResponse> getAllActive() {
-        return repository.findAllWithDetails().stream()
-                // Assuming "active" for Booking means not cancelled. Let's return all for now.
-                .map(mapper::toResponse)
-                .collect(Collectors.toList());
+    public org.springframework.data.domain.Page<BookingResponse> getAllActive(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        // Since Booking entity does not currently have an explicit active/inactive boolean filter, 
+        // fallback to standard getAll() behavior for pagination and search. 
+        // In the future, this can be filtered by specific MoveStatus.
+        return getAll(requestParams);
     }
 
     private org.springframework.data.domain.Pageable createPageable(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {

@@ -34,6 +34,21 @@ public interface UserRepository extends JpaRepository<User, Long> {
            countQuery = "SELECT count(u) FROM User u")
     org.springframework.data.domain.Page<User> findAllWithProfile(org.springframework.data.domain.Pageable pageable);
 
-    @Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.enabled = true")
-    java.util.List<User> findAllActive();
+    @Query(value = "SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.enabled = true",
+           countQuery = "SELECT count(u) FROM User u WHERE u.enabled = true")
+    org.springframework.data.domain.Page<User> findAllActive(org.springframework.data.domain.Pageable pageable);
+
+    @Query(value = "SELECT u FROM User u LEFT JOIN FETCH u.profile " +
+           "WHERE u.enabled = true AND (" +
+           "LOWER(u.username) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.firstName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.lastName) LIKE LOWER(CONCAT('%', :search, '%')))",
+           countQuery = "SELECT count(u) FROM User u LEFT JOIN u.profile " +
+           "WHERE u.enabled = true AND (" +
+           "LOWER(u.username) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.firstName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.lastName) LIKE LOWER(CONCAT('%', :search, '%')))")
+    org.springframework.data.domain.Page<User> findActiveBySearch(@Param("search") String search, org.springframework.data.domain.Pageable pageable);
 }

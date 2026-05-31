@@ -171,13 +171,21 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public List<AdminUserResponse> getAllActive() {
-        return userRepository.findAllActive().stream().map(user -> {
+    public org.springframework.data.domain.Page<AdminUserResponse> getAllActive(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        org.springframework.data.domain.Pageable pageable = createPageable(requestParams);
+        String search = requestParams.getSearch();
+        org.springframework.data.domain.Page<User> userPage;
+        if (search == null || search.trim().isEmpty()) {
+            userPage = userRepository.findAllActive(pageable);
+        } else {
+            userPage = userRepository.findActiveBySearch(search.trim(), pageable);
+        }
+        return userPage.map(user -> {
             List<String> roles = userRoleRepository.findByUserId(user.getId()).stream()
                     .map(ur -> ur.getRole().getName())
                     .collect(Collectors.toList());
             return mapToResponse(user, user.getProfile(), roles);
-        }).collect(Collectors.toList());
+        });
     }
 
     private org.springframework.data.domain.Pageable createPageable(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {

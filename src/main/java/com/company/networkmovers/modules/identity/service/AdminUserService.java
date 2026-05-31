@@ -11,6 +11,6 @@ public interface AdminUserService {
     AdminUserResponse toggleActive(Long id);
     void softDelete(Long id);
     org.springframework.data.domain.Page<AdminUserResponse> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams);
-    List<AdminUserResponse> getAllActive();
+    org.springframework.data.domain.Page<AdminUserResponse> getAllActive(com.company.networkmovers.shared.dto.RequestParamDto requestParams);
     AdminUserResponse findById(Long id);
 }

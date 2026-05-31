@@ -36,9 +36,10 @@ public class AdminBookingController {
     }
 
     @GetMapping("/active")
-    @Operation(summary = "List all active records", description = "Retrieves all currently active master data lookup records for administrative review.")
-    public ResponseEntity<List<BookingResponse>> getAllActive() {
-        return ResponseEntity.ok(service.getAllActive());
+    @Operation(summary = "Pageable search of active records", description = "Retrieves paginated active master data lookup records for administrative review.")
+    public ResponseEntity<org.springframework.data.domain.Page<BookingResponse>> getAllActive(
+            @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        return ResponseEntity.ok(service.getAllActive(requestParams));
     }
 
     @GetMapping

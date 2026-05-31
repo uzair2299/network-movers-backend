@@ -23,8 +23,8 @@ public class BookingFacade {
         return service.findById(id);
     }
 
-    public List<BookingResponse> getAllActive() {
-        return service.getAllActive();
+    public org.springframework.data.domain.Page<BookingResponse> getAllActive(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        return service.getAllActive(requestParams);
     }
 
     public BookingResponse update(Long id, BookingRequest request) {

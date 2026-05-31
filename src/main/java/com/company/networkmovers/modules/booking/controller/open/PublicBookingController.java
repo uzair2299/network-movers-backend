@@ -22,8 +22,9 @@ public class PublicBookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookingResponse>> getAllActive() {
-        return ResponseEntity.ok(service.getAllActive());
+    public ResponseEntity<org.springframework.data.domain.Page<BookingResponse>> getAllActive(
+            @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        return ResponseEntity.ok(service.getAllActive(requestParams));
     }
 }
 
