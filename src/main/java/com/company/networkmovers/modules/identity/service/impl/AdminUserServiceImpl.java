@@ -245,11 +245,13 @@ public class AdminUserServiceImpl implements AdminUserService {
                 .build();
 
         if (profile != null) {
-            response.setFirstName(profile.getFirstName());
-            response.setLastName(profile.getLastName());
-            response.setPhoneNumber(profile.getPhoneNumber());
-            response.setAddress(profile.getAddress());
-            response.setProfilePictureUrl(profile.getProfilePictureUrl());
+            response.setProfile(AdminUserResponse.ProfileResponse.builder()
+                    .firstName(profile.getFirstName())
+                    .lastName(profile.getLastName())
+                    .phoneNumber(profile.getPhoneNumber())
+                    .address(profile.getAddress())
+                    .profilePictureUrl(profile.getProfilePictureUrl())
+                    .build());
         }
 
         return response;

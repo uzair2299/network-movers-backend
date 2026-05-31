@@ -16,13 +16,21 @@ public class AdminUserResponse {
     private boolean enabled;
     private List<String> roles;
     
-    // Profile Fields
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String profilePictureUrl;
-    private String address;
+    private ProfileResponse profile;
     
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class ProfileResponse {
+        private String firstName;
+        private String lastName;
+        private String phoneNumber;
+        private String profilePictureUrl;
+        private String address;
+    }
 }
