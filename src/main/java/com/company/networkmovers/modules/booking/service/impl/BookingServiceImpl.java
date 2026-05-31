@@ -13,6 +13,10 @@ import com.company.networkmovers.modules.booking.dto.response.BookingResponse;
 import com.company.networkmovers.modules.booking.mapper.BookingMapper;
 import com.company.networkmovers.modules.property.entity.*;
 import com.company.networkmovers.modules.property.repository.MoveStatusRepository;
+import com.company.networkmovers.modules.booking.repository.BookingHistoryRepository;
+import com.company.networkmovers.modules.booking.entity.BookingHistoryEntity;
+import com.company.networkmovers.modules.booking.dto.response.BookingHistoryResponse;
+import com.company.networkmovers.modules.booking.dto.request.UpdateBookingStatusRequest;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +32,14 @@ public class BookingServiceImpl implements BookingService {
     private final BookingMapper mapper;
     private final EntityManager entityManager;
     private final MoveStatusRepository moveStatusRepository;
+    private final BookingHistoryRepository historyRepository;
 
-    public BookingServiceImpl(BookingRepository repository, BookingMapper mapper, EntityManager entityManager, MoveStatusRepository moveStatusRepository) {
+    public BookingServiceImpl(BookingRepository repository, BookingMapper mapper, EntityManager entityManager, MoveStatusRepository moveStatusRepository, BookingHistoryRepository historyRepository) {
         this.repository = repository;
         this.mapper = mapper;
         this.entityManager = entityManager;
         this.moveStatusRepository = moveStatusRepository;
+        this.historyRepository = historyRepository;
     }
 
     //add commit
@@ -54,6 +60,18 @@ public class BookingServiceImpl implements BookingService {
         }
 
         BookingEntity saved = repository.save(entity);
+
+        BookingHistoryEntity history = BookingHistoryEntity.builder()
+                .booking(saved)
+                .previousStatus(null)
+                .newStatus(defaultStatus)
+                .notes("Booking initialized")
+                .build();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof CustomUserDetails) {
+            history.setCreatedBy(((CustomUserDetails) authentication.getPrincipal()).getId());
+        }
+        historyRepository.save(history);
+
         // Force flush to execute inserts
         entityManager.flush();
         // Fetch with all details loaded using JPQL fetch joins
@@ -221,6 +239,73 @@ public class BookingServiceImpl implements BookingService {
         BookingEntity fetched = repository.findByIdWithDetails(updated.getId())
                 .orElseThrow(() -> new RuntimeException("Booking not found after update with id: " + updated.getId()));
         return mapper.toResponse(fetched);
+    }
+
+    @Override
+    public BookingResponse updateStatus(Long id, UpdateBookingStatusRequest request) {
+        BookingEntity entity = repository.findByIdWithDetails(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
+
+        MoveStatus oldStatus = entity.getCurrentStatus();
+        MoveStatus newStatus = moveStatusRepository.findById(request.getStatusId())
+                .orElseThrow(() -> new RuntimeException("MoveStatus not found with id: " + request.getStatusId()));
+
+        entity.setCurrentStatus(newStatus);
+        BookingEntity updated = repository.save(entity);
+
+        BookingHistoryEntity history = BookingHistoryEntity.builder()
+                .booking(updated)
+                .previousStatus(oldStatus)
+                .newStatus(newStatus)
+                .notes(request.getNotes())
+                .build();
+                
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof CustomUserDetails) {
+            history.setCreatedBy(((CustomUserDetails) authentication.getPrincipal()).getId());
+        }
+        historyRepository.save(history);
+
+        return mapper.toResponse(updated);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookingHistoryResponse> getBookingTimeline(Long id) {
+        List<BookingHistoryEntity> historyList = historyRepository.findByBookingIdOrderByCreatedAtDescWithDetails(id);
+        return historyList.stream().map(h -> BookingHistoryResponse.builder()
+                .id(h.getId())
+                .bookingId(h.getBooking().getId())
+                .previousStatus(h.getPreviousStatus() != null ? com.company.networkmovers.modules.property.dto.response.MoveStatusResponse.builder()
+                        .id(h.getPreviousStatus().getId())
+                        .phase(h.getPreviousStatus().getPhase() != null ? com.company.networkmovers.modules.property.dto.response.MovePhaseResponse.builder()
+                                .id(h.getPreviousStatus().getPhase().getId())
+                                .name(h.getPreviousStatus().getPhase().getName())
+                                .code(h.getPreviousStatus().getPhase().getCode())
+                                .build() : null)
+                        .code(h.getPreviousStatus().getCode())
+                        .name(h.getPreviousStatus().getName())
+                        .description(h.getPreviousStatus().getDescription())
+                        .sequenceNo(h.getPreviousStatus().getSequenceNo())
+                        .colorCode(h.getPreviousStatus().getColorCode())
+                        .build() : null)
+                .newStatus(h.getNewStatus() != null ? com.company.networkmovers.modules.property.dto.response.MoveStatusResponse.builder()
+                        .id(h.getNewStatus().getId())
+                        .phase(h.getNewStatus().getPhase() != null ? com.company.networkmovers.modules.property.dto.response.MovePhaseResponse.builder()
+                                .id(h.getNewStatus().getPhase().getId())
+                                .name(h.getNewStatus().getPhase().getName())
+                                .code(h.getNewStatus().getPhase().getCode())
+                                .build() : null)
+                        .code(h.getNewStatus().getCode())
+                        .name(h.getNewStatus().getName())
+                        .description(h.getNewStatus().getDescription())
+                        .sequenceNo(h.getNewStatus().getSequenceNo())
+                        .colorCode(h.getNewStatus().getColorCode())
+                        .build() : null)
+                .notes(h.getNotes())
+                .createdAt(h.getCreatedAt())
+                .createdBy(h.getCreatedBy())
+                .build()).collect(Collectors.toList());
     }
 
     @Override

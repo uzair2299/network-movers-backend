@@ -10,6 +10,7 @@ import com.company.networkmovers.modules.identity.entity.User;
 import com.company.networkmovers.security.context.CustomUserDetails;
 import com.company.networkmovers.modules.property.entity.MoveStatus;
 import com.company.networkmovers.modules.property.repository.MoveStatusRepository;
+import com.company.networkmovers.modules.booking.repository.BookingHistoryRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,11 +42,14 @@ class BookingServiceTest {
     @Mock
     private MoveStatusRepository moveStatusRepository;
 
+    @Mock
+    private BookingHistoryRepository historyRepository;
+
     private BookingService bookingService;
 
     @BeforeEach
     void setUp() {
-        bookingService = new BookingServiceImpl(repository, mapper, entityManager, moveStatusRepository);
+        bookingService = new BookingServiceImpl(repository, mapper, entityManager, moveStatusRepository, historyRepository);
     }
 
     @Test

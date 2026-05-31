@@ -52,6 +52,27 @@ public class MobileBookingController {
         return ResponseEntity.ok(service.findByIdAndUserId(id, userId));
     }
 
+    @PutMapping("/{id}/status")
+    @Operation(summary = "Update booking status", description = "Updates the status of a booking belonging to the current user (e.g. Cancelled) and logs it to the history timeline.")
+    public ResponseEntity<BookingResponse> updateStatusForCurrentUser(
+            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id,
+            @RequestBody com.company.networkmovers.modules.booking.dto.request.UpdateBookingStatusRequest request) {
+        Long userId = getCurrentUserId();
+        // Verify ownership
+        service.findByIdAndUserId(id, userId);
+        return ResponseEntity.ok(service.updateStatus(id, request));
+    }
+
+    @GetMapping("/{id}/timeline")
+    @Operation(summary = "Get booking timeline", description = "Retrieves the full lifecycle history of a specific booking belonging to the current user.")
+    public ResponseEntity<List<com.company.networkmovers.modules.booking.dto.response.BookingHistoryResponse>> getBookingTimelineForCurrentUser(
+            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id) {
+        Long userId = getCurrentUserId();
+        // Verify ownership
+        service.findByIdAndUserId(id, userId);
+        return ResponseEntity.ok(service.getBookingTimeline(id));
+    }
+
     private Long getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()

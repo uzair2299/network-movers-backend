@@ -57,6 +57,21 @@ public class AdminBookingController {
         return ResponseEntity.ok(service.update(id, request));
     }
 
+    @PutMapping("/{id}/status")
+    @Operation(summary = "Update booking status", description = "Updates the status of a booking and logs it to the history timeline.")
+    public ResponseEntity<BookingResponse> updateStatus(
+            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id,
+            @RequestBody com.company.networkmovers.modules.booking.dto.request.UpdateBookingStatusRequest request) {
+        return ResponseEntity.ok(service.updateStatus(id, request));
+    }
+
+    @GetMapping("/{id}/timeline")
+    @Operation(summary = "Get booking timeline", description = "Retrieves the full lifecycle history of a specific booking.")
+    public ResponseEntity<List<com.company.networkmovers.modules.booking.dto.response.BookingHistoryResponse>> getBookingTimeline(
+            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id) {
+        return ResponseEntity.ok(service.getBookingTimeline(id));
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Soft delete master data record", description = "Soft deletes (deactivates) a master data record by its ID. Requires administrative privileges.")
     public ResponseEntity<Void> delete(
