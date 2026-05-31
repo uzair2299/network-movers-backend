@@ -13,7 +13,8 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
 
     @Query("SELECT b FROM BookingEntity b " +
-           "LEFT JOIN FETCH b.user " +
+           "LEFT JOIN FETCH b.user u " +
+           "LEFT JOIN FETCH u.profile " +
            "LEFT JOIN FETCH b.currentStatus cs " +
            "LEFT JOIN FETCH cs.phase " +
            "LEFT JOIN FETCH b.propertyCategory " +
@@ -29,7 +30,8 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     Optional<BookingEntity> findByIdWithDetails(@Param("id") Long id);
 
     @Query("SELECT b FROM BookingEntity b " +
-           "LEFT JOIN FETCH b.user " +
+           "LEFT JOIN FETCH b.user u " +
+           "LEFT JOIN FETCH u.profile " +
            "LEFT JOIN FETCH b.currentStatus cs " +
            "LEFT JOIN FETCH cs.phase " +
            "LEFT JOIN FETCH b.propertyCategory " +
@@ -44,7 +46,8 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     List<BookingEntity> findAllWithDetails();
 
     @Query("SELECT b FROM BookingEntity b " +
-           "LEFT JOIN FETCH b.user " +
+           "LEFT JOIN FETCH b.user u " +
+           "LEFT JOIN FETCH u.profile " +
            "LEFT JOIN FETCH b.currentStatus cs " +
            "LEFT JOIN FETCH cs.phase " +
            "LEFT JOIN FETCH b.propertyCategory " +
@@ -60,7 +63,8 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     List<BookingEntity> findAllByUserIdWithDetails(@Param("userId") Long userId);
 
     @Query("SELECT b FROM BookingEntity b " +
-           "LEFT JOIN FETCH b.user " +
+           "LEFT JOIN FETCH b.user u " +
+           "LEFT JOIN FETCH u.profile " +
            "LEFT JOIN FETCH b.currentStatus cs " +
            "LEFT JOIN FETCH cs.phase " +
            "LEFT JOIN FETCH b.propertyCategory " +

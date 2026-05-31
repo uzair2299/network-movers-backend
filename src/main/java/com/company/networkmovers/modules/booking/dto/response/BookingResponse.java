@@ -18,8 +18,8 @@ import java.util.UUID;
 public class BookingResponse {
     private Long id;
 
-    @JsonProperty("user_id")
-    private Long userId;
+    @JsonProperty("user")
+    private UserDetailsResponse user;
 
     private String name;
     private String description;
@@ -178,5 +178,28 @@ public class BookingResponse {
             private String code;
             private String name;
         }
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
+    public static class UserDetailsResponse {
+        private Long id;
+        private String username;
+        private String email;
+        
+        @JsonProperty("first_name")
+        private String firstName;
+        
+        @JsonProperty("last_name")
+        private String lastName;
+        
+        @JsonProperty("phone_number")
+        private String phoneNumber;
+        
+        @JsonProperty("profile_picture_url")
+        private String profilePictureUrl;
     }
 }

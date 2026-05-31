@@ -127,7 +127,23 @@ public class BookingMapper {
         BookingResponse.BookingResponseBuilder builder = BookingResponse.builder();
 
         builder.id(entity.getId());
-        builder.userId(entity.getUser() != null ? entity.getUser().getId() : null);
+        
+        if (entity.getUser() != null) {
+            com.company.networkmovers.modules.identity.entity.User u = entity.getUser();
+            BookingResponse.UserDetailsResponse.UserDetailsResponseBuilder userBuilder = 
+                    BookingResponse.UserDetailsResponse.builder()
+                            .id(u.getId())
+                            .username(u.getUsername())
+                            .email(u.getEmail());
+            
+            if (u.getProfile() != null) {
+                userBuilder.firstName(u.getProfile().getFirstName())
+                           .lastName(u.getProfile().getLastName())
+                           .phoneNumber(u.getProfile().getPhoneNumber())
+                           .profilePictureUrl(u.getProfile().getProfilePictureUrl());
+            }
+            builder.user(userBuilder.build());
+        }
         builder.name(entity.getName());
         builder.description(entity.getDescription());
         builder.createdAt(entity.getCreatedAt());
