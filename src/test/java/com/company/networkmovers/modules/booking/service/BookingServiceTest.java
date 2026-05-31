@@ -191,7 +191,7 @@ class BookingServiceTest {
     }
 
     @Test
-    void testFindAllByUserId_Success() {
+    void testGetAllByUserId_Success() {
         // Arrange
         Long userId = 99L;
         BookingEntity entity = BookingEntity.builder()
@@ -203,19 +203,22 @@ class BookingServiceTest {
                 .user(BookingResponse.UserDetailsResponse.builder().id(userId).build())
                 .build();
 
-        java.util.List<BookingEntity> entities = Collections.singletonList(entity);
-        when(repository.findAllByUserIdWithDetails(userId)).thenReturn(entities);
+        com.company.networkmovers.shared.dto.RequestParamDto requestParams = new com.company.networkmovers.shared.dto.RequestParamDto();
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 20, org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "name"));
+        org.springframework.data.domain.Page<BookingEntity> entityPage = new org.springframework.data.domain.PageImpl<>(java.util.Collections.singletonList(entity), pageable, 1);
+        
+        when(repository.findAllByUserIdWithDetails(eq(userId), any(org.springframework.data.domain.Pageable.class))).thenReturn(entityPage);
         when(mapper.toResponse(entity)).thenReturn(response);
 
         // Act
-        java.util.List<BookingResponse> result = bookingService.findAllByUserId(userId);
+        org.springframework.data.domain.Page<BookingResponse> result = bookingService.getAllByUserId(userId, requestParams);
 
         // Assert
         assertNotNull(result);
-        assertEquals(1, result.size());
-        assertEquals(1L, result.get(0).getId());
-        assertEquals(userId, result.get(0).getUser().getId());
-        verify(repository, times(1)).findAllByUserIdWithDetails(userId);
+        assertEquals(1, result.getTotalElements());
+        assertEquals(1L, result.getContent().get(0).getId());
+        assertEquals(userId, result.getContent().get(0).getUser().getId());
+        verify(repository, times(1)).findAllByUserIdWithDetails(eq(userId), any(org.springframework.data.domain.Pageable.class));
     }
 
     @Test
