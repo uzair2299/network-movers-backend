@@ -109,10 +109,16 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookingResponse> findAllByUserId(Long userId) {
-        return repository.findAllByUserIdWithDetails(userId).stream()
-                .map(mapper::toResponse)
-                .collect(Collectors.toList());
+    public org.springframework.data.domain.Page<BookingResponse> getAllByUserId(Long userId, com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        org.springframework.data.domain.Pageable pageable = createPageable(requestParams);
+        String search = requestParams.getSearch();
+        org.springframework.data.domain.Page<BookingEntity> bookingPage;
+        if (search == null || search.trim().isEmpty()) {
+            bookingPage = repository.findAllByUserIdWithDetails(userId, pageable);
+        } else {
+            bookingPage = repository.findByUserIdAndSearchWithDetails(userId, search.trim(), pageable);
+        }
+        return bookingPage.map(mapper::toResponse);
     }
 
     @Override

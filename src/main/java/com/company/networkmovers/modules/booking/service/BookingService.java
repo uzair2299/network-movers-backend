@@ -9,7 +9,7 @@ public interface BookingService {
     BookingResponse findById(Long id);
     org.springframework.data.domain.Page<BookingResponse> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams);
     List<BookingResponse> getAllActive();
-    List<BookingResponse> findAllByUserId(Long userId);
+    org.springframework.data.domain.Page<BookingResponse> getAllByUserId(Long userId, com.company.networkmovers.shared.dto.RequestParamDto requestParams);
     BookingResponse findByIdAndUserId(Long id, Long userId);
     BookingResponse update(Long id, BookingRequest request);
     void delete(Long id);

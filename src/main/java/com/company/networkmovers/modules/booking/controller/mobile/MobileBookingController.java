@@ -36,10 +36,11 @@ public class MobileBookingController {
     }
 
     @GetMapping
-    @Operation(summary = "Get bookings of the authenticated user", description = "Retrieves all bookings belonging to the currently authenticated user.")
-    public ResponseEntity<List<BookingResponse>> findAllForCurrentUser() {
+    @Operation(summary = "Pageable search of user bookings", description = "Query, filter, paginate, and sort bookings belonging to the currently authenticated user.")
+    public ResponseEntity<org.springframework.data.domain.Page<BookingResponse>> getAllForCurrentUser(
+            @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         Long userId = getCurrentUserId();
-        return ResponseEntity.ok(service.findAllByUserId(userId));
+        return ResponseEntity.ok(service.getAllByUserId(userId, requestParams));
     }
 
     @GetMapping("/{id}")
