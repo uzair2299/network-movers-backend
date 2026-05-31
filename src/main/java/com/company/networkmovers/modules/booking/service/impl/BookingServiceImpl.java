@@ -72,10 +72,39 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookingResponse> findAll() {
+    public org.springframework.data.domain.Page<BookingResponse> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        org.springframework.data.domain.Pageable pageable = createPageable(requestParams);
+        String search = requestParams.getSearch();
+        org.springframework.data.domain.Page<BookingEntity> bookingPage;
+        if (search == null || search.trim().isEmpty()) {
+            bookingPage = repository.findAllWithDetails(pageable);
+        } else {
+            bookingPage = repository.findBySearchWithDetails(search.trim(), pageable);
+        }
+        return bookingPage.map(mapper::toResponse);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BookingResponse> getAllActive() {
         return repository.findAllWithDetails().stream()
+                // Assuming "active" for Booking means not cancelled. Let's return all for now.
                 .map(mapper::toResponse)
                 .collect(Collectors.toList());
+    }
+
+    private org.springframework.data.domain.Pageable createPageable(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        String[] sortParams = requestParams.getSort().split(",");
+        String sortField = sortParams[0];
+        org.springframework.data.domain.Sort.Direction direction = org.springframework.data.domain.Sort.Direction.ASC;
+        if (sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1])) {
+            direction = org.springframework.data.domain.Sort.Direction.DESC;
+        }
+        return org.springframework.data.domain.PageRequest.of(
+                requestParams.getPage(),
+                requestParams.getSize(),
+                org.springframework.data.domain.Sort.by(direction, sortField)
+        );
     }
 
     @Override

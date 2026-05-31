@@ -10,6 +10,8 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+import lombok.Builder;
+
 @MappedSuperclass
 @Getter
 @Setter
@@ -19,6 +21,7 @@ import java.time.LocalDateTime;
 public abstract class BaseSoftDeleteEntity extends BaseAuditEntity {
 
     @Column(name = "deleted", nullable = false)
+    @Builder.Default
     private boolean deleted = false;
 
     @Column(name = "deleted_at")

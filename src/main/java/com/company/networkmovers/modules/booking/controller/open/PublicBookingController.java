@@ -22,8 +22,8 @@ public class PublicBookingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookingResponse>> findAll() {
-        return ResponseEntity.ok(service.findAll());
+    public ResponseEntity<List<BookingResponse>> getAllActive() {
+        return ResponseEntity.ok(service.getAllActive());
     }
 }
 

@@ -23,8 +23,8 @@ public class BookingFacade {
         return service.findById(id);
     }
 
-    public List<BookingResponse> findAll() {
-        return service.findAll();
+    public List<BookingResponse> getAllActive() {
+        return service.getAllActive();
     }
 
     public BookingResponse update(Long id, BookingRequest request) {

@@ -7,7 +7,8 @@ import java.util.List;
 public interface BookingService {
     BookingResponse create(BookingRequest request);
     BookingResponse findById(Long id);
-    List<BookingResponse> findAll();
+    org.springframework.data.domain.Page<BookingResponse> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams);
+    List<BookingResponse> getAllActive();
     List<BookingResponse> findAllByUserId(Long userId);
     BookingResponse findByIdAndUserId(Long id, Long userId);
     BookingResponse update(Long id, BookingRequest request);

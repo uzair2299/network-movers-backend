@@ -29,6 +29,44 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "WHERE b.id = :id")
     Optional<BookingEntity> findByIdWithDetails(@Param("id") Long id);
 
+    @Query(value = "SELECT b FROM BookingEntity b " +
+           "LEFT JOIN FETCH b.user u " +
+           "LEFT JOIN FETCH u.profile " +
+           "LEFT JOIN FETCH b.currentStatus cs " +
+           "LEFT JOIN FETCH cs.phase " +
+           "LEFT JOIN FETCH b.propertyCategory " +
+           "LEFT JOIN FETCH b.propertyType " +
+           "LEFT JOIN FETCH b.propertySize " +
+           "LEFT JOIN FETCH b.pickupFloorType " +
+           "LEFT JOIN FETCH b.pickupBuildingAccess " +
+           "LEFT JOIN FETCH b.pickupParkingAccess " +
+           "LEFT JOIN FETCH b.destinationFloorType " +
+           "LEFT JOIN FETCH b.destinationBuildingAccess " +
+           "LEFT JOIN FETCH b.destinationParkingAccess",
+           countQuery = "SELECT count(b) FROM BookingEntity b")
+    org.springframework.data.domain.Page<BookingEntity> findAllWithDetails(org.springframework.data.domain.Pageable pageable);
+
+    @Query(value = "SELECT b FROM BookingEntity b " +
+           "LEFT JOIN FETCH b.user u " +
+           "LEFT JOIN FETCH u.profile " +
+           "LEFT JOIN FETCH b.currentStatus cs " +
+           "LEFT JOIN FETCH cs.phase " +
+           "LEFT JOIN FETCH b.propertyCategory " +
+           "LEFT JOIN FETCH b.propertyType " +
+           "LEFT JOIN FETCH b.propertySize " +
+           "LEFT JOIN FETCH b.pickupFloorType " +
+           "LEFT JOIN FETCH b.pickupBuildingAccess " +
+           "LEFT JOIN FETCH b.pickupParkingAccess " +
+           "LEFT JOIN FETCH b.destinationFloorType " +
+           "LEFT JOIN FETCH b.destinationBuildingAccess " +
+           "LEFT JOIN FETCH b.destinationParkingAccess " +
+           "WHERE LOWER(b.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(b.description) LIKE LOWER(CONCAT('%', :search, '%'))",
+           countQuery = "SELECT count(b) FROM BookingEntity b " +
+           "WHERE LOWER(b.name) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(b.description) LIKE LOWER(CONCAT('%', :search, '%'))")
+    org.springframework.data.domain.Page<BookingEntity> findBySearchWithDetails(@Param("search") String search, org.springframework.data.domain.Pageable pageable);
+
     @Query("SELECT b FROM BookingEntity b " +
            "LEFT JOIN FETCH b.user u " +
            "LEFT JOIN FETCH u.profile " +

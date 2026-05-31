@@ -1,9 +1,10 @@
 package com.company.networkmovers.modules.identity.entity;
 
-import com.company.networkmovers.shared.entity.BaseAuditEntity;
+import com.company.networkmovers.shared.entity.BaseSoftDeleteEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "tbl_user_profiles")
@@ -12,7 +13,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class UserProfile extends BaseAuditEntity {
+@SQLRestriction("deleted = false")
+public class UserProfile extends BaseSoftDeleteEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false, unique = true)

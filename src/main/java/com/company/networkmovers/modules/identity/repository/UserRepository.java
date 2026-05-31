@@ -17,4 +17,23 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
+
+    @Query(value = "SELECT u FROM User u LEFT JOIN FETCH u.profile " +
+           "WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.firstName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.lastName) LIKE LOWER(CONCAT('%', :search, '%'))",
+           countQuery = "SELECT count(u) FROM User u LEFT JOIN u.profile " +
+           "WHERE LOWER(u.username) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.email) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.firstName) LIKE LOWER(CONCAT('%', :search, '%')) " +
+           "OR LOWER(u.profile.lastName) LIKE LOWER(CONCAT('%', :search, '%'))")
+    org.springframework.data.domain.Page<User> findBySearch(@Param("search") String search, org.springframework.data.domain.Pageable pageable);
+
+    @Query(value = "SELECT u FROM User u LEFT JOIN FETCH u.profile",
+           countQuery = "SELECT count(u) FROM User u")
+    org.springframework.data.domain.Page<User> findAllWithProfile(org.springframework.data.domain.Pageable pageable);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.profile WHERE u.enabled = true")
+    java.util.List<User> findAllActive();
 }
