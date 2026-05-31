@@ -146,7 +146,7 @@ class BookingServiceTest {
                 .build();
         BookingResponse response = BookingResponse.builder()
                 .id(2L)
-                .userId(99L)
+                .user(BookingResponse.UserDetailsResponse.builder().id(99L).build())
                 .build();
 
         // Mock authentication context
@@ -182,7 +182,7 @@ class BookingServiceTest {
             // Assert
             assertNotNull(result);
             assertEquals(2L, result.getId());
-            assertEquals(99L, result.getUserId());
+            assertEquals(99L, result.getUser().getId());
             verify(mappedEntity).setUser(userProxy);
             verify(repository, times(1)).save(mappedEntity);
         } finally {
@@ -200,7 +200,7 @@ class BookingServiceTest {
                 .build();
         BookingResponse response = BookingResponse.builder()
                 .id(1L)
-                .userId(userId)
+                .user(BookingResponse.UserDetailsResponse.builder().id(userId).build())
                 .build();
 
         java.util.List<BookingEntity> entities = Collections.singletonList(entity);
@@ -214,7 +214,7 @@ class BookingServiceTest {
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(1L, result.get(0).getId());
-        assertEquals(userId, result.get(0).getUserId());
+        assertEquals(userId, result.get(0).getUser().getId());
         verify(repository, times(1)).findAllByUserIdWithDetails(userId);
     }
 
@@ -228,7 +228,7 @@ class BookingServiceTest {
                 .build();
         BookingResponse response = BookingResponse.builder()
                 .id(bookingId)
-                .userId(userId)
+                .user(BookingResponse.UserDetailsResponse.builder().id(userId).build())
                 .build();
 
         when(repository.findByIdAndUserIdWithDetails(bookingId, userId)).thenReturn(Optional.of(entity));
@@ -240,7 +240,7 @@ class BookingServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(bookingId, result.getId());
-        assertEquals(userId, result.getUserId());
+        assertEquals(userId, result.getUser().getId());
         verify(repository, times(1)).findByIdAndUserIdWithDetails(bookingId, userId);
     }
 
