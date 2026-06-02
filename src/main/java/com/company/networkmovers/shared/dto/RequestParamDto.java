@@ -27,6 +27,6 @@ public class RequestParamDto {
     private String search;
     
     @Builder.Default
-    @Schema(description = "Sorting criteria in the format: property,(asc|desc).", defaultValue = "name,asc", example = "name,asc")
-    private String sort = "name,asc";
+    @Schema(description = "Sorting criteria in the format: property,(asc|desc).", defaultValue = "createdAt,desc", example = "createdAt,desc")
+    private String sort = "createdAt,desc";
 }
