@@ -65,4 +65,11 @@ public class AdminUserRoleController {
             @Parameter(description = "UUID of the role", required = true) @PathVariable UUID roleId) {
         return ResponseEntity.ok(userRoleService.getUsersForRole(roleId));
     }
+
+    @GetMapping
+    @Operation(summary = "Pageable search of records", description = "Query, filter, paginate, and sort user-role mapping records.")
+    public ResponseEntity<org.springframework.data.domain.Page<UserRoleResponse>> getAll(
+            @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        return ResponseEntity.ok(userRoleService.getAll(requestParams));
+    }
 }

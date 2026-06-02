@@ -16,4 +16,5 @@ public interface UserRoleService {
     
     List<UserRoleResponse> getRolesForUser(Long userId);
     List<UserRoleResponse> getUsersForRole(UUID roleId);
+    org.springframework.data.domain.Page<UserRoleResponse> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams);
 }

@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public abstract class BaseLookupEntity extends BaseUuidAuditEntity {
+public abstract class BaseLookupEntity extends BaseUuidSoftDeleteEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

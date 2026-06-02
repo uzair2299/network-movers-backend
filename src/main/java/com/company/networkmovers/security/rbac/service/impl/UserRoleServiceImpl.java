@@ -92,4 +92,14 @@ public class UserRoleServiceImpl implements UserRoleService {
                 .map(userRoleMapper::toResponse)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public org.springframework.data.domain.Page<UserRoleResponse> getAll(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(
+                requestParams.getPage(),
+                requestParams.getSize() > 0 ? requestParams.getSize() : 10
+        );
+        return userRoleRepository.findAll(pageable).map(userRoleMapper::toResponse);
+    }
 }
