@@ -4,5 +4,5 @@ import com.company.networkmovers.security.rbac.dto.request.RoleRequest;
 import com.company.networkmovers.security.rbac.dto.response.RoleResponse;
 import com.company.networkmovers.shared.service.GenericLookupService;
 
-public interface AdminRoleService extends GenericLookupService<RoleRequest, RoleResponse> {
+public interface RoleService extends GenericLookupService<RoleRequest, RoleResponse> {
 }

@@ -34,18 +34,4 @@ public class RoleMapper implements GenericMapper<Role, RoleRequest, RoleResponse
                 .build();
     }
 
-    public void updateEntity(Role role, RoleRequest request) {
-        if (request == null) return;
-        
-        if (request.getName() != null) {
-            role.setName(request.getName());
-        }
-        if (request.getCode() != null) {
-            role.setCode(request.getCode());
-        }
-        if (request.getDescription() != null) {
-            role.setDescription(request.getDescription());
-        }
-        role.setActive(request.isActive());
-    }
 }

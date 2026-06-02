@@ -4,7 +4,7 @@ import com.company.networkmovers.security.rbac.Role;
 import com.company.networkmovers.security.rbac.RoleRepository;
 import com.company.networkmovers.security.rbac.dto.request.RoleRequest;
 import com.company.networkmovers.security.rbac.dto.response.RoleResponse;
-import com.company.networkmovers.security.rbac.service.AdminRoleService;
+import com.company.networkmovers.security.rbac.service.RoleService;
 import com.company.networkmovers.shared.mapper.GenericMapper;
 import com.company.networkmovers.shared.service.AbstractLookupService;
 import org.springframework.stereotype.Service;
@@ -12,11 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class AdminRoleServiceImpl 
+public class RoleServiceImpl 
         extends AbstractLookupService<Role, RoleRequest, RoleResponse, RoleRepository> 
-        implements AdminRoleService {
+        implements RoleService {
 
-    public AdminRoleServiceImpl(RoleRepository repository, 
+    public RoleServiceImpl(RoleRepository repository, 
                                 GenericMapper<Role, RoleRequest, RoleResponse> mapper) {
         super(repository, mapper);
     }

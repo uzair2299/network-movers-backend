@@ -15,7 +15,6 @@ import org.hibernate.annotations.SQLRestriction;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@SQLRestriction("active = true")
 public class Role extends BaseLookupEntity {
 
     @Column(name = "description")
