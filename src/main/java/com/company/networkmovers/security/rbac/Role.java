@@ -1,23 +1,22 @@
 package com.company.networkmovers.security.rbac;
 
-import com.company.networkmovers.shared.entity.BaseSoftDeleteEntity;
+import com.company.networkmovers.shared.entity.BaseLookupEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
-@Table(name = "sec_roles")
+@Table(name = "sec_roles", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"name"})
+})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-@SQLRestriction("deleted = false")
-public class Role extends BaseSoftDeleteEntity {
-
-    @Column(nullable = false, unique = true)
-    private String name;
+@SQLRestriction("active = true")
+public class Role extends BaseLookupEntity {
 
     @Column(name = "description")
     private String description;
