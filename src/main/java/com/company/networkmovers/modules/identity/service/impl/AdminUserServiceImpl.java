@@ -191,12 +191,6 @@ public class AdminUserServiceImpl implements AdminUserService {
     private org.springframework.data.domain.Pageable createPageable(com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         String[] sortParams = requestParams.getSort().split(",");
         String sortField = sortParams[0];
-        
-        // Map frontend "name" sort to the actual entity path
-        if ("name".equalsIgnoreCase(sortField)) {
-            sortField = "profile.firstName";
-        }
-
         org.springframework.data.domain.Sort.Direction direction = org.springframework.data.domain.Sort.Direction.ASC;
         if (sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1])) {
             direction = org.springframework.data.domain.Sort.Direction.DESC;
