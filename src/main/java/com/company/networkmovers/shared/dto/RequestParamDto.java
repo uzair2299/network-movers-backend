@@ -23,7 +23,7 @@ public class RequestParamDto {
     @Schema(description = "The size of the page to be returned", defaultValue = "20", example = "20")
     private int size = 20;
     
-    @Schema(description = "Dynamic search term to match against name or code (case-insensitive)", example = "office")
+    @Schema(description = "Dynamic search term to match against name or code (case-insensitive)", example = "")
     private String search;
     
     @Builder.Default

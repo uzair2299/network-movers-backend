@@ -1,7 +1,10 @@
 package com.company.networkmovers.security.rbac;
 
+import com.company.networkmovers.shared.entity.BaseSoftDeleteEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "sec_roles")
@@ -9,12 +12,9 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Role {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+@SQLRestriction("deleted = false")
+public class Role extends BaseSoftDeleteEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
