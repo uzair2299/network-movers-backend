@@ -1,7 +1,9 @@
 package com.company.networkmovers.security.rbac;
 
+import com.company.networkmovers.shared.entity.BaseUuidAuditEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "sec_user_roles", uniqueConstraints = {
@@ -11,12 +13,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class UserRole {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+public class UserRole extends BaseUuidAuditEntity {
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
