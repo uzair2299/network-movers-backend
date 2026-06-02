@@ -37,14 +37,14 @@ public class AdminUserController {
     }
 
     @GetMapping("/active")
-    @Operation(summary = "Pageable search of active records", description = "Query, filter, paginate, and sort active master data lookup records with dynamic search.")
+    @Operation(summary = "Pageable search of active records", description = "Query, filter, paginate, and sort active user records with dynamic search. Valid sort fields: name (automatically maps to profile.firstName), email, username, id, createdAt.")
     public ResponseEntity<org.springframework.data.domain.Page<AdminUserResponse>> getAllActive(
             @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         return ResponseEntity.ok(adminUserService.getAllActive(requestParams));
     }
 
     @GetMapping
-    @Operation(summary = "Pageable search of records", description = "Query, filter, paginate, and sort lookup records with dynamic search.")
+    @Operation(summary = "Pageable search of records", description = "Query, filter, paginate, and sort user records with dynamic search. Valid sort fields: name (automatically maps to profile.firstName), email, username, id, createdAt.")
     public ResponseEntity<org.springframework.data.domain.Page<AdminUserResponse>> getAll(
             @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         return ResponseEntity.ok(adminUserService.getAll(requestParams));
