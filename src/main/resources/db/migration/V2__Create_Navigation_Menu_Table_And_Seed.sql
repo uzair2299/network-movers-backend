@@ -72,7 +72,7 @@ INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order
 (402, 'Service Types', 'sliders', '/services/types', 'SIDEBAR', 4, 20, NULL, TRUE),
 (403, 'Add-On Services', 'plus-square', '/services/add-ons', 'SIDEBAR', 4, 30, NULL, TRUE),
 (404, 'Pricing Management', 'dollar-sign', '/services/pricing', 'SIDEBAR', 4, 40, NULL, TRUE),
-(405, 'Property Types', 'layers', '/services/property-types', 'SIDEBAR', 4, 50, NULL, TRUE),
+(405, 'Property Types Management', 'layers', '/system/property-types', 'SIDEBAR', 4, 50, NULL, TRUE),
 (406, 'Zones & Coverage', 'map-pin', '/services/zones', 'SIDEBAR', 4, 60, NULL, TRUE);
 
 -- 5. Resources Menus (Level 2)
@@ -361,8 +361,8 @@ INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order
 
 -- 11. Administration -> User Management Submenus (Level 3)
 INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order, permission_id, active) VALUES
-(1111, 'Users', 'user', '/admin/users/all', 'SIDEBAR', 1101, 10, NULL, TRUE),
-(1112, 'Roles', 'shield', '/admin/users/roles', 'SIDEBAR', 1101, 20, NULL, TRUE),
+(1111, 'Users Management', 'user', '/system/users', 'SIDEBAR', 1101, 10, NULL, TRUE),
+(1112, 'Roles Management', 'shield', '/system/roles', 'SIDEBAR', 1101, 20, NULL, TRUE),
 (1113, 'Permissions', 'key', '/admin/users/permissions', 'SIDEBAR', 1101, 30, NULL, TRUE),
 (1114, 'User Groups', 'users', '/admin/users/groups', 'SIDEBAR', 1101, 40, NULL, TRUE);
 
@@ -389,7 +389,7 @@ INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order
 
 -- 11. Administration -> Document Management Submenus (Level 3)
 INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order, permission_id, active) VALUES
-(1151, 'Document Types', 'file', '/admin/documents/types', 'SIDEBAR', 1105, 10, NULL, TRUE),
+(1151, 'Document Types Management', 'file', '/system/document-types', 'SIDEBAR', 1105, 10, NULL, TRUE),
 (1152, 'Templates', 'copy', '/admin/documents/templates', 'SIDEBAR', 1105, 20, NULL, TRUE),
 (1153, 'Storage Settings', 'database', '/admin/documents/storage', 'SIDEBAR', 1105, 30, NULL, TRUE);
 
@@ -416,6 +416,11 @@ INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order
 (1301, 'My Profile', 'user-profile', '/user/profile', 'PROFILE', NULL, 10, NULL, TRUE),
 (1302, 'Account Settings', 'settings-gear', '/user/settings', 'PROFILE', NULL, 20, NULL, TRUE),
 (1303, 'Logout', 'sign-out', '/logout', 'PROFILE', NULL, 30, NULL, TRUE);
+
+-- System Settings Submenus (Level 3)
+INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order, permission_id, active) VALUES
+(1181, 'Navigation Management', 'menu', '/system/navigation', 'SIDEBAR', 1108, 10, NULL, TRUE),
+(1182, 'Move States Management', 'check-square', '/system/move-states', 'SIDEBAR', 1108, 20, NULL, TRUE);
 
 -- Final sequence synchronization
 SELECT setval('sec_menu_items_id_seq', (SELECT MAX(id) FROM sec_menu_items));
