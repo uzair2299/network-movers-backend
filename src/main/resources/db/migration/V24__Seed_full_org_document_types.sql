@@ -1,12 +1,87 @@
-INSERT INTO vehicle_types (
-    id, version,
-    created_at, created_by,
-    updated_at, updated_by,
-    deleted, deleted_at, deleted_by,
-    code, name,
-    active, description
-)
-VALUES
+INSERT INTO vehicle_maintenance_types(id, code, name, description) VALUES
+
+-- Preventive Maintenance
+(gen_random_uuid(), 'OIL_CHANGE', 'Engine Oil Change', 'Replace engine oil and oil filter according to service schedule'),
+(gen_random_uuid(), 'PERIODIC_SERVICE', 'Periodic Service', 'Scheduled preventive maintenance as per manufacturer guidelines'),
+(gen_random_uuid(), 'LUBRICATION', 'Lubrication Service', 'Lubrication of moving components and joints'),
+(gen_random_uuid(), 'FLUID_TOPUP', 'Fluid Top-Up', 'Top-up engine oil, coolant, brake fluid, power steering fluid, and washer fluid'),
+(gen_random_uuid(), 'AIR_FILTER', 'Air Filter Replacement', 'Replacement of engine air filter'),
+(gen_random_uuid(), 'CABIN_FILTER', 'Cabin Air Filter Replacement', 'Replacement of cabin or AC filter'),
+(gen_random_uuid(), 'FUEL_FILTER', 'Fuel Filter Replacement', 'Replacement of fuel filter'),
+-- Engine & Drivetrain
+(gen_random_uuid(), 'ENGINE_REPAIR', 'Engine Repair', 'Engine diagnostics, repair, or overhaul'),
+(gen_random_uuid(), 'TIMING_BELT', 'Timing Belt Replacement', 'Replacement of timing belt or timing chain components'),
+(gen_random_uuid(), 'TRANSMISSION_SERVICE', 'Transmission Service', 'Transmission inspection, repair, or fluid replacement'),
+(gen_random_uuid(), 'CLUTCH_REPAIR', 'Clutch Repair', 'Clutch maintenance, repair, or replacement'),
+(gen_random_uuid(), 'DIFFERENTIAL_SERVICE', 'Differential Service', 'Inspection and servicing of differential components'),
+-- Brake System
+(gen_random_uuid(), 'BRAKE_SERVICE', 'Brake Service', 'Inspection and maintenance of braking system'),
+(gen_random_uuid(), 'BRAKE_PAD_REPLACEMENT', 'Brake Pad Replacement', 'Replacement of brake pads'),
+(gen_random_uuid(), 'BRAKE_DISC_REPLACEMENT', 'Brake Disc Replacement', 'Replacement of brake rotors/discs'),
+(gen_random_uuid(), 'BRAKE_FLUID_CHANGE', 'Brake Fluid Change', 'Replacement of brake fluid'),
+-- Tires & Wheels
+(gen_random_uuid(), 'TIRE_REPLACEMENT', 'Tire Replacement', 'Replacement of worn or damaged tires'),
+(gen_random_uuid(), 'TIRE_ROTATION', 'Tire Rotation', 'Rotation of tires to ensure even wear'),
+(gen_random_uuid(), 'WHEEL_ALIGNMENT', 'Wheel Alignment', 'Adjustment of wheel alignment'),
+(gen_random_uuid(), 'WHEEL_BALANCING', 'Wheel Balancing', 'Wheel balancing service'),
+(gen_random_uuid(), 'PUNCTURE_REPAIR', 'Puncture Repair', 'Repair of punctured tires'),
+
+-- Battery & Electrical
+(gen_random_uuid(), 'BATTERY_REPLACEMENT', 'Battery Replacement', 'Replacement of vehicle battery'),
+(gen_random_uuid(), 'BATTERY_SERVICE', 'Battery Service', 'Battery inspection, testing, and maintenance'),
+(gen_random_uuid(), 'ALTERNATOR_REPAIR', 'Alternator Repair', 'Repair or replacement of alternator'),
+(gen_random_uuid(), 'STARTER_MOTOR_REPAIR', 'Starter Motor Repair', 'Repair or replacement of starter motor'),
+(gen_random_uuid(), 'ELECTRICAL_REPAIR', 'Electrical Repair', 'General electrical diagnostics and repairs'),
+(gen_random_uuid(), 'LIGHTING_REPAIR', 'Lighting Repair', 'Repair or replacement of vehicle lights'),
+
+-- Cooling & AC
+(gen_random_uuid(), 'COOLING_SYSTEM_SERVICE', 'Cooling System Service', 'Inspection and maintenance of cooling system'),
+(gen_random_uuid(), 'RADIATOR_REPAIR', 'Radiator Repair', 'Repair or replacement of radiator'),
+(gen_random_uuid(), 'COOLANT_FLUSH', 'Coolant Flush', 'Drain and replace coolant'),
+(gen_random_uuid(), 'AC_SERVICE', 'Air Conditioning Service', 'Inspection and servicing of air conditioning system'),
+(gen_random_uuid(), 'AC_GAS_REFILL', 'AC Gas Refill', 'Refrigerant recharge for air conditioning system'),
+
+-- Suspension & Steering
+(gen_random_uuid(), 'SUSPENSION_REPAIR', 'Suspension Repair', 'Repair or replacement of suspension components'),
+(gen_random_uuid(), 'SHOCK_ABSORBER_REPLACEMENT', 'Shock Absorber Replacement', 'Replacement of shock absorbers'),
+(gen_random_uuid(), 'STEERING_REPAIR', 'Steering Repair', 'Repair of steering system'),
+(gen_random_uuid(), 'POWER_STEERING_SERVICE', 'Power Steering Service', 'Power steering maintenance and fluid replacement'),
+
+-- Exhaust & Emissions
+(gen_random_uuid(), 'EXHAUST_REPAIR', 'Exhaust System Repair', 'Repair of exhaust system components'),
+(gen_random_uuid(), 'EMISSION_TEST', 'Emission Test', 'Vehicle emission testing and compliance'),
+(gen_random_uuid(), 'CATALYTIC_CONVERTER_REPAIR', 'Catalytic Converter Repair', 'Repair or replacement of catalytic converter'),
+
+-- Inspection & Compliance
+(gen_random_uuid(), 'VEHICLE_INSPECTION', 'Vehicle Inspection', 'General vehicle inspection'),
+(gen_random_uuid(), 'SAFETY_INSPECTION', 'Safety Inspection', 'Roadworthiness and safety inspection'),
+(gen_random_uuid(), 'PRE_TRIP_INSPECTION', 'Pre-Trip Inspection', 'Inspection before vehicle deployment'),
+(gen_random_uuid(), 'POST_TRIP_INSPECTION', 'Post-Trip Inspection', 'Inspection after vehicle return'),
+(gen_random_uuid(), 'REGISTRATION_RENEWAL', 'Registration Renewal', 'Vehicle registration compliance activity'),
+(gen_random_uuid(), 'FITNESS_CERTIFICATE', 'Fitness Certificate', 'Vehicle fitness certification process'),
+
+-- Body & Exterior
+(gen_random_uuid(), 'BODY_REPAIR', 'Body Repair', 'Body damage repair'),
+(gen_random_uuid(), 'PAINT_WORK', 'Paint Work', 'Vehicle painting and touch-ups'),
+(gen_random_uuid(), 'WINDSHIELD_REPLACEMENT', 'Windshield Replacement', 'Replacement of damaged windshield'),
+(gen_random_uuid(), 'GLASS_REPAIR', 'Glass Repair', 'Repair of vehicle windows and glass'),
+(gen_random_uuid(), 'DENT_REMOVAL', 'Dent Removal', 'Removal of dents and body imperfections'),
+
+-- Cleaning & Detailing
+(gen_random_uuid(), 'VEHICLE_WASH', 'Vehicle Wash', 'Exterior cleaning service'),
+(gen_random_uuid(), 'INTERIOR_CLEANING', 'Interior Cleaning', 'Interior cleaning and sanitization'),
+(gen_random_uuid(), 'DETAILING', 'Vehicle Detailing', 'Comprehensive vehicle detailing service'),
+
+-- Emergency & Miscellaneous
+(gen_random_uuid(), 'BREAKDOWN_REPAIR', 'Breakdown Repair', 'Emergency roadside breakdown repair'),
+(gen_random_uuid(), 'TOWING_SERVICE', 'Towing Service', 'Vehicle towing and recovery'),
+(gen_random_uuid(), 'ACCIDENT_REPAIR', 'Accident Repair', 'Repair following accident damage'),
+(gen_random_uuid(), 'DIAGNOSTIC_SERVICE', 'Diagnostic Service', 'Computerized diagnostics and fault analysis'),
+(gen_random_uuid(), 'OTHER', 'Other Maintenance', 'Maintenance activity not covered by predefined categories');
+
+
+
+INSERT INTO vehicle_types (id,version,created_at,created_by,updated_at,updated_by,deleted,deleted_at,deleted_by,code,name,active,description) VALUES
 
 (gen_random_uuid(), 0, NOW(), 1, NOW(), 1, false, NULL, NULL,
  'PICKUP', 'Pickup', true,
