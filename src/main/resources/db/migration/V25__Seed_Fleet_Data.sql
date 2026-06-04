@@ -10,27 +10,27 @@ INSERT INTO vehicle_models (
 ),
 (gen_random_uuid(), 0, NOW(), 1, NOW(), 1, false, NULL, NULL,
     (SELECT id FROM vehicle_makes WHERE code = 'TOYOTA'), 
-    (SELECT id FROM vehicle_types WHERE code = 'VAN_CARGO'),
+    (SELECT id FROM vehicle_types WHERE code = 'VAN'),
     'HIACE', 'Toyota Hiace'
 ),
 (gen_random_uuid(), 0, NOW(), 1, NOW(), 1, false, NULL, NULL,
     (SELECT id FROM vehicle_makes WHERE code = 'ISUZU'), 
-    (SELECT id FROM vehicle_types WHERE code = 'TRUCK_BOX'),
+    (SELECT id FROM vehicle_types WHERE code = 'TRUCK'),
     'NPR', 'Isuzu NPR Box'
 ),
 (gen_random_uuid(), 0, NOW(), 1, NOW(), 1, false, NULL, NULL,
     (SELECT id FROM vehicle_makes WHERE code = 'MITSUBISHI_FUSO'), 
-    (SELECT id FROM vehicle_types WHERE code = 'TRUCK_REFRIGERATED'),
+    (SELECT id FROM vehicle_types WHERE code = 'TRUCK'),
     'CANTER', 'Fuso Canter'
 ),
 (gen_random_uuid(), 0, NOW(), 1, NOW(), 1, false, NULL, NULL,
     (SELECT id FROM vehicle_makes WHERE code = 'VOLVO'), 
-    (SELECT id FROM vehicle_types WHERE code = 'TRAILER_TRACTOR'),
+    (SELECT id FROM vehicle_types WHERE code = 'HEAVY_TRUCK'),
     'FH16', 'Volvo FH16 Tractor'
 ),
 (gen_random_uuid(), 0, NOW(), 1, NOW(), 1, false, NULL, NULL,
     (SELECT id FROM vehicle_makes WHERE code = 'MERCEDES_BENZ'), 
-    (SELECT id FROM vehicle_types WHERE code = 'TRUCK_FLATBED'),
+    (SELECT id FROM vehicle_types WHERE code = 'HEAVY_TRUCK'),
     'ACTROS', 'Mercedes Actros Flatbed'
 );
 
