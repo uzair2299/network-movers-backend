@@ -2,6 +2,30 @@
 
 Spring Boot Enterprise Moving Services platform.
 
+## Table of Contents
+
+- [Swagger Docs & OpenAPI Specification](#swagger-docs--openapi-specification)
+  - [Authentication](#authentication)
+- [Actuator Endpoints](#actuator-endpoints)
+- [Project Directory Structure](#project-directory-structure)
+- [API Endpoint Strategy: Admin, Mobile, and Public](#api-endpoint-strategy-admin-mobile-and-public)
+  - [Generic Controller Inheritance](#generic-controller-inheritance)
+- [Dynamic Navigation & Sidebar Workflow](#dynamic-navigation--sidebar-workflow)
+  - [Classifications](#classifications)
+  - [Relational Schema (DDL)](#relational-schema-ddl)
+  - [Dynamic Tree Processing](#dynamic-tree-processing)
+  - [JSON Payload Schema (Example)](#json-payload-schema-example)
+- [Database Configuration](#database-configuration)
+  - [Database Setup](#database-setup)
+  - [Flyway Migrations](#flyway-migrations)
+  - [Database Directory Structure](#database-directory-structure)
+  - [Hibernate Configuration by Profile](#hibernate-configuration-by-profile)
+  - [Running Migrations](#running-migrations)
+  - [Exporting Current Schema to Flyway](#exporting-current-schema-to-flyway)
+  - [Troubleshooting](#troubleshooting)
+  - [Flyway Clean Configuration](#flyway-clean-configuration)
+  - [Resetting / Dropping Database](#resetting--dropping-database)
+
 ## Swagger Docs & OpenAPI Specification
 
 - **Local Development** (when running locally on port 8081):
