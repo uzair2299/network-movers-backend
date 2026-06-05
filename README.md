@@ -324,6 +324,89 @@ Then create a Flyway migration file with the exported schema:
 - If importing existing database: `spring.flyway.baseline-on-migrate=true`
 - This allows Flyway to work with pre-existing schemas
 
+### Flyway Clean Configuration
+
+In environments like development or staging, you may need to reset your database schema quickly. Flyway provides a `clean` operation to drop all managed database objects.
+
+#### 1. Enabling the Clean Operation (`spring.flyway.clean-disabled=false`)
+
+##### Purpose
+Allows Flyway's `clean()` operation to run. By default, clean is disabled in newer Flyway versions to prevent accidental database deletion.
+
+##### Property Configuration
+Configure this property in your active profile's properties file (e.g., `application-stage.properties`):
+```properties
+spring.flyway.clean-disabled=false
+```
+
+##### What does `clean()` do?
+It drops all database objects managed by Flyway:
+- **Tables** (including the `flyway_schema_history` table)
+- **Views**
+- **Sequences**
+- **Functions**
+- **Schemas** (depending on configuration)
+
+##### Example Result
+Running `flyway.clean()` drops all entities:
+```text
+flyway.clean()
+   ├── customers      ❌ deleted
+   ├── users          ❌ deleted
+   ├── orders         ❌ deleted
+   └── flyway history ❌ deleted
+```
+
+##### Recommendation
+- **✅ Development / Staging:** OK
+- **❌ Production:** Never
+
+---
+
+#### 2. Automatic Clean on Validation Error (`spring.flyway.clean-on-validation-error=true`)
+
+##### Purpose
+If Flyway validation fails (e.g., due to a checksum mismatch after altering an already-run migration file), Flyway will automatically run `clean()` before reapplying migrations.
+
+##### Property Configuration
+Configure this property in your active profile's properties file:
+```properties
+spring.flyway.clean-on-validation-error=true
+```
+
+##### Example Scenario
+1. **Database History:**
+   - `V1__create_users.sql` (applied)
+   - `V2__create_roles.sql` (applied)
+2. **You Modify:** `V1__create_users.sql` locally.
+3. **Flyway Detects:** Checksum mismatch.
+4. **Validation Fails.**
+5. **With property enabled, Flyway will:**
+   1. **DROP ALL TABLES** and managed objects.
+   2. **Recreate schema**.
+   3. **Re-run all migrations** in correct order.
+
+##### Danger
+> [!WARNING]
+> This property can cause automatic and immediate loss of all data in the database if any migration file checksum changes.
+
+##### Recommendation
+- **✅ Development:** OK (highly convenient when prototyping schemas).
+- **❌ Production / Staging (with real data):** Never.
+
+---
+
+#### Environment Configuration Grid
+
+> [!IMPORTANT]
+> Always verify the active profile before enabling or executing any clean operations.
+
+| Environment | property: `clean-disabled` | property: `clean-on-validation-error` | Risk Level |
+| :--- | :--- | :--- | :--- |
+| **Development** | `false` | `true` | Safe / Convenient |
+| **Staging/QA** | `false` | `false` (or `true` only on fresh ephemeral test DBs) | Moderate |
+| **Production** | `true` (default) | `false` (default) | Critical |
+
 ### Resetting / Dropping Database
 
 #### Method 1 — Using pgAdmin UI (Easy)
