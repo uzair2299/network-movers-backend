@@ -407,6 +407,19 @@ spring.flyway.clean-on-validation-error=true
 | **Staging/QA** | `false` | `false` (or `true` only on fresh ephemeral test DBs) | Moderate |
 | **Production** | `true` (default) | `false` (default) | Critical |
 
+#### Recommended Development Configuration
+
+To facilitate rapid iteration and schema prototyping in the local **Development** environment, apply the following properties in your local profile (e.g. `application-dev.properties`):
+
+```properties
+spring.flyway.clean-disabled=false
+spring.flyway.clean-on-validation-error=true
+spring.flyway.validate-on-migrate=false
+```
+
+> [!TIP]
+> This setup allows you to quickly reset and rebuild your schema automatically when changes are made.
+
 ### Resetting / Dropping Database
 
 #### Method 1 — Using pgAdmin UI (Easy)
