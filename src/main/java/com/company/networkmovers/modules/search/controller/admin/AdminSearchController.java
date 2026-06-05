@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.search.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.search.dto.request.SearchRequest;
 import com.company.networkmovers.modules.search.dto.response.SearchResponse;
 import com.company.networkmovers.modules.search.service.SearchService;
@@ -23,7 +25,7 @@ public class AdminSearchController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SearchResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SearchResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminSearchController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SearchResponse> update(@PathVariable Long id, @RequestBody SearchRequest request) {
+    public ResponseEntity<SearchResponse> update(@PathVariable UUID id, @RequestBody SearchRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

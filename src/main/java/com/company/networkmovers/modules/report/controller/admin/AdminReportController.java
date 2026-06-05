@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.report.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.report.dto.request.ReportRequest;
 import com.company.networkmovers.modules.report.dto.response.ReportResponse;
 import com.company.networkmovers.modules.report.service.ReportService;
@@ -23,7 +25,7 @@ public class AdminReportController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReportResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ReportResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminReportController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReportResponse> update(@PathVariable Long id, @RequestBody ReportRequest request) {
+    public ResponseEntity<ReportResponse> update(@PathVariable UUID id, @RequestBody ReportRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

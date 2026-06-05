@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.document.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.document.entity.DocumentEntity;
 import com.company.networkmovers.modules.document.repository.DocumentRepository;
 import com.company.networkmovers.modules.document.service.DocumentService;
@@ -32,7 +34,7 @@ public class DocumentServiceImpl implements DocumentService {
 
     @Override
     @Transactional(readOnly = true)
-    public DocumentResponse findById(Long id) {
+    public DocumentResponse findById(UUID id) {
         DocumentEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Document not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public DocumentResponse update(Long id, DocumentRequest request) {
+    public DocumentResponse update(UUID id, DocumentRequest request) {
         DocumentEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Document not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         DocumentEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Document not found with id: " + id));
         repository.delete(entity);

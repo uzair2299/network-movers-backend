@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dashboard.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.dashboard.dto.request.DashboardRequest;
 import com.company.networkmovers.modules.dashboard.dto.response.DashboardResponse;
 import com.company.networkmovers.modules.dashboard.service.DashboardService;
@@ -23,7 +25,7 @@ public class AdminDashboardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DashboardResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DashboardResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminDashboardController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DashboardResponse> update(@PathVariable Long id, @RequestBody DashboardRequest request) {
+    public ResponseEntity<DashboardResponse> update(@PathVariable UUID id, @RequestBody DashboardRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

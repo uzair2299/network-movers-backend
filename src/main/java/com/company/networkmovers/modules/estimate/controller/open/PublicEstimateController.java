@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.estimate.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.estimate.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.estimate.dto.response.EstimateResponse;
 import com.company.networkmovers.modules.estimate.service.EstimateService;
@@ -17,7 +19,7 @@ public class PublicEstimateController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EstimateResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<EstimateResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

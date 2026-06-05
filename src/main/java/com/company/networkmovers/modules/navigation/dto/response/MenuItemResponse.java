@@ -3,6 +3,7 @@ package com.company.networkmovers.modules.navigation.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -17,7 +18,7 @@ public class MenuItemResponse {
     private String path;
     private String section;
     private Long parentId;
-    private Long permissionId;
+    private UUID permissionId;
     private Integer sortOrder;
     private boolean active;
     private List<MenuItemResponse> children;

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.communication.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.communication.dto.request.CommunicationRequest;
 import com.company.networkmovers.modules.communication.dto.response.CommunicationResponse;
 import com.company.networkmovers.modules.communication.service.CommunicationService;
@@ -23,7 +25,7 @@ public class AdminCommunicationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommunicationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<CommunicationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminCommunicationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CommunicationResponse> update(@PathVariable Long id, @RequestBody CommunicationRequest request) {
+    public ResponseEntity<CommunicationResponse> update(@PathVariable UUID id, @RequestBody CommunicationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

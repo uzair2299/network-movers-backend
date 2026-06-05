@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.movingitem.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.movingitem.dto.request.MovingitemRequest;
 import com.company.networkmovers.modules.movingitem.dto.response.MovingitemResponse;
 import com.company.networkmovers.modules.movingitem.service.MovingitemService;
@@ -23,7 +25,7 @@ public class AdminMovingitemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovingitemResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<MovingitemResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminMovingitemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovingitemResponse> update(@PathVariable Long id, @RequestBody MovingitemRequest request) {
+    public ResponseEntity<MovingitemResponse> update(@PathVariable UUID id, @RequestBody MovingitemRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

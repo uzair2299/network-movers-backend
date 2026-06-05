@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.subscription.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.subscription.entity.SubscriptionEntity;
 import com.company.networkmovers.modules.subscription.repository.SubscriptionRepository;
 import com.company.networkmovers.modules.subscription.service.SubscriptionService;
@@ -32,7 +34,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public SubscriptionResponse findById(Long id) {
+    public SubscriptionResponse findById(UUID id) {
         SubscriptionEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public SubscriptionResponse update(Long id, SubscriptionRequest request) {
+    public SubscriptionResponse update(UUID id, SubscriptionRequest request) {
         SubscriptionEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         SubscriptionEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + id));
         repository.delete(entity);

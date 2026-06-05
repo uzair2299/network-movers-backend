@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.chat.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.chat.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.chat.dto.response.ChatResponse;
 import com.company.networkmovers.modules.chat.service.ChatService;
@@ -17,7 +19,7 @@ public class PublicChatController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ChatResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ChatResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

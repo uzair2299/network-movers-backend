@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.review.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.review.dto.request.ReviewRequest;
 import com.company.networkmovers.modules.review.dto.response.ReviewResponse;
 import com.company.networkmovers.modules.review.service.ReviewService;
@@ -19,7 +21,7 @@ public class ReviewFacade {
         return service.create(request);
     }
 
-    public ReviewResponse findById(Long id) {
+    public ReviewResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ReviewFacade {
         return service.findAll();
     }
 
-    public ReviewResponse update(Long id, ReviewRequest request) {
+    public ReviewResponse update(UUID id, ReviewRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

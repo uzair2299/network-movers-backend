@@ -1,6 +1,6 @@
 package com.company.networkmovers.modules.audit.entity;
 
-import com.company.networkmovers.shared.entity.BaseAuditEntity;
+import com.company.networkmovers.shared.entity.BaseLookupEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -14,10 +14,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class AuditEntity extends BaseAuditEntity {
+public class AuditEntity extends BaseLookupEntity {
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    
 
     @Column(name = "description")
     private String description;

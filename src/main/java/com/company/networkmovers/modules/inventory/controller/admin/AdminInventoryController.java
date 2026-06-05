@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.inventory.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.inventory.dto.request.InventoryRequest;
 import com.company.networkmovers.modules.inventory.dto.response.InventoryResponse;
 import com.company.networkmovers.modules.inventory.service.InventoryService;
@@ -23,7 +25,7 @@ public class AdminInventoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InventoryResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<InventoryResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminInventoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InventoryResponse> update(@PathVariable Long id, @RequestBody InventoryRequest request) {
+    public ResponseEntity<InventoryResponse> update(@PathVariable UUID id, @RequestBody InventoryRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

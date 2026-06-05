@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.logistics.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.logistics.entity.LogisticsEntity;
 import com.company.networkmovers.modules.logistics.repository.LogisticsRepository;
 import com.company.networkmovers.modules.logistics.service.LogisticsService;
@@ -32,7 +34,7 @@ public class LogisticsServiceImpl implements LogisticsService {
 
     @Override
     @Transactional(readOnly = true)
-    public LogisticsResponse findById(Long id) {
+    public LogisticsResponse findById(UUID id) {
         LogisticsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Logistics not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class LogisticsServiceImpl implements LogisticsService {
     }
 
     @Override
-    public LogisticsResponse update(Long id, LogisticsRequest request) {
+    public LogisticsResponse update(UUID id, LogisticsRequest request) {
         LogisticsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Logistics not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class LogisticsServiceImpl implements LogisticsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         LogisticsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Logistics not found with id: " + id));
         repository.delete(entity);

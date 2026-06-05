@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.customer.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.customer.entity.CustomerEntity;
 import com.company.networkmovers.modules.customer.repository.CustomerRepository;
 import com.company.networkmovers.modules.customer.service.CustomerService;
@@ -32,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional(readOnly = true)
-    public CustomerResponse findById(Long id) {
+    public CustomerResponse findById(UUID id) {
         CustomerEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerResponse update(Long id, CustomerRequest request) {
+    public CustomerResponse update(UUID id, CustomerRequest request) {
         CustomerEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         CustomerEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Customer not found with id: " + id));
         repository.delete(entity);

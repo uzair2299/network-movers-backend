@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.booking.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.booking.dto.request.BookingRequest;
 import com.company.networkmovers.modules.booking.dto.response.BookingResponse;
 import com.company.networkmovers.modules.booking.service.BookingService;
@@ -31,7 +33,7 @@ public class AdminBookingController {
     @GetMapping("/{id}")
     @Operation(summary = "Get master data record by ID", description = "Retrieves details of a specific master data record by its ID. Access restricted to admin users.")
     public ResponseEntity<BookingResponse> findById(
-            @Parameter(description = "ID of the record", required = true) @PathVariable Long id) {
+            @Parameter(description = "ID of the record", required = true) @PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -52,7 +54,7 @@ public class AdminBookingController {
     @PutMapping("/{id}")
     @Operation(summary = "Update master data record", description = "Updates an existing master data entry by its ID. Requires administrative privileges.")
     public ResponseEntity<BookingResponse> update(
-            @Parameter(description = "ID of the record to update", required = true) @PathVariable Long id, 
+            @Parameter(description = "ID of the record to update", required = true) @PathVariable UUID id, 
             @RequestBody BookingRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
@@ -60,7 +62,7 @@ public class AdminBookingController {
     @PutMapping("/{id}/status")
     @Operation(summary = "Update booking status", description = "Updates the status of a booking and logs it to the history timeline.")
     public ResponseEntity<BookingResponse> updateStatus(
-            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id,
+            @Parameter(description = "ID of the booking", required = true) @PathVariable UUID id,
             @RequestBody com.company.networkmovers.modules.booking.dto.request.UpdateBookingStatusRequest request) {
         return ResponseEntity.ok(service.updateStatus(id, request));
     }
@@ -68,14 +70,14 @@ public class AdminBookingController {
     @GetMapping("/{id}/timeline")
     @Operation(summary = "Get booking timeline", description = "Retrieves the full lifecycle history of a specific booking.")
     public ResponseEntity<List<com.company.networkmovers.modules.booking.dto.response.BookingHistoryResponse>> getBookingTimeline(
-            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id) {
+            @Parameter(description = "ID of the booking", required = true) @PathVariable UUID id) {
         return ResponseEntity.ok(service.getBookingTimeline(id));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Soft delete master data record", description = "Soft deletes (deactivates) a master data record by its ID. Requires administrative privileges.")
     public ResponseEntity<Void> delete(
-            @Parameter(description = "ID of the record to delete", required = true) @PathVariable Long id) {
+            @Parameter(description = "ID of the record to delete", required = true) @PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

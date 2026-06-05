@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dashboard.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.dashboard.entity.DashboardEntity;
 import com.company.networkmovers.modules.dashboard.repository.DashboardRepository;
 import com.company.networkmovers.modules.dashboard.service.DashboardService;
@@ -32,7 +34,7 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     @Transactional(readOnly = true)
-    public DashboardResponse findById(Long id) {
+    public DashboardResponse findById(UUID id) {
         DashboardEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dashboard not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public DashboardResponse update(Long id, DashboardRequest request) {
+    public DashboardResponse update(UUID id, DashboardRequest request) {
         DashboardEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dashboard not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         DashboardEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dashboard not found with id: " + id));
         repository.delete(entity);

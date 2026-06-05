@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.warehouse.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.warehouse.dto.request.WarehouseRequest;
 import com.company.networkmovers.modules.warehouse.dto.response.WarehouseResponse;
 import com.company.networkmovers.modules.warehouse.service.WarehouseService;
@@ -23,7 +25,7 @@ public class AdminWarehouseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WarehouseResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<WarehouseResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminWarehouseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WarehouseResponse> update(@PathVariable Long id, @RequestBody WarehouseRequest request) {
+    public ResponseEntity<WarehouseResponse> update(@PathVariable UUID id, @RequestBody WarehouseRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.fraud.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.fraud.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.fraud.dto.response.FraudResponse;
 import com.company.networkmovers.modules.fraud.service.FraudService;
@@ -17,7 +19,7 @@ public class PublicFraudController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FraudResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FraudResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

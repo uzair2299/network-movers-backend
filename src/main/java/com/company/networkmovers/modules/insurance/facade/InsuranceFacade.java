@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.insurance.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.insurance.dto.request.InsuranceRequest;
 import com.company.networkmovers.modules.insurance.dto.response.InsuranceResponse;
 import com.company.networkmovers.modules.insurance.service.InsuranceService;
@@ -19,7 +21,7 @@ public class InsuranceFacade {
         return service.create(request);
     }
 
-    public InsuranceResponse findById(Long id) {
+    public InsuranceResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class InsuranceFacade {
         return service.findAll();
     }
 
-    public InsuranceResponse update(Long id, InsuranceRequest request) {
+    public InsuranceResponse update(UUID id, InsuranceRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

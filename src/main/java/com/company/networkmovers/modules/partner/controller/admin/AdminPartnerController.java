@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.partner.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.partner.dto.request.PartnerRequest;
 import com.company.networkmovers.modules.partner.dto.response.PartnerResponse;
 import com.company.networkmovers.modules.partner.service.PartnerService;
@@ -23,7 +25,7 @@ public class AdminPartnerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PartnerResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<PartnerResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminPartnerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PartnerResponse> update(@PathVariable Long id, @RequestBody PartnerRequest request) {
+    public ResponseEntity<PartnerResponse> update(@PathVariable UUID id, @RequestBody PartnerRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

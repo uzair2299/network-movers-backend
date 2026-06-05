@@ -1,6 +1,6 @@
 package com.company.networkmovers.modules.identity.entity;
 
-import com.company.networkmovers.shared.entity.BaseSoftDeleteEntity;
+import com.company.networkmovers.shared.entity.BaseUuidSoftDeleteEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -14,7 +14,7 @@ import org.hibernate.annotations.SQLRestriction;
 @AllArgsConstructor
 @SuperBuilder
 @SQLRestriction("deleted = false")
-public class User extends BaseSoftDeleteEntity {
+public class User extends BaseUuidSoftDeleteEntity {
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;

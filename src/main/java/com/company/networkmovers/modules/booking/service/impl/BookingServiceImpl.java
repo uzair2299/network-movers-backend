@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.booking.service.impl;
 
+import java.util.UUID;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.company.networkmovers.security.context.CustomUserDetails;
@@ -68,7 +70,7 @@ public class BookingServiceImpl implements BookingService {
                 .notes("Booking initialized")
                 .build();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof CustomUserDetails) {
-            history.setCreatedBy(((CustomUserDetails) authentication.getPrincipal()).getId());
+            history.setCreatedBy(((CustomUserDetails) authentication.getPrincipal()).getAuditId());
         }
         historyRepository.save(history);
 
@@ -82,7 +84,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public BookingResponse findById(Long id) {
+    public BookingResponse findById(UUID id) {
         BookingEntity entity = repository.findByIdWithDetails(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
         return mapper.toResponse(entity);
@@ -127,7 +129,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public org.springframework.data.domain.Page<BookingResponse> getAllByUserId(Long userId, com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
+    public org.springframework.data.domain.Page<BookingResponse> getAllByUserId(UUID userId, com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
         org.springframework.data.domain.Pageable pageable = createPageable(requestParams);
         String search = requestParams.getSearch();
         org.springframework.data.domain.Page<BookingEntity> bookingPage;
@@ -141,14 +143,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public BookingResponse findByIdAndUserId(Long id, Long userId) {
+    public BookingResponse findByIdAndUserId(UUID id, UUID userId) {
         BookingEntity entity = repository.findByIdAndUserIdWithDetails(id, userId)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id + " for user: " + userId));
         return mapper.toResponse(entity);
     }
 
     @Override
-    public BookingResponse update(Long id, BookingRequest request) {
+    public BookingResponse update(UUID id, BookingRequest request) {
         BookingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
 
@@ -242,7 +244,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponse updateStatus(Long id, UpdateBookingStatusRequest request) {
+    public BookingResponse updateStatus(UUID id, UpdateBookingStatusRequest request) {
         BookingEntity entity = repository.findByIdWithDetails(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
 
@@ -262,7 +264,7 @@ public class BookingServiceImpl implements BookingService {
                 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof CustomUserDetails) {
-            history.setCreatedBy(((CustomUserDetails) authentication.getPrincipal()).getId());
+            history.setCreatedBy(((CustomUserDetails) authentication.getPrincipal()).getAuditId());
         }
         historyRepository.save(history);
 
@@ -271,7 +273,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookingHistoryResponse> getBookingTimeline(Long id) {
+    public List<BookingHistoryResponse> getBookingTimeline(UUID id) {
         List<BookingHistoryEntity> historyList = historyRepository.findByBookingIdOrderByCreatedAtDescWithDetails(id);
         return historyList.stream().map(h -> BookingHistoryResponse.builder()
                 .id(h.getId())
@@ -309,7 +311,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         BookingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Booking not found with id: " + id));
         repository.delete(entity);

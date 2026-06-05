@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.mover.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.mover.entity.MoverEntity;
 import com.company.networkmovers.modules.mover.repository.MoverRepository;
 import com.company.networkmovers.modules.mover.service.MoverService;
@@ -32,7 +34,7 @@ public class MoverServiceImpl implements MoverService {
 
     @Override
     @Transactional(readOnly = true)
-    public MoverResponse findById(Long id) {
+    public MoverResponse findById(UUID id) {
         MoverEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mover not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class MoverServiceImpl implements MoverService {
     }
 
     @Override
-    public MoverResponse update(Long id, MoverRequest request) {
+    public MoverResponse update(UUID id, MoverRequest request) {
         MoverEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mover not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class MoverServiceImpl implements MoverService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         MoverEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mover not found with id: " + id));
         repository.delete(entity);

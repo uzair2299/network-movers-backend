@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.rating.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.rating.dto.request.RatingRequest;
 import com.company.networkmovers.modules.rating.dto.response.RatingResponse;
 import com.company.networkmovers.modules.rating.service.RatingService;
@@ -23,7 +25,7 @@ public class AdminRatingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RatingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RatingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminRatingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RatingResponse> update(@PathVariable Long id, @RequestBody RatingRequest request) {
+    public ResponseEntity<RatingResponse> update(@PathVariable UUID id, @RequestBody RatingRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

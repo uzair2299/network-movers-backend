@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.chat.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.chat.entity.ChatEntity;
 import com.company.networkmovers.modules.chat.repository.ChatRepository;
 import com.company.networkmovers.modules.chat.service.ChatService;
@@ -32,7 +34,7 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     @Transactional(readOnly = true)
-    public ChatResponse findById(Long id) {
+    public ChatResponse findById(UUID id) {
         ChatEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Chat not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public ChatResponse update(Long id, ChatRequest request) {
+    public ChatResponse update(UUID id, ChatRequest request) {
         ChatEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Chat not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ChatEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Chat not found with id: " + id));
         repository.delete(entity);

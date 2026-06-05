@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.geofence.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.geofence.entity.GeofenceEntity;
 import com.company.networkmovers.modules.geofence.repository.GeofenceRepository;
 import com.company.networkmovers.modules.geofence.service.GeofenceService;
@@ -32,7 +34,7 @@ public class GeofenceServiceImpl implements GeofenceService {
 
     @Override
     @Transactional(readOnly = true)
-    public GeofenceResponse findById(Long id) {
+    public GeofenceResponse findById(UUID id) {
         GeofenceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Geofence not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class GeofenceServiceImpl implements GeofenceService {
     }
 
     @Override
-    public GeofenceResponse update(Long id, GeofenceRequest request) {
+    public GeofenceResponse update(UUID id, GeofenceRequest request) {
         GeofenceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Geofence not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class GeofenceServiceImpl implements GeofenceService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         GeofenceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Geofence not found with id: " + id));
         repository.delete(entity);

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.ticket.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.ticket.entity.TicketEntity;
 import com.company.networkmovers.modules.ticket.repository.TicketRepository;
 import com.company.networkmovers.modules.ticket.service.TicketService;
@@ -32,7 +34,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional(readOnly = true)
-    public TicketResponse findById(Long id) {
+    public TicketResponse findById(UUID id) {
         TicketEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public TicketResponse update(Long id, TicketRequest request) {
+    public TicketResponse update(UUID id, TicketRequest request) {
         TicketEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         TicketEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ticket not found with id: " + id));
         repository.delete(entity);

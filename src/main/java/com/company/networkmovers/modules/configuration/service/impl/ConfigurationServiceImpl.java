@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.configuration.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.configuration.entity.ConfigurationEntity;
 import com.company.networkmovers.modules.configuration.repository.ConfigurationRepository;
 import com.company.networkmovers.modules.configuration.service.ConfigurationService;
@@ -32,7 +34,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 
     @Override
     @Transactional(readOnly = true)
-    public ConfigurationResponse findById(Long id) {
+    public ConfigurationResponse findById(UUID id) {
         ConfigurationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Configuration not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     @Override
-    public ConfigurationResponse update(Long id, ConfigurationRequest request) {
+    public ConfigurationResponse update(UUID id, ConfigurationRequest request) {
         ConfigurationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Configuration not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ConfigurationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Configuration not found with id: " + id));
         repository.delete(entity);

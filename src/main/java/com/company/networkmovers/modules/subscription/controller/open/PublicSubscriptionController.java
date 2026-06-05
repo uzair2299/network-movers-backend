@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.subscription.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.subscription.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.subscription.dto.response.SubscriptionResponse;
 import com.company.networkmovers.modules.subscription.service.SubscriptionService;
@@ -17,7 +19,7 @@ public class PublicSubscriptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SubscriptionResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SubscriptionResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

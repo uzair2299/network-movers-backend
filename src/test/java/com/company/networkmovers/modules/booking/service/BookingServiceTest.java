@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -55,7 +56,7 @@ class BookingServiceTest {
     @Test
     void testFindById_Success() {
         // Arrange
-        Long bookingId = 1L;
+        UUID bookingId = UUID.randomUUID();
         BookingEntity entity = BookingEntity.builder()
                 .id(bookingId)
                 .pickupAddress("Pickup Address")
@@ -95,13 +96,14 @@ class BookingServiceTest {
                 .pickupAddress("Pickup Address")
                 .destinationAddress("Destination Address")
                 .build();
+        UUID generatedId = UUID.randomUUID();
         BookingEntity savedEntity = BookingEntity.builder()
-                .id(1L)
+                .id(generatedId)
                 .pickupAddress("Pickup Address")
                 .destinationAddress("Destination Address")
                 .build();
         BookingResponse response = BookingResponse.builder()
-                .id(1L)
+                .id(generatedId)
                 .routeDetails(BookingResponse.RouteDetailsResponse.builder()
                         .pickupAddress("Pickup Address")
                         .destinationAddress("Destination Address")
@@ -116,7 +118,7 @@ class BookingServiceTest {
 
         when(mapper.toEntity(request)).thenReturn(mappedEntity);
         when(repository.save(mappedEntity)).thenReturn(savedEntity);
-        when(repository.findByIdWithDetails(1L)).thenReturn(Optional.of(savedEntity));
+        when(repository.findByIdWithDetails(generatedId)).thenReturn(Optional.of(savedEntity));
         when(mapper.toResponse(savedEntity)).thenReturn(response);
 
         // Act
@@ -124,10 +126,10 @@ class BookingServiceTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(1L, result.getId());
+        assertEquals(generatedId, result.getId());
         verify(repository, times(1)).save(mappedEntity);
         verify(entityManager, times(1)).flush();
-        verify(repository, times(1)).findByIdWithDetails(1L);
+        verify(repository, times(1)).findByIdWithDetails(generatedId);
     }
 
     @Test
@@ -143,19 +145,21 @@ class BookingServiceTest {
                 .pickupAddress("Pickup Address")
                 .destinationAddress("Destination Address")
                 .build());
+        UUID generatedId = UUID.randomUUID();
         BookingEntity savedEntity = BookingEntity.builder()
-                .id(2L)
+                .id(generatedId)
                 .pickupAddress("Pickup Address")
                 .destinationAddress("Destination Address")
                 .build();
+        UUID userId = UUID.randomUUID();
         BookingResponse response = BookingResponse.builder()
-                .id(2L)
-                .user(BookingResponse.UserDetailsResponse.builder().id(99L).build())
+                .id(generatedId)
+                .user(BookingResponse.UserDetailsResponse.builder().id(userId).build())
                 .build();
 
         // Mock authentication context
         Authentication auth = mock(Authentication.class);
-        CustomUserDetails userDetails = new CustomUserDetails(99L, "testuser", "pass", true, Collections.emptyList());
+        CustomUserDetails userDetails = new CustomUserDetails(userId, "testuser", "pass", true, Collections.emptyList());
 
         when(auth.isAuthenticated()).thenReturn(true);
         when(auth.getPrincipal()).thenReturn(userDetails);
@@ -167,7 +171,7 @@ class BookingServiceTest {
 
         try {
             User userProxy = mock(User.class);
-            when(entityManager.getReference(User.class, 99L)).thenReturn(userProxy);
+            when(entityManager.getReference(User.class, userId)).thenReturn(userProxy);
 
             MoveStatus defaultStatus = MoveStatus.builder()
                     .code("REQUESTED")
@@ -177,7 +181,7 @@ class BookingServiceTest {
 
             when(mapper.toEntity(request)).thenReturn(mappedEntity);
             when(repository.save(mappedEntity)).thenReturn(savedEntity);
-            when(repository.findByIdWithDetails(2L)).thenReturn(Optional.of(savedEntity));
+            when(repository.findByIdWithDetails(generatedId)).thenReturn(Optional.of(savedEntity));
             when(mapper.toResponse(savedEntity)).thenReturn(response);
 
             // Act
@@ -185,8 +189,8 @@ class BookingServiceTest {
 
             // Assert
             assertNotNull(result);
-            assertEquals(2L, result.getId());
-            assertEquals(99L, result.getUser().getId());
+            assertEquals(generatedId, result.getId());
+            assertEquals(userId, result.getUser().getId());
             verify(mappedEntity).setUser(userProxy);
             verify(repository, times(1)).save(mappedEntity);
         } finally {
@@ -197,13 +201,14 @@ class BookingServiceTest {
     @Test
     void testGetAllByUserId_Success() {
         // Arrange
-        Long userId = 99L;
+        UUID userId = UUID.randomUUID();
+        UUID bookingId = UUID.randomUUID();
         BookingEntity entity = BookingEntity.builder()
-                .id(1L)
+                .id(bookingId)
                 .pickupAddress("Pickup Address")
                 .build();
         BookingResponse response = BookingResponse.builder()
-                .id(1L)
+                .id(bookingId)
                 .user(BookingResponse.UserDetailsResponse.builder().id(userId).build())
                 .build();
 
@@ -220,7 +225,7 @@ class BookingServiceTest {
         // Assert
         assertNotNull(result);
         assertEquals(1, result.getTotalElements());
-        assertEquals(1L, result.getContent().get(0).getId());
+        assertEquals(bookingId, result.getContent().get(0).getId());
         assertEquals(userId, result.getContent().get(0).getUser().getId());
         verify(repository, times(1)).findAllByUserIdWithDetails(eq(userId), any(org.springframework.data.domain.Pageable.class));
     }
@@ -228,8 +233,8 @@ class BookingServiceTest {
     @Test
     void testFindByIdAndUserId_Success() {
         // Arrange
-        Long bookingId = 1L;
-        Long userId = 99L;
+        UUID bookingId = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
         BookingEntity entity = BookingEntity.builder()
                 .id(bookingId)
                 .build();
@@ -254,8 +259,8 @@ class BookingServiceTest {
     @Test
     void testFindByIdAndUserId_NotFound() {
         // Arrange
-        Long bookingId = 1L;
-        Long userId = 99L;
+        UUID bookingId = UUID.randomUUID();
+        UUID userId = UUID.randomUUID();
 
         when(repository.findByIdAndUserIdWithDetails(bookingId, userId)).thenReturn(Optional.empty());
 

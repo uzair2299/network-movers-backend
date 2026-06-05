@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.inventory.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.inventory.entity.InventoryEntity;
 import com.company.networkmovers.modules.inventory.repository.InventoryRepository;
 import com.company.networkmovers.modules.inventory.service.InventoryService;
@@ -32,7 +34,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public InventoryResponse findById(Long id) {
+    public InventoryResponse findById(UUID id) {
         InventoryEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inventory not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public InventoryResponse update(Long id, InventoryRequest request) {
+    public InventoryResponse update(UUID id, InventoryRequest request) {
         InventoryEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inventory not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         InventoryEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Inventory not found with id: " + id));
         repository.delete(entity);

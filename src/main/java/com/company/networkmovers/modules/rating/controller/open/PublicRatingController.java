@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.rating.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.rating.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.rating.dto.response.RatingResponse;
 import com.company.networkmovers.modules.rating.service.RatingService;
@@ -17,7 +19,7 @@ public class PublicRatingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RatingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RatingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

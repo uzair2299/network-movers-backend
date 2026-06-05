@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.payment.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.payment.dto.request.PaymentRequest;
 import com.company.networkmovers.modules.payment.dto.response.PaymentResponse;
 import com.company.networkmovers.modules.payment.service.PaymentService;
@@ -23,7 +25,7 @@ public class AdminPaymentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<PaymentResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminPaymentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentResponse> update(@PathVariable Long id, @RequestBody PaymentRequest request) {
+    public ResponseEntity<PaymentResponse> update(@PathVariable UUID id, @RequestBody PaymentRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

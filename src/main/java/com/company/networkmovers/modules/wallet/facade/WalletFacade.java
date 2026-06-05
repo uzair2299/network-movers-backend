@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.wallet.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.wallet.dto.request.WalletRequest;
 import com.company.networkmovers.modules.wallet.dto.response.WalletResponse;
 import com.company.networkmovers.modules.wallet.service.WalletService;
@@ -19,7 +21,7 @@ public class WalletFacade {
         return service.create(request);
     }
 
-    public WalletResponse findById(Long id) {
+    public WalletResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class WalletFacade {
         return service.findAll();
     }
 
-    public WalletResponse update(Long id, WalletRequest request) {
+    public WalletResponse update(UUID id, WalletRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

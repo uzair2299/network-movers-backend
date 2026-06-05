@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.promotion.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.promotion.entity.PromotionEntity;
 import com.company.networkmovers.modules.promotion.repository.PromotionRepository;
 import com.company.networkmovers.modules.promotion.service.PromotionService;
@@ -32,7 +34,7 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     @Transactional(readOnly = true)
-    public PromotionResponse findById(Long id) {
+    public PromotionResponse findById(UUID id) {
         PromotionEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Promotion not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public PromotionResponse update(Long id, PromotionRequest request) {
+    public PromotionResponse update(UUID id, PromotionRequest request) {
         PromotionEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Promotion not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class PromotionServiceImpl implements PromotionService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         PromotionEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Promotion not found with id: " + id));
         repository.delete(entity);

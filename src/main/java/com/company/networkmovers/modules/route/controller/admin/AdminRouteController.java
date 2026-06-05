@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.route.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.route.dto.request.RouteRequest;
 import com.company.networkmovers.modules.route.dto.response.RouteResponse;
 import com.company.networkmovers.modules.route.service.RouteService;
@@ -23,7 +25,7 @@ public class AdminRouteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RouteResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RouteResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminRouteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RouteResponse> update(@PathVariable Long id, @RequestBody RouteRequest request) {
+    public ResponseEntity<RouteResponse> update(@PathVariable UUID id, @RequestBody RouteRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

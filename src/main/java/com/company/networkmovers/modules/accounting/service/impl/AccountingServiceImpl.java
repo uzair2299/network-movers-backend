@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.accounting.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.accounting.entity.AccountingEntity;
 import com.company.networkmovers.modules.accounting.repository.AccountingRepository;
 import com.company.networkmovers.modules.accounting.service.AccountingService;
@@ -32,7 +34,7 @@ public class AccountingServiceImpl implements AccountingService {
 
     @Override
     @Transactional(readOnly = true)
-    public AccountingResponse findById(Long id) {
+    public AccountingResponse findById(UUID id) {
         AccountingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Accounting not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AccountingServiceImpl implements AccountingService {
     }
 
     @Override
-    public AccountingResponse update(Long id, AccountingRequest request) {
+    public AccountingResponse update(UUID id, AccountingRequest request) {
         AccountingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Accounting not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AccountingServiceImpl implements AccountingService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AccountingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Accounting not found with id: " + id));
         repository.delete(entity);

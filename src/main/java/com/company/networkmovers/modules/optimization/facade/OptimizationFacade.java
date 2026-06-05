@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.optimization.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.optimization.dto.request.OptimizationRequest;
 import com.company.networkmovers.modules.optimization.dto.response.OptimizationResponse;
 import com.company.networkmovers.modules.optimization.service.OptimizationService;
@@ -19,7 +21,7 @@ public class OptimizationFacade {
         return service.create(request);
     }
 
-    public OptimizationResponse findById(Long id) {
+    public OptimizationResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class OptimizationFacade {
         return service.findAll();
     }
 
-    public OptimizationResponse update(Long id, OptimizationRequest request) {
+    public OptimizationResponse update(UUID id, OptimizationRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.estimate.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.estimate.entity.EstimateEntity;
 import com.company.networkmovers.modules.estimate.repository.EstimateRepository;
 import com.company.networkmovers.modules.estimate.service.EstimateService;
@@ -32,7 +34,7 @@ public class EstimateServiceImpl implements EstimateService {
 
     @Override
     @Transactional(readOnly = true)
-    public EstimateResponse findById(Long id) {
+    public EstimateResponse findById(UUID id) {
         EstimateEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estimate not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class EstimateServiceImpl implements EstimateService {
     }
 
     @Override
-    public EstimateResponse update(Long id, EstimateRequest request) {
+    public EstimateResponse update(UUID id, EstimateRequest request) {
         EstimateEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estimate not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class EstimateServiceImpl implements EstimateService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         EstimateEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Estimate not found with id: " + id));
         repository.delete(entity);

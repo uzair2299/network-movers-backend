@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.filemanagement.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.filemanagement.dto.request.FilemanagementRequest;
 import com.company.networkmovers.modules.filemanagement.dto.response.FilemanagementResponse;
 import com.company.networkmovers.modules.filemanagement.service.FilemanagementService;
@@ -19,7 +21,7 @@ public class FilemanagementFacade {
         return service.create(request);
     }
 
-    public FilemanagementResponse findById(Long id) {
+    public FilemanagementResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class FilemanagementFacade {
         return service.findAll();
     }
 
-    public FilemanagementResponse update(Long id, FilemanagementRequest request) {
+    public FilemanagementResponse update(UUID id, FilemanagementRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

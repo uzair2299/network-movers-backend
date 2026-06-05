@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.identity.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.identity.dto.request.AdminUserRequest;
 import com.company.networkmovers.modules.identity.dto.response.AdminUserResponse;
 import com.company.networkmovers.modules.identity.service.AdminUserService;
@@ -32,7 +34,7 @@ public class AdminUserController {
     @GetMapping("/{id}")
     @Operation(summary = "Get master data record by ID", description = "Retrieves details of a specific master data record by its ID. Access restricted to admin users.")
     public ResponseEntity<AdminUserResponse> findById(
-            @Parameter(description = "ID of the record", required = true) @PathVariable Long id) {
+            @Parameter(description = "ID of the record", required = true) @PathVariable UUID id) {
         return ResponseEntity.ok(adminUserService.findById(id));
     }
 
@@ -53,7 +55,7 @@ public class AdminUserController {
     @PutMapping("/{id}")
     @Operation(summary = "Update master data record", description = "Updates an existing master data entry by its ID. Requires administrative privileges.")
     public ResponseEntity<AdminUserResponse> update(
-            @Parameter(description = "ID of the record to update", required = true) @PathVariable Long id, 
+            @Parameter(description = "ID of the record to update", required = true) @PathVariable UUID id, 
             @RequestBody AdminUserRequest request) {
         return ResponseEntity.ok(adminUserService.update(id, request));
     }
@@ -61,14 +63,14 @@ public class AdminUserController {
     @PutMapping("/{id}/activate")
     @Operation(summary = "Toggle user activation status", description = "Toggles the enabled status of the user.")
     public ResponseEntity<AdminUserResponse> toggleActive(
-            @Parameter(description = "ID of the record", required = true) @PathVariable Long id) {
+            @Parameter(description = "ID of the record", required = true) @PathVariable UUID id) {
         return ResponseEntity.ok(adminUserService.toggleActive(id));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Soft delete master data record", description = "Soft deletes (deactivates) a master data record by its ID. Requires administrative privileges.")
     public ResponseEntity<Void> softDelete(
-            @Parameter(description = "ID of the record to delete", required = true) @PathVariable Long id) {
+            @Parameter(description = "ID of the record to delete", required = true) @PathVariable UUID id) {
         adminUserService.softDelete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.identity.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.identity.dto.request.IdentityRequest;
 import com.company.networkmovers.modules.identity.dto.response.IdentityResponse;
 import com.company.networkmovers.modules.identity.service.IdentityService;
@@ -23,7 +25,7 @@ public class AdminIdentityController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IdentityResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<IdentityResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminIdentityController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<IdentityResponse> update(@PathVariable Long id, @RequestBody IdentityRequest request) {
+    public ResponseEntity<IdentityResponse> update(@PathVariable UUID id, @RequestBody IdentityRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

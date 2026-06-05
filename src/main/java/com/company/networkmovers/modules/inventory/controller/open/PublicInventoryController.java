@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.inventory.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.inventory.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.inventory.dto.response.InventoryResponse;
 import com.company.networkmovers.modules.inventory.service.InventoryService;
@@ -17,7 +19,7 @@ public class PublicInventoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InventoryResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<InventoryResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

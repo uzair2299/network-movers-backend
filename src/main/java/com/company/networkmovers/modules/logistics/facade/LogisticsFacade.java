@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.logistics.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.logistics.dto.request.LogisticsRequest;
 import com.company.networkmovers.modules.logistics.dto.response.LogisticsResponse;
 import com.company.networkmovers.modules.logistics.service.LogisticsService;
@@ -19,7 +21,7 @@ public class LogisticsFacade {
         return service.create(request);
     }
 
-    public LogisticsResponse findById(Long id) {
+    public LogisticsResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class LogisticsFacade {
         return service.findAll();
     }
 
-    public LogisticsResponse update(Long id, LogisticsRequest request) {
+    public LogisticsResponse update(UUID id, LogisticsRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

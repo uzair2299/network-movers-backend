@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.lookup.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.lookup.dto.request.LookupRequest;
 import com.company.networkmovers.modules.lookup.dto.response.LookupResponse;
 import com.company.networkmovers.modules.lookup.service.LookupService;
@@ -19,7 +21,7 @@ public class LookupFacade {
         return service.create(request);
     }
 
-    public LookupResponse findById(Long id) {
+    public LookupResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class LookupFacade {
         return service.findAll();
     }
 
-    public LookupResponse update(Long id, LookupRequest request) {
+    public LookupResponse update(UUID id, LookupRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

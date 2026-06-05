@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.workflow.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.workflow.dto.request.WorkflowRequest;
 import com.company.networkmovers.modules.workflow.dto.response.WorkflowResponse;
 import com.company.networkmovers.modules.workflow.service.WorkflowService;
@@ -23,7 +25,7 @@ public class AdminWorkflowController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkflowResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<WorkflowResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminWorkflowController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<WorkflowResponse> update(@PathVariable Long id, @RequestBody WorkflowRequest request) {
+    public ResponseEntity<WorkflowResponse> update(@PathVariable UUID id, @RequestBody WorkflowRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.communication.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.communication.entity.CommunicationEntity;
 import com.company.networkmovers.modules.communication.repository.CommunicationRepository;
 import com.company.networkmovers.modules.communication.service.CommunicationService;
@@ -32,7 +34,7 @@ public class CommunicationServiceImpl implements CommunicationService {
 
     @Override
     @Transactional(readOnly = true)
-    public CommunicationResponse findById(Long id) {
+    public CommunicationResponse findById(UUID id) {
         CommunicationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Communication not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class CommunicationServiceImpl implements CommunicationService {
     }
 
     @Override
-    public CommunicationResponse update(Long id, CommunicationRequest request) {
+    public CommunicationResponse update(UUID id, CommunicationRequest request) {
         CommunicationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Communication not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class CommunicationServiceImpl implements CommunicationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         CommunicationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Communication not found with id: " + id));
         repository.delete(entity);

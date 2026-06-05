@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.search.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.search.entity.SearchEntity;
 import com.company.networkmovers.modules.search.repository.SearchRepository;
 import com.company.networkmovers.modules.search.service.SearchService;
@@ -32,7 +34,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     @Transactional(readOnly = true)
-    public SearchResponse findById(Long id) {
+    public SearchResponse findById(UUID id) {
         SearchEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Search not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public SearchResponse update(Long id, SearchRequest request) {
+    public SearchResponse update(UUID id, SearchRequest request) {
         SearchEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Search not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         SearchEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Search not found with id: " + id));
         repository.delete(entity);

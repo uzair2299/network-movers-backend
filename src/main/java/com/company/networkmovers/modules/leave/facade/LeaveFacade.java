@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.leave.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.leave.dto.request.LeaveRequest;
 import com.company.networkmovers.modules.leave.dto.response.LeaveResponse;
 import com.company.networkmovers.modules.leave.service.LeaveService;
@@ -19,7 +21,7 @@ public class LeaveFacade {
         return service.create(request);
     }
 
-    public LeaveResponse findById(Long id) {
+    public LeaveResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class LeaveFacade {
         return service.findAll();
     }
 
-    public LeaveResponse update(Long id, LeaveRequest request) {
+    public LeaveResponse update(UUID id, LeaveRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

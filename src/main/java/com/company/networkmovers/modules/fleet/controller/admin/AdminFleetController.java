@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.fleet.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.fleet.dto.request.FleetRequest;
 import com.company.networkmovers.modules.fleet.dto.response.FleetResponse;
 import com.company.networkmovers.modules.fleet.service.FleetService;
@@ -23,7 +25,7 @@ public class AdminFleetController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FleetResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FleetResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminFleetController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FleetResponse> update(@PathVariable Long id, @RequestBody FleetRequest request) {
+    public ResponseEntity<FleetResponse> update(@PathVariable UUID id, @RequestBody FleetRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

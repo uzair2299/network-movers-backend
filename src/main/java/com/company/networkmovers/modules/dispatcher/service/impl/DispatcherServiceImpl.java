@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dispatcher.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.dispatcher.entity.DispatcherEntity;
 import com.company.networkmovers.modules.dispatcher.repository.DispatcherRepository;
 import com.company.networkmovers.modules.dispatcher.service.DispatcherService;
@@ -32,7 +34,7 @@ public class DispatcherServiceImpl implements DispatcherService {
 
     @Override
     @Transactional(readOnly = true)
-    public DispatcherResponse findById(Long id) {
+    public DispatcherResponse findById(UUID id) {
         DispatcherEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dispatcher not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class DispatcherServiceImpl implements DispatcherService {
     }
 
     @Override
-    public DispatcherResponse update(Long id, DispatcherRequest request) {
+    public DispatcherResponse update(UUID id, DispatcherRequest request) {
         DispatcherEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dispatcher not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class DispatcherServiceImpl implements DispatcherService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         DispatcherEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Dispatcher not found with id: " + id));
         repository.delete(entity);

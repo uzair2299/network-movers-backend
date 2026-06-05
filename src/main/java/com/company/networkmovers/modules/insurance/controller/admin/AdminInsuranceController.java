@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.insurance.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.insurance.dto.request.InsuranceRequest;
 import com.company.networkmovers.modules.insurance.dto.response.InsuranceResponse;
 import com.company.networkmovers.modules.insurance.service.InsuranceService;
@@ -23,7 +25,7 @@ public class AdminInsuranceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InsuranceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<InsuranceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminInsuranceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InsuranceResponse> update(@PathVariable Long id, @RequestBody InsuranceRequest request) {
+    public ResponseEntity<InsuranceResponse> update(@PathVariable UUID id, @RequestBody InsuranceRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

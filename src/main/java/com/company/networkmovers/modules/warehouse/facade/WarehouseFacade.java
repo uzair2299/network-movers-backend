@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.warehouse.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.warehouse.dto.request.WarehouseRequest;
 import com.company.networkmovers.modules.warehouse.dto.response.WarehouseResponse;
 import com.company.networkmovers.modules.warehouse.service.WarehouseService;
@@ -19,7 +21,7 @@ public class WarehouseFacade {
         return service.create(request);
     }
 
-    public WarehouseResponse findById(Long id) {
+    public WarehouseResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class WarehouseFacade {
         return service.findAll();
     }
 
-    public WarehouseResponse update(Long id, WarehouseRequest request) {
+    public WarehouseResponse update(UUID id, WarehouseRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

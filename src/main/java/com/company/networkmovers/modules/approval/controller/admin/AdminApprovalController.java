@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.approval.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.approval.dto.request.ApprovalRequest;
 import com.company.networkmovers.modules.approval.dto.response.ApprovalResponse;
 import com.company.networkmovers.modules.approval.service.ApprovalService;
@@ -23,7 +25,7 @@ public class AdminApprovalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApprovalResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ApprovalResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminApprovalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApprovalResponse> update(@PathVariable Long id, @RequestBody ApprovalRequest request) {
+    public ResponseEntity<ApprovalResponse> update(@PathVariable UUID id, @RequestBody ApprovalRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.fraud.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.fraud.entity.FraudEntity;
 import com.company.networkmovers.modules.fraud.repository.FraudRepository;
 import com.company.networkmovers.modules.fraud.service.FraudService;
@@ -32,7 +34,7 @@ public class FraudServiceImpl implements FraudService {
 
     @Override
     @Transactional(readOnly = true)
-    public FraudResponse findById(Long id) {
+    public FraudResponse findById(UUID id) {
         FraudEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fraud not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class FraudServiceImpl implements FraudService {
     }
 
     @Override
-    public FraudResponse update(Long id, FraudRequest request) {
+    public FraudResponse update(UUID id, FraudRequest request) {
         FraudEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fraud not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class FraudServiceImpl implements FraudService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         FraudEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fraud not found with id: " + id));
         repository.delete(entity);

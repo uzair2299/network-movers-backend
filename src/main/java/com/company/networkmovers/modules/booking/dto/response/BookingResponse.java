@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class BookingResponse {
-    private Long id;
+    private UUID id;
 
     @JsonProperty("user")
     private UserDetailsResponse user;
@@ -186,7 +186,7 @@ public class BookingResponse {
     @AllArgsConstructor
     @Builder
     public static class UserDetailsResponse {
-        private Long id;
+        private UUID id;
         private String username;
         private String email;
         

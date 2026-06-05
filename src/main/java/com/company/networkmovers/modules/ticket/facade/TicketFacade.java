@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.ticket.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.ticket.dto.request.TicketRequest;
 import com.company.networkmovers.modules.ticket.dto.response.TicketResponse;
 import com.company.networkmovers.modules.ticket.service.TicketService;
@@ -19,7 +21,7 @@ public class TicketFacade {
         return service.create(request);
     }
 
-    public TicketResponse findById(Long id) {
+    public TicketResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class TicketFacade {
         return service.findAll();
     }
 
-    public TicketResponse update(Long id, TicketRequest request) {
+    public TicketResponse update(UUID id, TicketRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

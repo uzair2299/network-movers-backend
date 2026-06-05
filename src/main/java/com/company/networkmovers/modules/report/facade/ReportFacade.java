@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.report.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.report.dto.request.ReportRequest;
 import com.company.networkmovers.modules.report.dto.response.ReportResponse;
 import com.company.networkmovers.modules.report.service.ReportService;
@@ -19,7 +21,7 @@ public class ReportFacade {
         return service.create(request);
     }
 
-    public ReportResponse findById(Long id) {
+    public ReportResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ReportFacade {
         return service.findAll();
     }
 
-    public ReportResponse update(Long id, ReportRequest request) {
+    public ReportResponse update(UUID id, ReportRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

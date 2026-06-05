@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.claims.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.claims.dto.request.ClaimsRequest;
 import com.company.networkmovers.modules.claims.dto.response.ClaimsResponse;
 import com.company.networkmovers.modules.claims.service.ClaimsService;
@@ -19,7 +21,7 @@ public class ClaimsFacade {
         return service.create(request);
     }
 
-    public ClaimsResponse findById(Long id) {
+    public ClaimsResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ClaimsFacade {
         return service.findAll();
     }
 
-    public ClaimsResponse update(Long id, ClaimsRequest request) {
+    public ClaimsResponse update(UUID id, ClaimsRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

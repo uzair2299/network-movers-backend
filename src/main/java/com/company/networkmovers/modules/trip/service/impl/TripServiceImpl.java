@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.trip.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.trip.entity.TripEntity;
 import com.company.networkmovers.modules.trip.repository.TripRepository;
 import com.company.networkmovers.modules.trip.service.TripService;
@@ -32,7 +34,7 @@ public class TripServiceImpl implements TripService {
 
     @Override
     @Transactional(readOnly = true)
-    public TripResponse findById(Long id) {
+    public TripResponse findById(UUID id) {
         TripEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Trip not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public TripResponse update(Long id, TripRequest request) {
+    public TripResponse update(UUID id, TripRequest request) {
         TripEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Trip not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class TripServiceImpl implements TripService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         TripEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Trip not found with id: " + id));
         repository.delete(entity);

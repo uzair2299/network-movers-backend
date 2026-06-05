@@ -79,7 +79,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserRoleResponse> getRolesForUser(Long userId) {
+    public List<UserRoleResponse> getRolesForUser(UUID userId) {
         return userRoleRepository.findByUserId(userId).stream()
                 .map(userRoleMapper::toResponse)
                 .collect(Collectors.toList());

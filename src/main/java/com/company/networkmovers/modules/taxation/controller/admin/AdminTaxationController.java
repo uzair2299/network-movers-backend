@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.taxation.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.taxation.dto.request.TaxationRequest;
 import com.company.networkmovers.modules.taxation.dto.response.TaxationResponse;
 import com.company.networkmovers.modules.taxation.service.TaxationService;
@@ -23,7 +25,7 @@ public class AdminTaxationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaxationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TaxationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminTaxationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaxationResponse> update(@PathVariable Long id, @RequestBody TaxationRequest request) {
+    public ResponseEntity<TaxationResponse> update(@PathVariable UUID id, @RequestBody TaxationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

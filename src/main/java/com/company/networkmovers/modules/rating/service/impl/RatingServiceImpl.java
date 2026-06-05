@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.rating.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.rating.entity.RatingEntity;
 import com.company.networkmovers.modules.rating.repository.RatingRepository;
 import com.company.networkmovers.modules.rating.service.RatingService;
@@ -32,7 +34,7 @@ public class RatingServiceImpl implements RatingService {
 
     @Override
     @Transactional(readOnly = true)
-    public RatingResponse findById(Long id) {
+    public RatingResponse findById(UUID id) {
         RatingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Rating not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public RatingResponse update(Long id, RatingRequest request) {
+    public RatingResponse update(UUID id, RatingRequest request) {
         RatingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Rating not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         RatingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Rating not found with id: " + id));
         repository.delete(entity);

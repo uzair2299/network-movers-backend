@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.scheduling.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.scheduling.entity.SchedulingEntity;
 import com.company.networkmovers.modules.scheduling.repository.SchedulingRepository;
 import com.company.networkmovers.modules.scheduling.service.SchedulingService;
@@ -32,7 +34,7 @@ public class SchedulingServiceImpl implements SchedulingService {
 
     @Override
     @Transactional(readOnly = true)
-    public SchedulingResponse findById(Long id) {
+    public SchedulingResponse findById(UUID id) {
         SchedulingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Scheduling not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public SchedulingResponse update(Long id, SchedulingRequest request) {
+    public SchedulingResponse update(UUID id, SchedulingRequest request) {
         SchedulingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Scheduling not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         SchedulingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Scheduling not found with id: " + id));
         repository.delete(entity);

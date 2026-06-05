@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.workflow.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.workflow.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.workflow.dto.response.WorkflowResponse;
 import com.company.networkmovers.modules.workflow.service.WorkflowService;
@@ -17,7 +19,7 @@ public class PublicWorkflowController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WorkflowResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<WorkflowResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

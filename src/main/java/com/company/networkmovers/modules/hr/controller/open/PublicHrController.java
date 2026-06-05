@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.hr.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.hr.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.hr.dto.response.HrResponse;
 import com.company.networkmovers.modules.hr.service.HrService;
@@ -17,7 +19,7 @@ public class PublicHrController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HrResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<HrResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

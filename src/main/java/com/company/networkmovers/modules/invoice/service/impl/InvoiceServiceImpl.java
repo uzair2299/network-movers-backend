@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.invoice.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.invoice.entity.InvoiceEntity;
 import com.company.networkmovers.modules.invoice.repository.InvoiceRepository;
 import com.company.networkmovers.modules.invoice.service.InvoiceService;
@@ -32,7 +34,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     @Transactional(readOnly = true)
-    public InvoiceResponse findById(Long id) {
+    public InvoiceResponse findById(UUID id) {
         InvoiceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Invoice not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public InvoiceResponse update(Long id, InvoiceRequest request) {
+    public InvoiceResponse update(UUID id, InvoiceRequest request) {
         InvoiceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Invoice not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         InvoiceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Invoice not found with id: " + id));
         repository.delete(entity);

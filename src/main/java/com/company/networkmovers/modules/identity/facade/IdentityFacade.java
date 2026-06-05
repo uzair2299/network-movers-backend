@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.identity.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.identity.dto.request.IdentityRequest;
 import com.company.networkmovers.modules.identity.dto.response.IdentityResponse;
 import com.company.networkmovers.modules.identity.service.IdentityService;
@@ -19,7 +21,7 @@ public class IdentityFacade {
         return service.create(request);
     }
 
-    public IdentityResponse findById(Long id) {
+    public IdentityResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class IdentityFacade {
         return service.findAll();
     }
 
-    public IdentityResponse update(Long id, IdentityRequest request) {
+    public IdentityResponse update(UUID id, IdentityRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

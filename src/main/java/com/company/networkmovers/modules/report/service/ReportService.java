@@ -1,13 +1,15 @@
 package com.company.networkmovers.modules.report.service;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.report.dto.request.ReportRequest;
 import com.company.networkmovers.modules.report.dto.response.ReportResponse;
 import java.util.List;
 
 public interface ReportService {
     ReportResponse create(ReportRequest request);
-    ReportResponse findById(Long id);
+    ReportResponse findById(UUID id);
     List<ReportResponse> findAll();
-    ReportResponse update(Long id, ReportRequest request);
-    void delete(Long id);
+    ReportResponse update(UUID id, ReportRequest request);
+    void delete(UUID id);
 }

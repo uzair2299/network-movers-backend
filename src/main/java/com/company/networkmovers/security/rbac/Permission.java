@@ -1,7 +1,9 @@
 package com.company.networkmovers.security.rbac;
 
+import com.company.networkmovers.shared.entity.BaseLookupEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "sec_permissions")
@@ -9,15 +11,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Permission {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String name;
+@SuperBuilder
+public class Permission extends BaseLookupEntity {
 
     @Column(name = "description")
     private String description;

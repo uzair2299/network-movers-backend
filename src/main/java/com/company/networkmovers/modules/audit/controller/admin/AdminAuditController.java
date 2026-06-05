@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.audit.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.audit.dto.request.AuditRequest;
 import com.company.networkmovers.modules.audit.dto.response.AuditResponse;
 import com.company.networkmovers.modules.audit.service.AuditService;
@@ -23,7 +25,7 @@ public class AdminAuditController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuditResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AuditResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminAuditController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AuditResponse> update(@PathVariable Long id, @RequestBody AuditRequest request) {
+    public ResponseEntity<AuditResponse> update(@PathVariable UUID id, @RequestBody AuditRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

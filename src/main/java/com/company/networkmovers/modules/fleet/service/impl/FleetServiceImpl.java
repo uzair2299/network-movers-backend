@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.fleet.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.fleet.entity.FleetEntity;
 import com.company.networkmovers.modules.fleet.repository.FleetRepository;
 import com.company.networkmovers.modules.fleet.service.FleetService;
@@ -32,7 +34,7 @@ public class FleetServiceImpl implements FleetService {
 
     @Override
     @Transactional(readOnly = true)
-    public FleetResponse findById(Long id) {
+    public FleetResponse findById(UUID id) {
         FleetEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fleet not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class FleetServiceImpl implements FleetService {
     }
 
     @Override
-    public FleetResponse update(Long id, FleetRequest request) {
+    public FleetResponse update(UUID id, FleetRequest request) {
         FleetEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fleet not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class FleetServiceImpl implements FleetService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         FleetEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Fleet not found with id: " + id));
         repository.delete(entity);

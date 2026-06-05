@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.hr.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.hr.dto.request.HrRequest;
 import com.company.networkmovers.modules.hr.dto.response.HrResponse;
 import com.company.networkmovers.modules.hr.service.HrService;
@@ -23,7 +25,7 @@ public class AdminHrController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HrResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<HrResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminHrController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HrResponse> update(@PathVariable Long id, @RequestBody HrRequest request) {
+    public ResponseEntity<HrResponse> update(@PathVariable UUID id, @RequestBody HrRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

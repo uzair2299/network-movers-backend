@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.configuration.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.configuration.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.configuration.dto.response.ConfigurationResponse;
 import com.company.networkmovers.modules.configuration.service.ConfigurationService;
@@ -17,7 +19,7 @@ public class PublicConfigurationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConfigurationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ConfigurationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

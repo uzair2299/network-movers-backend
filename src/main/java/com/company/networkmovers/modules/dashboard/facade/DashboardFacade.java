@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dashboard.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.dashboard.dto.request.DashboardRequest;
 import com.company.networkmovers.modules.dashboard.dto.response.DashboardResponse;
 import com.company.networkmovers.modules.dashboard.service.DashboardService;
@@ -19,7 +21,7 @@ public class DashboardFacade {
         return service.create(request);
     }
 
-    public DashboardResponse findById(Long id) {
+    public DashboardResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class DashboardFacade {
         return service.findAll();
     }
 
-    public DashboardResponse update(Long id, DashboardRequest request) {
+    public DashboardResponse update(UUID id, DashboardRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.automation.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.automation.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.automation.dto.response.AutomationResponse;
 import com.company.networkmovers.modules.automation.service.AutomationService;
@@ -17,7 +19,7 @@ public class PublicAutomationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AutomationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AutomationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

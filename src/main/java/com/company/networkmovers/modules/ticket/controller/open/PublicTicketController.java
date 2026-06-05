@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.ticket.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.ticket.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.ticket.dto.response.TicketResponse;
 import com.company.networkmovers.modules.ticket.service.TicketService;
@@ -17,7 +19,7 @@ public class PublicTicketController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TicketResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TicketResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

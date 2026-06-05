@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.payment.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.payment.entity.PaymentEntity;
 import com.company.networkmovers.modules.payment.repository.PaymentRepository;
 import com.company.networkmovers.modules.payment.service.PaymentService;
@@ -32,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional(readOnly = true)
-    public PaymentResponse findById(Long id) {
+    public PaymentResponse findById(UUID id) {
         PaymentEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentResponse update(Long id, PaymentRequest request) {
+    public PaymentResponse update(UUID id, PaymentRequest request) {
         PaymentEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         PaymentEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payment not found with id: " + id));
         repository.delete(entity);

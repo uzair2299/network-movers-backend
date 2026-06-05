@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.leave.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.leave.dto.request.LeaveRequest;
 import com.company.networkmovers.modules.leave.dto.response.LeaveResponse;
 import com.company.networkmovers.modules.leave.service.LeaveService;
@@ -23,7 +25,7 @@ public class AdminLeaveController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LeaveResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<LeaveResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminLeaveController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LeaveResponse> update(@PathVariable Long id, @RequestBody LeaveRequest request) {
+    public ResponseEntity<LeaveResponse> update(@PathVariable UUID id, @RequestBody LeaveRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.search.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.search.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.search.dto.response.SearchResponse;
 import com.company.networkmovers.modules.search.service.SearchService;
@@ -17,7 +19,7 @@ public class PublicSearchController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SearchResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SearchResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

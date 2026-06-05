@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.optimization.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.optimization.dto.request.OptimizationRequest;
 import com.company.networkmovers.modules.optimization.dto.response.OptimizationResponse;
 import com.company.networkmovers.modules.optimization.service.OptimizationService;
@@ -23,7 +25,7 @@ public class AdminOptimizationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OptimizationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<OptimizationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminOptimizationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OptimizationResponse> update(@PathVariable Long id, @RequestBody OptimizationRequest request) {
+    public ResponseEntity<OptimizationResponse> update(@PathVariable UUID id, @RequestBody OptimizationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

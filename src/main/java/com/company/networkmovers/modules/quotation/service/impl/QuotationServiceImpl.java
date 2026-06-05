@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.quotation.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.quotation.entity.QuotationEntity;
 import com.company.networkmovers.modules.quotation.repository.QuotationRepository;
 import com.company.networkmovers.modules.quotation.service.QuotationService;
@@ -32,7 +34,7 @@ public class QuotationServiceImpl implements QuotationService {
 
     @Override
     @Transactional(readOnly = true)
-    public QuotationResponse findById(Long id) {
+    public QuotationResponse findById(UUID id) {
         QuotationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Quotation not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class QuotationServiceImpl implements QuotationService {
     }
 
     @Override
-    public QuotationResponse update(Long id, QuotationRequest request) {
+    public QuotationResponse update(UUID id, QuotationRequest request) {
         QuotationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Quotation not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class QuotationServiceImpl implements QuotationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         QuotationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Quotation not found with id: " + id));
         repository.delete(entity);

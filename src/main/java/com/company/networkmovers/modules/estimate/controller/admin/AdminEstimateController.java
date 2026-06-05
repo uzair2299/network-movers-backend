@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.estimate.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.estimate.dto.request.EstimateRequest;
 import com.company.networkmovers.modules.estimate.dto.response.EstimateResponse;
 import com.company.networkmovers.modules.estimate.service.EstimateService;
@@ -23,7 +25,7 @@ public class AdminEstimateController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EstimateResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<EstimateResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminEstimateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstimateResponse> update(@PathVariable Long id, @RequestBody EstimateRequest request) {
+    public ResponseEntity<EstimateResponse> update(@PathVariable UUID id, @RequestBody EstimateRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

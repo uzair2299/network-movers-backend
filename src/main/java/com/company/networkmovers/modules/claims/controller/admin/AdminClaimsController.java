@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.claims.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.claims.dto.request.ClaimsRequest;
 import com.company.networkmovers.modules.claims.dto.response.ClaimsResponse;
 import com.company.networkmovers.modules.claims.service.ClaimsService;
@@ -23,7 +25,7 @@ public class AdminClaimsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClaimsResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ClaimsResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminClaimsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClaimsResponse> update(@PathVariable Long id, @RequestBody ClaimsRequest request) {
+    public ResponseEntity<ClaimsResponse> update(@PathVariable UUID id, @RequestBody ClaimsRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

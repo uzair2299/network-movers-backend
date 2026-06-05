@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.payroll.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.payroll.dto.request.PayrollRequest;
 import com.company.networkmovers.modules.payroll.dto.response.PayrollResponse;
 import com.company.networkmovers.modules.payroll.service.PayrollService;
@@ -19,7 +21,7 @@ public class PayrollFacade {
         return service.create(request);
     }
 
-    public PayrollResponse findById(Long id) {
+    public PayrollResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class PayrollFacade {
         return service.findAll();
     }
 
-    public PayrollResponse update(Long id, PayrollRequest request) {
+    public PayrollResponse update(UUID id, PayrollRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

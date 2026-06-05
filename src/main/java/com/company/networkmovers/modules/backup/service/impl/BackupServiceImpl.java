@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.backup.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.backup.entity.BackupEntity;
 import com.company.networkmovers.modules.backup.repository.BackupRepository;
 import com.company.networkmovers.modules.backup.service.BackupService;
@@ -32,7 +34,7 @@ public class BackupServiceImpl implements BackupService {
 
     @Override
     @Transactional(readOnly = true)
-    public BackupResponse findById(Long id) {
+    public BackupResponse findById(UUID id) {
         BackupEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Backup not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class BackupServiceImpl implements BackupService {
     }
 
     @Override
-    public BackupResponse update(Long id, BackupRequest request) {
+    public BackupResponse update(UUID id, BackupRequest request) {
         BackupEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Backup not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class BackupServiceImpl implements BackupService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         BackupEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Backup not found with id: " + id));
         repository.delete(entity);

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.filemanagement.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.filemanagement.entity.FilemanagementEntity;
 import com.company.networkmovers.modules.filemanagement.repository.FilemanagementRepository;
 import com.company.networkmovers.modules.filemanagement.service.FilemanagementService;
@@ -32,7 +34,7 @@ public class FilemanagementServiceImpl implements FilemanagementService {
 
     @Override
     @Transactional(readOnly = true)
-    public FilemanagementResponse findById(Long id) {
+    public FilemanagementResponse findById(UUID id) {
         FilemanagementEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Filemanagement not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class FilemanagementServiceImpl implements FilemanagementService {
     }
 
     @Override
-    public FilemanagementResponse update(Long id, FilemanagementRequest request) {
+    public FilemanagementResponse update(UUID id, FilemanagementRequest request) {
         FilemanagementEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Filemanagement not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class FilemanagementServiceImpl implements FilemanagementService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         FilemanagementEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Filemanagement not found with id: " + id));
         repository.delete(entity);

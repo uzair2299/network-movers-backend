@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.promotion.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.promotion.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.promotion.dto.response.PromotionResponse;
 import com.company.networkmovers.modules.promotion.service.PromotionService;
@@ -17,7 +19,7 @@ public class PublicPromotionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PromotionResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<PromotionResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

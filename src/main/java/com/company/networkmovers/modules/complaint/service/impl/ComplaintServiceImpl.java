@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.complaint.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.complaint.entity.ComplaintEntity;
 import com.company.networkmovers.modules.complaint.repository.ComplaintRepository;
 import com.company.networkmovers.modules.complaint.service.ComplaintService;
@@ -32,7 +34,7 @@ public class ComplaintServiceImpl implements ComplaintService {
 
     @Override
     @Transactional(readOnly = true)
-    public ComplaintResponse findById(Long id) {
+    public ComplaintResponse findById(UUID id) {
         ComplaintEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Complaint not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     }
 
     @Override
-    public ComplaintResponse update(Long id, ComplaintRequest request) {
+    public ComplaintResponse update(UUID id, ComplaintRequest request) {
         ComplaintEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Complaint not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ComplaintEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Complaint not found with id: " + id));
         repository.delete(entity);

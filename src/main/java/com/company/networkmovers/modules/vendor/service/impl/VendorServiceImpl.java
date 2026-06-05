@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.vendor.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.vendor.entity.VendorEntity;
 import com.company.networkmovers.modules.vendor.repository.VendorRepository;
 import com.company.networkmovers.modules.vendor.service.VendorService;
@@ -32,7 +34,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     @Transactional(readOnly = true)
-    public VendorResponse findById(Long id) {
+    public VendorResponse findById(UUID id) {
         VendorEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vendor not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public VendorResponse update(Long id, VendorRequest request) {
+    public VendorResponse update(UUID id, VendorRequest request) {
         VendorEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vendor not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         VendorEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vendor not found with id: " + id));
         repository.delete(entity);

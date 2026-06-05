@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.settings.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.settings.dto.request.SettingsRequest;
 import com.company.networkmovers.modules.settings.dto.response.SettingsResponse;
 import com.company.networkmovers.modules.settings.service.SettingsService;
@@ -23,7 +25,7 @@ public class AdminSettingsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SettingsResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SettingsResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminSettingsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SettingsResponse> update(@PathVariable Long id, @RequestBody SettingsRequest request) {
+    public ResponseEntity<SettingsResponse> update(@PathVariable UUID id, @RequestBody SettingsRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

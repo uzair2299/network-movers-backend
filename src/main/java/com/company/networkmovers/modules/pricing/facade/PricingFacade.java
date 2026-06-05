@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.pricing.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.pricing.dto.request.PricingRequest;
 import com.company.networkmovers.modules.pricing.dto.response.PricingResponse;
 import com.company.networkmovers.modules.pricing.service.PricingService;
@@ -19,7 +21,7 @@ public class PricingFacade {
         return service.create(request);
     }
 
-    public PricingResponse findById(Long id) {
+    public PricingResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class PricingFacade {
         return service.findAll();
     }
 
-    public PricingResponse update(Long id, PricingRequest request) {
+    public PricingResponse update(UUID id, PricingRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

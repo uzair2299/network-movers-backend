@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.vehicle.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.vehicle.entity.VehicleEntity;
 import com.company.networkmovers.modules.vehicle.repository.VehicleRepository;
 import com.company.networkmovers.modules.vehicle.service.VehicleService;
@@ -32,7 +34,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
-    public VehicleResponse findById(Long id) {
+    public VehicleResponse findById(UUID id) {
         VehicleEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public VehicleResponse update(Long id, VehicleRequest request) {
+    public VehicleResponse update(UUID id, VehicleRequest request) {
         VehicleEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         VehicleEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle not found with id: " + id));
         repository.delete(entity);

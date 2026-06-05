@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.notification.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.notification.entity.NotificationEntity;
 import com.company.networkmovers.modules.notification.repository.NotificationRepository;
 import com.company.networkmovers.modules.notification.service.NotificationService;
@@ -32,7 +34,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     @Transactional(readOnly = true)
-    public NotificationResponse findById(Long id) {
+    public NotificationResponse findById(UUID id) {
         NotificationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notification not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public NotificationResponse update(Long id, NotificationRequest request) {
+    public NotificationResponse update(UUID id, NotificationRequest request) {
         NotificationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notification not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         NotificationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Notification not found with id: " + id));
         repository.delete(entity);

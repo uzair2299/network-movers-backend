@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.tracking.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.tracking.dto.request.TrackingRequest;
 import com.company.networkmovers.modules.tracking.dto.response.TrackingResponse;
 import com.company.networkmovers.modules.tracking.service.TrackingService;
@@ -19,7 +21,7 @@ public class TrackingFacade {
         return service.create(request);
     }
 
-    public TrackingResponse findById(Long id) {
+    public TrackingResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class TrackingFacade {
         return service.findAll();
     }
 
-    public TrackingResponse update(Long id, TrackingRequest request) {
+    public TrackingResponse update(UUID id, TrackingRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

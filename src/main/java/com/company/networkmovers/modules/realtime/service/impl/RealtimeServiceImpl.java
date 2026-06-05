@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.realtime.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.realtime.entity.RealtimeEntity;
 import com.company.networkmovers.modules.realtime.repository.RealtimeRepository;
 import com.company.networkmovers.modules.realtime.service.RealtimeService;
@@ -32,7 +34,7 @@ public class RealtimeServiceImpl implements RealtimeService {
 
     @Override
     @Transactional(readOnly = true)
-    public RealtimeResponse findById(Long id) {
+    public RealtimeResponse findById(UUID id) {
         RealtimeEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Realtime not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class RealtimeServiceImpl implements RealtimeService {
     }
 
     @Override
-    public RealtimeResponse update(Long id, RealtimeRequest request) {
+    public RealtimeResponse update(UUID id, RealtimeRequest request) {
         RealtimeEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Realtime not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class RealtimeServiceImpl implements RealtimeService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         RealtimeEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Realtime not found with id: " + id));
         repository.delete(entity);

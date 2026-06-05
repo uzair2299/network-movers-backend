@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.location.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.location.dto.request.LocationRequest;
 import com.company.networkmovers.modules.location.dto.response.LocationResponse;
 import com.company.networkmovers.modules.location.service.LocationService;
@@ -19,7 +21,7 @@ public class LocationFacade {
         return service.create(request);
     }
 
-    public LocationResponse findById(Long id) {
+    public LocationResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class LocationFacade {
         return service.findAll();
     }
 
-    public LocationResponse update(Long id, LocationRequest request) {
+    public LocationResponse update(UUID id, LocationRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.warehouse.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.warehouse.entity.WarehouseEntity;
 import com.company.networkmovers.modules.warehouse.repository.WarehouseRepository;
 import com.company.networkmovers.modules.warehouse.service.WarehouseService;
@@ -32,7 +34,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     @Transactional(readOnly = true)
-    public WarehouseResponse findById(Long id) {
+    public WarehouseResponse findById(UUID id) {
         WarehouseEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Warehouse not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public WarehouseResponse update(Long id, WarehouseRequest request) {
+    public WarehouseResponse update(UUID id, WarehouseRequest request) {
         WarehouseEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Warehouse not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         WarehouseEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Warehouse not found with id: " + id));
         repository.delete(entity);

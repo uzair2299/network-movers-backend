@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.configuration.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.configuration.dto.request.ConfigurationRequest;
 import com.company.networkmovers.modules.configuration.dto.response.ConfigurationResponse;
 import com.company.networkmovers.modules.configuration.service.ConfigurationService;
@@ -19,7 +21,7 @@ public class ConfigurationFacade {
         return service.create(request);
     }
 
-    public ConfigurationResponse findById(Long id) {
+    public ConfigurationResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ConfigurationFacade {
         return service.findAll();
     }
 
-    public ConfigurationResponse update(Long id, ConfigurationRequest request) {
+    public ConfigurationResponse update(UUID id, ConfigurationRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

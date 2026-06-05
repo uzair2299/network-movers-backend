@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.accounting.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.accounting.dto.request.AccountingRequest;
 import com.company.networkmovers.modules.accounting.dto.response.AccountingResponse;
 import com.company.networkmovers.modules.accounting.service.AccountingService;
@@ -23,7 +25,7 @@ public class AdminAccountingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AccountingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminAccountingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AccountingResponse> update(@PathVariable Long id, @RequestBody AccountingRequest request) {
+    public ResponseEntity<AccountingResponse> update(@PathVariable UUID id, @RequestBody AccountingRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

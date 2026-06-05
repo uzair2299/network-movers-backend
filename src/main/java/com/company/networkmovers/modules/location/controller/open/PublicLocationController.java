@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.location.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.location.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.location.dto.response.LocationResponse;
 import com.company.networkmovers.modules.location.service.LocationService;
@@ -17,7 +19,7 @@ public class PublicLocationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LocationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<LocationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

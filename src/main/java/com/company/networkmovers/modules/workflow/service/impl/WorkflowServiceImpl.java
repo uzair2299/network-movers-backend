@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.workflow.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.workflow.entity.WorkflowEntity;
 import com.company.networkmovers.modules.workflow.repository.WorkflowRepository;
 import com.company.networkmovers.modules.workflow.service.WorkflowService;
@@ -32,7 +34,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     @Transactional(readOnly = true)
-    public WorkflowResponse findById(Long id) {
+    public WorkflowResponse findById(UUID id) {
         WorkflowEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Workflow not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     @Override
-    public WorkflowResponse update(Long id, WorkflowRequest request) {
+    public WorkflowResponse update(UUID id, WorkflowRequest request) {
         WorkflowEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Workflow not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         WorkflowEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Workflow not found with id: " + id));
         repository.delete(entity);

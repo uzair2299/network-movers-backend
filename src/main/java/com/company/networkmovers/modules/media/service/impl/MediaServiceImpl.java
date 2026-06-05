@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.media.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.media.entity.MediaEntity;
 import com.company.networkmovers.modules.media.repository.MediaRepository;
 import com.company.networkmovers.modules.media.service.MediaService;
@@ -32,7 +34,7 @@ public class MediaServiceImpl implements MediaService {
 
     @Override
     @Transactional(readOnly = true)
-    public MediaResponse findById(Long id) {
+    public MediaResponse findById(UUID id) {
         MediaEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Media not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public MediaResponse update(Long id, MediaRequest request) {
+    public MediaResponse update(UUID id, MediaRequest request) {
         MediaEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Media not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         MediaEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Media not found with id: " + id));
         repository.delete(entity);

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.wallet.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.wallet.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.wallet.dto.response.WalletResponse;
 import com.company.networkmovers.modules.wallet.service.WalletService;
@@ -17,7 +19,7 @@ public class PublicWalletController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WalletResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<WalletResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

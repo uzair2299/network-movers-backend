@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.truck.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.truck.entity.TruckEntity;
 import com.company.networkmovers.modules.truck.repository.TruckRepository;
 import com.company.networkmovers.modules.truck.service.TruckService;
@@ -32,7 +34,7 @@ public class TruckServiceImpl implements TruckService {
 
     @Override
     @Transactional(readOnly = true)
-    public TruckResponse findById(Long id) {
+    public TruckResponse findById(UUID id) {
         TruckEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Truck not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    public TruckResponse update(Long id, TruckRequest request) {
+    public TruckResponse update(UUID id, TruckRequest request) {
         TruckEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Truck not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class TruckServiceImpl implements TruckService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         TruckEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Truck not found with id: " + id));
         repository.delete(entity);

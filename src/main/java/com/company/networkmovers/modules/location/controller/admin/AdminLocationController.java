@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.location.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.location.dto.request.LocationRequest;
 import com.company.networkmovers.modules.location.dto.response.LocationResponse;
 import com.company.networkmovers.modules.location.service.LocationService;
@@ -23,7 +25,7 @@ public class AdminLocationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LocationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<LocationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminLocationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LocationResponse> update(@PathVariable Long id, @RequestBody LocationRequest request) {
+    public ResponseEntity<LocationResponse> update(@PathVariable UUID id, @RequestBody LocationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

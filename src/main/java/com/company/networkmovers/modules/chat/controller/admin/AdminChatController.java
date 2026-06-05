@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.chat.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.chat.dto.request.ChatRequest;
 import com.company.networkmovers.modules.chat.dto.response.ChatResponse;
 import com.company.networkmovers.modules.chat.service.ChatService;
@@ -23,7 +25,7 @@ public class AdminChatController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ChatResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ChatResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminChatController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ChatResponse> update(@PathVariable Long id, @RequestBody ChatRequest request) {
+    public ResponseEntity<ChatResponse> update(@PathVariable UUID id, @RequestBody ChatRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

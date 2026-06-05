@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.quotation.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.quotation.dto.request.QuotationRequest;
 import com.company.networkmovers.modules.quotation.dto.response.QuotationResponse;
 import com.company.networkmovers.modules.quotation.service.QuotationService;
@@ -23,7 +25,7 @@ public class AdminQuotationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuotationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<QuotationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminQuotationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QuotationResponse> update(@PathVariable Long id, @RequestBody QuotationRequest request) {
+    public ResponseEntity<QuotationResponse> update(@PathVariable UUID id, @RequestBody QuotationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

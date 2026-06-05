@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.scheduling.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.scheduling.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.scheduling.dto.response.SchedulingResponse;
 import com.company.networkmovers.modules.scheduling.service.SchedulingService;
@@ -17,7 +19,7 @@ public class PublicSchedulingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SchedulingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SchedulingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.document.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.document.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.document.dto.response.DocumentResponse;
 import com.company.networkmovers.modules.document.service.DocumentService;
@@ -17,7 +19,7 @@ public class PublicDocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DocumentResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

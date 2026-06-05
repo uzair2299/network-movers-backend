@@ -12,6 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRoleRequest {
-    private Long userId;
+    private UUID userId;
     private UUID roleId;
 }

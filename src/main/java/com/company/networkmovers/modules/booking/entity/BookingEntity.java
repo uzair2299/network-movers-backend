@@ -1,7 +1,7 @@
 package com.company.networkmovers.modules.booking.entity;
 
 import com.company.networkmovers.modules.identity.entity.User;
-import com.company.networkmovers.shared.entity.BaseAuditEntity;
+import com.company.networkmovers.shared.entity.BaseLookupEntity;
 import com.company.networkmovers.modules.property.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class BookingEntity extends BaseAuditEntity {
+public class BookingEntity extends BaseLookupEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -27,8 +27,7 @@ public class BookingEntity extends BaseAuditEntity {
     @JoinColumn(name = "current_status_id")
     private MoveStatus currentStatus;
 
-    @Column(name = "name")
-    private String name;
+    
 
     @Column(name = "description")
     private String description;

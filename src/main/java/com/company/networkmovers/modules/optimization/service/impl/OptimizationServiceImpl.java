@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.optimization.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.optimization.entity.OptimizationEntity;
 import com.company.networkmovers.modules.optimization.repository.OptimizationRepository;
 import com.company.networkmovers.modules.optimization.service.OptimizationService;
@@ -32,7 +34,7 @@ public class OptimizationServiceImpl implements OptimizationService {
 
     @Override
     @Transactional(readOnly = true)
-    public OptimizationResponse findById(Long id) {
+    public OptimizationResponse findById(UUID id) {
         OptimizationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Optimization not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class OptimizationServiceImpl implements OptimizationService {
     }
 
     @Override
-    public OptimizationResponse update(Long id, OptimizationRequest request) {
+    public OptimizationResponse update(UUID id, OptimizationRequest request) {
         OptimizationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Optimization not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class OptimizationServiceImpl implements OptimizationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         OptimizationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Optimization not found with id: " + id));
         repository.delete(entity);

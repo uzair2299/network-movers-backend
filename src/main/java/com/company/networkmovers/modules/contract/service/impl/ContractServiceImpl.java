@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.contract.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.contract.entity.ContractEntity;
 import com.company.networkmovers.modules.contract.repository.ContractRepository;
 import com.company.networkmovers.modules.contract.service.ContractService;
@@ -32,7 +34,7 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     @Transactional(readOnly = true)
-    public ContractResponse findById(Long id) {
+    public ContractResponse findById(UUID id) {
         ContractEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contract not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public ContractResponse update(Long id, ContractRequest request) {
+    public ContractResponse update(UUID id, ContractRequest request) {
         ContractEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contract not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ContractEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contract not found with id: " + id));
         repository.delete(entity);

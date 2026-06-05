@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.pricing.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.pricing.entity.PricingEntity;
 import com.company.networkmovers.modules.pricing.repository.PricingRepository;
 import com.company.networkmovers.modules.pricing.service.PricingService;
@@ -32,7 +34,7 @@ public class PricingServiceImpl implements PricingService {
 
     @Override
     @Transactional(readOnly = true)
-    public PricingResponse findById(Long id) {
+    public PricingResponse findById(UUID id) {
         PricingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pricing not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class PricingServiceImpl implements PricingService {
     }
 
     @Override
-    public PricingResponse update(Long id, PricingRequest request) {
+    public PricingResponse update(UUID id, PricingRequest request) {
         PricingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pricing not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class PricingServiceImpl implements PricingService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         PricingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Pricing not found with id: " + id));
         repository.delete(entity);

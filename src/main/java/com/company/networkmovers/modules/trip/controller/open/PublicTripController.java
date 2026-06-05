@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.trip.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.trip.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.trip.dto.response.TripResponse;
 import com.company.networkmovers.modules.trip.service.TripService;
@@ -17,7 +19,7 @@ public class PublicTripController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TripResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TripResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

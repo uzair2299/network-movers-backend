@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.mover.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.mover.dto.request.MoverRequest;
 import com.company.networkmovers.modules.mover.dto.response.MoverResponse;
 import com.company.networkmovers.modules.mover.service.MoverService;
@@ -19,7 +21,7 @@ public class MoverFacade {
         return service.create(request);
     }
 
-    public MoverResponse findById(Long id) {
+    public MoverResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class MoverFacade {
         return service.findAll();
     }
 
-    public MoverResponse update(Long id, MoverRequest request) {
+    public MoverResponse update(UUID id, MoverRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

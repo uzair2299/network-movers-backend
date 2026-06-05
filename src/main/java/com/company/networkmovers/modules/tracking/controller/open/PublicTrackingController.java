@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.tracking.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.tracking.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.tracking.dto.response.TrackingResponse;
 import com.company.networkmovers.modules.tracking.service.TrackingService;
@@ -17,7 +19,7 @@ public class PublicTrackingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TrackingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TrackingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

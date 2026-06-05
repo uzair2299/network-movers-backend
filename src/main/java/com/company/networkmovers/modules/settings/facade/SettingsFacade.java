@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.settings.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.settings.dto.request.SettingsRequest;
 import com.company.networkmovers.modules.settings.dto.response.SettingsResponse;
 import com.company.networkmovers.modules.settings.service.SettingsService;
@@ -19,7 +21,7 @@ public class SettingsFacade {
         return service.create(request);
     }
 
-    public SettingsResponse findById(Long id) {
+    public SettingsResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class SettingsFacade {
         return service.findAll();
     }
 
-    public SettingsResponse update(Long id, SettingsRequest request) {
+    public SettingsResponse update(UUID id, SettingsRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

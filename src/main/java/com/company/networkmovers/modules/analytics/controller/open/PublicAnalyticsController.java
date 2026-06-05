@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.analytics.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.analytics.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.analytics.dto.response.AnalyticsResponse;
 import com.company.networkmovers.modules.analytics.service.AnalyticsService;
@@ -17,7 +19,7 @@ public class PublicAnalyticsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnalyticsResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AnalyticsResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

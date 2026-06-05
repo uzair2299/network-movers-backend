@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.ticket.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.ticket.dto.request.TicketRequest;
 import com.company.networkmovers.modules.ticket.dto.response.TicketResponse;
 import com.company.networkmovers.modules.ticket.service.TicketService;
@@ -23,7 +25,7 @@ public class AdminTicketController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TicketResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TicketResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminTicketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TicketResponse> update(@PathVariable Long id, @RequestBody TicketRequest request) {
+    public ResponseEntity<TicketResponse> update(@PathVariable UUID id, @RequestBody TicketRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

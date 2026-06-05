@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.audit.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.audit.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.audit.dto.response.AuditResponse;
 import com.company.networkmovers.modules.audit.service.AuditService;
@@ -17,7 +19,7 @@ public class PublicAuditController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuditResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AuditResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

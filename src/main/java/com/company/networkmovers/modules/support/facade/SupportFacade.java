@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.support.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.support.dto.request.SupportRequest;
 import com.company.networkmovers.modules.support.dto.response.SupportResponse;
 import com.company.networkmovers.modules.support.service.SupportService;
@@ -19,7 +21,7 @@ public class SupportFacade {
         return service.create(request);
     }
 
-    public SupportResponse findById(Long id) {
+    public SupportResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class SupportFacade {
         return service.findAll();
     }
 
-    public SupportResponse update(Long id, SupportRequest request) {
+    public SupportResponse update(UUID id, SupportRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

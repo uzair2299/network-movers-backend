@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.filemanagement.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.filemanagement.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.filemanagement.dto.response.FilemanagementResponse;
 import com.company.networkmovers.modules.filemanagement.service.FilemanagementService;
@@ -17,7 +19,7 @@ public class PublicFilemanagementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FilemanagementResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FilemanagementResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

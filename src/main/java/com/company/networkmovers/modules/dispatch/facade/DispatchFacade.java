@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dispatch.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.dispatch.dto.request.DispatchRequest;
 import com.company.networkmovers.modules.dispatch.dto.response.DispatchResponse;
 import com.company.networkmovers.modules.dispatch.service.DispatchService;
@@ -19,7 +21,7 @@ public class DispatchFacade {
         return service.create(request);
     }
 
-    public DispatchResponse findById(Long id) {
+    public DispatchResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class DispatchFacade {
         return service.findAll();
     }
 
-    public DispatchResponse update(Long id, DispatchRequest request) {
+    public DispatchResponse update(UUID id, DispatchRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.quotation.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.quotation.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.quotation.dto.response.QuotationResponse;
 import com.company.networkmovers.modules.quotation.service.QuotationService;
@@ -17,7 +19,7 @@ public class PublicQuotationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuotationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<QuotationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

@@ -13,6 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BulkUserRoleRequest {
-    private Long userId;
+    private UUID userId;
     private List<UUID> roleIds;
 }

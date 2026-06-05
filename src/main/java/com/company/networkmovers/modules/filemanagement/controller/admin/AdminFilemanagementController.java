@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.filemanagement.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.filemanagement.dto.request.FilemanagementRequest;
 import com.company.networkmovers.modules.filemanagement.dto.response.FilemanagementResponse;
 import com.company.networkmovers.modules.filemanagement.service.FilemanagementService;
@@ -23,7 +25,7 @@ public class AdminFilemanagementController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FilemanagementResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FilemanagementResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminFilemanagementController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FilemanagementResponse> update(@PathVariable Long id, @RequestBody FilemanagementRequest request) {
+    public ResponseEntity<FilemanagementResponse> update(@PathVariable UUID id, @RequestBody FilemanagementRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

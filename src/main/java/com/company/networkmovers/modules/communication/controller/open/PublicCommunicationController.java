@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.communication.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.communication.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.communication.dto.response.CommunicationResponse;
 import com.company.networkmovers.modules.communication.service.CommunicationService;
@@ -17,7 +19,7 @@ public class PublicCommunicationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CommunicationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<CommunicationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

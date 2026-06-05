@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.truck.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.truck.dto.request.TruckRequest;
 import com.company.networkmovers.modules.truck.dto.response.TruckResponse;
 import com.company.networkmovers.modules.truck.service.TruckService;
@@ -23,7 +25,7 @@ public class AdminTruckController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TruckResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TruckResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminTruckController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TruckResponse> update(@PathVariable Long id, @RequestBody TruckRequest request) {
+    public ResponseEntity<TruckResponse> update(@PathVariable UUID id, @RequestBody TruckRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

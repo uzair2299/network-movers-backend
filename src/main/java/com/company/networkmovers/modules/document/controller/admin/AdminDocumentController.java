@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.document.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.document.dto.request.DocumentRequest;
 import com.company.networkmovers.modules.document.dto.response.DocumentResponse;
 import com.company.networkmovers.modules.document.service.DocumentService;
@@ -23,7 +25,7 @@ public class AdminDocumentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DocumentResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DocumentResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminDocumentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DocumentResponse> update(@PathVariable Long id, @RequestBody DocumentRequest request) {
+    public ResponseEntity<DocumentResponse> update(@PathVariable UUID id, @RequestBody DocumentRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.admin.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.admin.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.admin.dto.response.AdminResponse;
 import com.company.networkmovers.modules.admin.service.AdminService;
@@ -17,7 +19,7 @@ public class PublicAdminController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdminResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AdminResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

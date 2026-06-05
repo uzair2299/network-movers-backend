@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.analytics.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.analytics.entity.AnalyticsEntity;
 import com.company.networkmovers.modules.analytics.repository.AnalyticsRepository;
 import com.company.networkmovers.modules.analytics.service.AnalyticsService;
@@ -32,7 +34,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Override
     @Transactional(readOnly = true)
-    public AnalyticsResponse findById(Long id) {
+    public AnalyticsResponse findById(UUID id) {
         AnalyticsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Analytics not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public AnalyticsResponse update(Long id, AnalyticsRequest request) {
+    public AnalyticsResponse update(UUID id, AnalyticsRequest request) {
         AnalyticsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Analytics not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AnalyticsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Analytics not found with id: " + id));
         repository.delete(entity);

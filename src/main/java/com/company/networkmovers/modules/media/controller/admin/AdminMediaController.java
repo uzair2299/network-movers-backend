@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.media.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.media.dto.request.MediaRequest;
 import com.company.networkmovers.modules.media.dto.response.MediaResponse;
 import com.company.networkmovers.modules.media.service.MediaService;
@@ -23,7 +25,7 @@ public class AdminMediaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MediaResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<MediaResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminMediaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MediaResponse> update(@PathVariable Long id, @RequestBody MediaRequest request) {
+    public ResponseEntity<MediaResponse> update(@PathVariable UUID id, @RequestBody MediaRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

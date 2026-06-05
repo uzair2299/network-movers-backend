@@ -252,7 +252,7 @@ public class NavigationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()
                 && authentication.getPrincipal() instanceof CustomUserDetails) {
-            return ((CustomUserDetails) authentication.getPrincipal()).getId();
+            return ((CustomUserDetails) authentication.getPrincipal()).getAuditId();
         }
         return null;
     }

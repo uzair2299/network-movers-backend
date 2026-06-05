@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.ai.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.ai.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.ai.dto.response.AiResponse;
 import com.company.networkmovers.modules.ai.service.AiService;
@@ -17,7 +19,7 @@ public class PublicAiController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AiResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AiResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

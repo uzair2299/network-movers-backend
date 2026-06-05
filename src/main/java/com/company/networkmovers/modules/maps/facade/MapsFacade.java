@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.maps.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.maps.dto.request.MapsRequest;
 import com.company.networkmovers.modules.maps.dto.response.MapsResponse;
 import com.company.networkmovers.modules.maps.service.MapsService;
@@ -19,7 +21,7 @@ public class MapsFacade {
         return service.create(request);
     }
 
-    public MapsResponse findById(Long id) {
+    public MapsResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class MapsFacade {
         return service.findAll();
     }
 
-    public MapsResponse update(Long id, MapsRequest request) {
+    public MapsResponse update(UUID id, MapsRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

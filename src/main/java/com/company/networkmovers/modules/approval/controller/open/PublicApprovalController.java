@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.approval.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.approval.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.approval.dto.response.ApprovalResponse;
 import com.company.networkmovers.modules.approval.service.ApprovalService;
@@ -17,7 +19,7 @@ public class PublicApprovalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApprovalResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ApprovalResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

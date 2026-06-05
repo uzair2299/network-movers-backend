@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.movingitem.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.movingitem.entity.MovingitemEntity;
 import com.company.networkmovers.modules.movingitem.repository.MovingitemRepository;
 import com.company.networkmovers.modules.movingitem.service.MovingitemService;
@@ -32,7 +34,7 @@ public class MovingitemServiceImpl implements MovingitemService {
 
     @Override
     @Transactional(readOnly = true)
-    public MovingitemResponse findById(Long id) {
+    public MovingitemResponse findById(UUID id) {
         MovingitemEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movingitem not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class MovingitemServiceImpl implements MovingitemService {
     }
 
     @Override
-    public MovingitemResponse update(Long id, MovingitemRequest request) {
+    public MovingitemResponse update(UUID id, MovingitemRequest request) {
         MovingitemEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movingitem not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class MovingitemServiceImpl implements MovingitemService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         MovingitemEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Movingitem not found with id: " + id));
         repository.delete(entity);

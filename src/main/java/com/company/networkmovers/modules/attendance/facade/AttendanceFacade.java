@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.attendance.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.attendance.dto.request.AttendanceRequest;
 import com.company.networkmovers.modules.attendance.dto.response.AttendanceResponse;
 import com.company.networkmovers.modules.attendance.service.AttendanceService;
@@ -19,7 +21,7 @@ public class AttendanceFacade {
         return service.create(request);
     }
 
-    public AttendanceResponse findById(Long id) {
+    public AttendanceResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class AttendanceFacade {
         return service.findAll();
     }
 
-    public AttendanceResponse update(Long id, AttendanceRequest request) {
+    public AttendanceResponse update(UUID id, AttendanceRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

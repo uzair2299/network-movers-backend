@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.contract.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.contract.dto.request.ContractRequest;
 import com.company.networkmovers.modules.contract.dto.response.ContractResponse;
 import com.company.networkmovers.modules.contract.service.ContractService;
@@ -23,7 +25,7 @@ public class AdminContractController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContractResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ContractResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminContractController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContractResponse> update(@PathVariable Long id, @RequestBody ContractRequest request) {
+    public ResponseEntity<ContractResponse> update(@PathVariable UUID id, @RequestBody ContractRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

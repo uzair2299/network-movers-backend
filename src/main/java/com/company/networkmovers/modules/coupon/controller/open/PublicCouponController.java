@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.coupon.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.coupon.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.coupon.dto.response.CouponResponse;
 import com.company.networkmovers.modules.coupon.service.CouponService;
@@ -17,7 +19,7 @@ public class PublicCouponController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CouponResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<CouponResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

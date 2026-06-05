@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.driver.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.driver.entity.DriverEntity;
 import com.company.networkmovers.modules.driver.repository.DriverRepository;
 import com.company.networkmovers.modules.driver.service.DriverService;
@@ -32,7 +34,7 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     @Transactional(readOnly = true)
-    public DriverResponse findById(Long id) {
+    public DriverResponse findById(UUID id) {
         DriverEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public DriverResponse update(Long id, DriverRequest request) {
+    public DriverResponse update(UUID id, DriverRequest request) {
         DriverEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         DriverEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found with id: " + id));
         repository.delete(entity);

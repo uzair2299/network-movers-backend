@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.notification.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.notification.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.notification.dto.response.NotificationResponse;
 import com.company.networkmovers.modules.notification.service.NotificationService;
@@ -17,7 +19,7 @@ public class PublicNotificationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NotificationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<NotificationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

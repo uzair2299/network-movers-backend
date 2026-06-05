@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.fleet.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.fleet.dto.request.FleetRequest;
 import com.company.networkmovers.modules.fleet.dto.response.FleetResponse;
 import com.company.networkmovers.modules.fleet.service.FleetService;
@@ -19,7 +21,7 @@ public class FleetFacade {
         return service.create(request);
     }
 
-    public FleetResponse findById(Long id) {
+    public FleetResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class FleetFacade {
         return service.findAll();
     }
 
-    public FleetResponse update(Long id, FleetRequest request) {
+    public FleetResponse update(UUID id, FleetRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

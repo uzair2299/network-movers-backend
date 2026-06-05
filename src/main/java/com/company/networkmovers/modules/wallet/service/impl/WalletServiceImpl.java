@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.wallet.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.wallet.entity.WalletEntity;
 import com.company.networkmovers.modules.wallet.repository.WalletRepository;
 import com.company.networkmovers.modules.wallet.service.WalletService;
@@ -32,7 +34,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     @Transactional(readOnly = true)
-    public WalletResponse findById(Long id) {
+    public WalletResponse findById(UUID id) {
         WalletEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Wallet not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public WalletResponse update(Long id, WalletRequest request) {
+    public WalletResponse update(UUID id, WalletRequest request) {
         WalletEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Wallet not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         WalletEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Wallet not found with id: " + id));
         repository.delete(entity);

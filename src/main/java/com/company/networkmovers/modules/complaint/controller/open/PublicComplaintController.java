@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.complaint.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.complaint.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.complaint.dto.response.ComplaintResponse;
 import com.company.networkmovers.modules.complaint.service.ComplaintService;
@@ -17,7 +19,7 @@ public class PublicComplaintController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ComplaintResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ComplaintResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

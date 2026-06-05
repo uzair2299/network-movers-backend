@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.invoice.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.invoice.dto.request.InvoiceRequest;
 import com.company.networkmovers.modules.invoice.dto.response.InvoiceResponse;
 import com.company.networkmovers.modules.invoice.service.InvoiceService;
@@ -23,7 +25,7 @@ public class AdminInvoiceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InvoiceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<InvoiceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminInvoiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InvoiceResponse> update(@PathVariable Long id, @RequestBody InvoiceRequest request) {
+    public ResponseEntity<InvoiceResponse> update(@PathVariable UUID id, @RequestBody InvoiceRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

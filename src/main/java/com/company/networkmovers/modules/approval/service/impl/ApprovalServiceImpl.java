@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.approval.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.approval.entity.ApprovalEntity;
 import com.company.networkmovers.modules.approval.repository.ApprovalRepository;
 import com.company.networkmovers.modules.approval.service.ApprovalService;
@@ -32,7 +34,7 @@ public class ApprovalServiceImpl implements ApprovalService {
 
     @Override
     @Transactional(readOnly = true)
-    public ApprovalResponse findById(Long id) {
+    public ApprovalResponse findById(UUID id) {
         ApprovalEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Approval not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ApprovalServiceImpl implements ApprovalService {
     }
 
     @Override
-    public ApprovalResponse update(Long id, ApprovalRequest request) {
+    public ApprovalResponse update(UUID id, ApprovalRequest request) {
         ApprovalEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Approval not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ApprovalServiceImpl implements ApprovalService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ApprovalEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Approval not found with id: " + id));
         repository.delete(entity);

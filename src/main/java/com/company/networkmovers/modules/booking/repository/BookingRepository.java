@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.booking.repository;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.booking.entity.BookingEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
+public interface BookingRepository extends JpaRepository<BookingEntity, UUID> {
 
     @Query("SELECT b FROM BookingEntity b " +
            "LEFT JOIN FETCH b.user u " +
@@ -27,7 +29,7 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "LEFT JOIN FETCH b.destinationBuildingAccess " +
            "LEFT JOIN FETCH b.destinationParkingAccess " +
            "WHERE b.id = :id")
-    Optional<BookingEntity> findByIdWithDetails(@Param("id") Long id);
+    Optional<BookingEntity> findByIdWithDetails(@Param("id") UUID id);
 
     @Query(value = "SELECT b FROM BookingEntity b " +
            "LEFT JOIN FETCH b.user u " +
@@ -98,7 +100,7 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "LEFT JOIN FETCH b.destinationBuildingAccess " +
            "LEFT JOIN FETCH b.destinationParkingAccess " +
            "WHERE b.user.id = :userId")
-    List<BookingEntity> findAllByUserIdWithDetails(@Param("userId") Long userId);
+    List<BookingEntity> findAllByUserIdWithDetails(@Param("userId") UUID userId);
 
     @Query(value = "SELECT b FROM BookingEntity b " +
            "LEFT JOIN FETCH b.user u " +
@@ -116,7 +118,7 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "LEFT JOIN FETCH b.destinationParkingAccess " +
            "WHERE b.user.id = :userId",
            countQuery = "SELECT count(b) FROM BookingEntity b WHERE b.user.id = :userId")
-    org.springframework.data.domain.Page<BookingEntity> findAllByUserIdWithDetails(@Param("userId") Long userId, org.springframework.data.domain.Pageable pageable);
+    org.springframework.data.domain.Page<BookingEntity> findAllByUserIdWithDetails(@Param("userId") UUID userId, org.springframework.data.domain.Pageable pageable);
 
     @Query(value = "SELECT b FROM BookingEntity b " +
            "LEFT JOIN FETCH b.user u " +
@@ -139,7 +141,7 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "WHERE b.user.id = :userId AND (" +
            "LOWER(b.name) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
            "LOWER(b.description) LIKE LOWER(CONCAT('%', :search, '%')))")
-    org.springframework.data.domain.Page<BookingEntity> findByUserIdAndSearchWithDetails(@Param("userId") Long userId, @Param("search") String search, org.springframework.data.domain.Pageable pageable);
+    org.springframework.data.domain.Page<BookingEntity> findByUserIdAndSearchWithDetails(@Param("userId") UUID userId, @Param("search") String search, org.springframework.data.domain.Pageable pageable);
 
     @Query("SELECT b FROM BookingEntity b " +
            "LEFT JOIN FETCH b.user u " +
@@ -156,5 +158,5 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
            "LEFT JOIN FETCH b.destinationBuildingAccess " +
            "LEFT JOIN FETCH b.destinationParkingAccess " +
            "WHERE b.id = :id AND b.user.id = :userId")
-    Optional<BookingEntity> findByIdAndUserIdWithDetails(@Param("id") Long id, @Param("userId") Long userId);
+    Optional<BookingEntity> findByIdAndUserIdWithDetails(@Param("id") UUID id, @Param("userId") UUID userId);
 }

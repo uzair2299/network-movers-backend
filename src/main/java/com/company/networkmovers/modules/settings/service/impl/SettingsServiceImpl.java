@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.settings.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.settings.entity.SettingsEntity;
 import com.company.networkmovers.modules.settings.repository.SettingsRepository;
 import com.company.networkmovers.modules.settings.service.SettingsService;
@@ -32,7 +34,7 @@ public class SettingsServiceImpl implements SettingsService {
 
     @Override
     @Transactional(readOnly = true)
-    public SettingsResponse findById(Long id) {
+    public SettingsResponse findById(UUID id) {
         SettingsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Settings not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     @Override
-    public SettingsResponse update(Long id, SettingsRequest request) {
+    public SettingsResponse update(UUID id, SettingsRequest request) {
         SettingsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Settings not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class SettingsServiceImpl implements SettingsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         SettingsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Settings not found with id: " + id));
         repository.delete(entity);

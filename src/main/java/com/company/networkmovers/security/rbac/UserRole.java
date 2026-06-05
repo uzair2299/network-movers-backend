@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "sec_user_roles", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"user_id", "role_id"})
@@ -17,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 public class UserRole extends BaseUuidAuditEntity {
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private UUID userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)

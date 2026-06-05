@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.support.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.support.dto.request.SupportRequest;
 import com.company.networkmovers.modules.support.dto.response.SupportResponse;
 import com.company.networkmovers.modules.support.service.SupportService;
@@ -23,7 +25,7 @@ public class AdminSupportController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SupportResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SupportResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminSupportController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SupportResponse> update(@PathVariable Long id, @RequestBody SupportRequest request) {
+    public ResponseEntity<SupportResponse> update(@PathVariable UUID id, @RequestBody SupportRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

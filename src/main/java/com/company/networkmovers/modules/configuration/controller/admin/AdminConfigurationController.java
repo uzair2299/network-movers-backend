@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.configuration.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.configuration.dto.request.ConfigurationRequest;
 import com.company.networkmovers.modules.configuration.dto.response.ConfigurationResponse;
 import com.company.networkmovers.modules.configuration.service.ConfigurationService;
@@ -23,7 +25,7 @@ public class AdminConfigurationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ConfigurationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ConfigurationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminConfigurationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConfigurationResponse> update(@PathVariable Long id, @RequestBody ConfigurationRequest request) {
+    public ResponseEntity<ConfigurationResponse> update(@PathVariable UUID id, @RequestBody ConfigurationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

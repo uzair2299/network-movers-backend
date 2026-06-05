@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.vendor.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.vendor.dto.request.VendorRequest;
 import com.company.networkmovers.modules.vendor.dto.response.VendorResponse;
 import com.company.networkmovers.modules.vendor.service.VendorService;
@@ -19,7 +21,7 @@ public class VendorFacade {
         return service.create(request);
     }
 
-    public VendorResponse findById(Long id) {
+    public VendorResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class VendorFacade {
         return service.findAll();
     }
 
-    public VendorResponse update(Long id, VendorRequest request) {
+    public VendorResponse update(UUID id, VendorRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

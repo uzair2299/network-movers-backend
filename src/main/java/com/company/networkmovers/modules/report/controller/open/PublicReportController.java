@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.report.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.report.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.report.dto.response.ReportResponse;
 import com.company.networkmovers.modules.report.service.ReportService;
@@ -17,7 +19,7 @@ public class PublicReportController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReportResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ReportResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

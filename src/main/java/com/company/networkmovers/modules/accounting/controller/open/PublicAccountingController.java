@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.accounting.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.accounting.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.accounting.dto.response.AccountingResponse;
 import com.company.networkmovers.modules.accounting.service.AccountingService;
@@ -17,7 +19,7 @@ public class PublicAccountingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AccountingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AccountingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

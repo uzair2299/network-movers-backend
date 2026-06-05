@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.geofence.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.geofence.dto.request.GeofenceRequest;
 import com.company.networkmovers.modules.geofence.dto.response.GeofenceResponse;
 import com.company.networkmovers.modules.geofence.service.GeofenceService;
@@ -19,7 +21,7 @@ public class GeofenceFacade {
         return service.create(request);
     }
 
-    public GeofenceResponse findById(Long id) {
+    public GeofenceResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class GeofenceFacade {
         return service.findAll();
     }
 
-    public GeofenceResponse update(Long id, GeofenceRequest request) {
+    public GeofenceResponse update(UUID id, GeofenceRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

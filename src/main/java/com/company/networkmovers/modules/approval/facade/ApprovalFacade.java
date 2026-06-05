@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.approval.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.approval.dto.request.ApprovalRequest;
 import com.company.networkmovers.modules.approval.dto.response.ApprovalResponse;
 import com.company.networkmovers.modules.approval.service.ApprovalService;
@@ -19,7 +21,7 @@ public class ApprovalFacade {
         return service.create(request);
     }
 
-    public ApprovalResponse findById(Long id) {
+    public ApprovalResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ApprovalFacade {
         return service.findAll();
     }
 
-    public ApprovalResponse update(Long id, ApprovalRequest request) {
+    public ApprovalResponse update(UUID id, ApprovalRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.route.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.route.entity.RouteEntity;
 import com.company.networkmovers.modules.route.repository.RouteRepository;
 import com.company.networkmovers.modules.route.service.RouteService;
@@ -32,7 +34,7 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     @Transactional(readOnly = true)
-    public RouteResponse findById(Long id) {
+    public RouteResponse findById(UUID id) {
         RouteEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Route not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public RouteResponse update(Long id, RouteRequest request) {
+    public RouteResponse update(UUID id, RouteRequest request) {
         RouteEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Route not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         RouteEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Route not found with id: " + id));
         repository.delete(entity);

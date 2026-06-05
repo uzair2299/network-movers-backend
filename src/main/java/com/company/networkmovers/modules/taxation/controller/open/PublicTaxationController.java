@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.taxation.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.taxation.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.taxation.dto.response.TaxationResponse;
 import com.company.networkmovers.modules.taxation.service.TaxationService;
@@ -17,7 +19,7 @@ public class PublicTaxationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaxationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TaxationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

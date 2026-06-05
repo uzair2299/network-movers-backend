@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.taxation.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.taxation.entity.TaxationEntity;
 import com.company.networkmovers.modules.taxation.repository.TaxationRepository;
 import com.company.networkmovers.modules.taxation.service.TaxationService;
@@ -32,7 +34,7 @@ public class TaxationServiceImpl implements TaxationService {
 
     @Override
     @Transactional(readOnly = true)
-    public TaxationResponse findById(Long id) {
+    public TaxationResponse findById(UUID id) {
         TaxationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Taxation not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class TaxationServiceImpl implements TaxationService {
     }
 
     @Override
-    public TaxationResponse update(Long id, TaxationRequest request) {
+    public TaxationResponse update(UUID id, TaxationRequest request) {
         TaxationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Taxation not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class TaxationServiceImpl implements TaxationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         TaxationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Taxation not found with id: " + id));
         repository.delete(entity);

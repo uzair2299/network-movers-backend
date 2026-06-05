@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.payroll.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.payroll.entity.PayrollEntity;
 import com.company.networkmovers.modules.payroll.repository.PayrollRepository;
 import com.company.networkmovers.modules.payroll.service.PayrollService;
@@ -32,7 +34,7 @@ public class PayrollServiceImpl implements PayrollService {
 
     @Override
     @Transactional(readOnly = true)
-    public PayrollResponse findById(Long id) {
+    public PayrollResponse findById(UUID id) {
         PayrollEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payroll not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class PayrollServiceImpl implements PayrollService {
     }
 
     @Override
-    public PayrollResponse update(Long id, PayrollRequest request) {
+    public PayrollResponse update(UUID id, PayrollRequest request) {
         PayrollEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payroll not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class PayrollServiceImpl implements PayrollService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         PayrollEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Payroll not found with id: " + id));
         repository.delete(entity);

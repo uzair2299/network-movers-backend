@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.subscription.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.subscription.dto.request.SubscriptionRequest;
 import com.company.networkmovers.modules.subscription.dto.response.SubscriptionResponse;
 import com.company.networkmovers.modules.subscription.service.SubscriptionService;
@@ -23,7 +25,7 @@ public class AdminSubscriptionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SubscriptionResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SubscriptionResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminSubscriptionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionResponse> update(@PathVariable Long id, @RequestBody SubscriptionRequest request) {
+    public ResponseEntity<SubscriptionResponse> update(@PathVariable UUID id, @RequestBody SubscriptionRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

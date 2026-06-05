@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.inventory.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.inventory.dto.request.InventoryRequest;
 import com.company.networkmovers.modules.inventory.dto.response.InventoryResponse;
 import com.company.networkmovers.modules.inventory.service.InventoryService;
@@ -19,7 +21,7 @@ public class InventoryFacade {
         return service.create(request);
     }
 
-    public InventoryResponse findById(Long id) {
+    public InventoryResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class InventoryFacade {
         return service.findAll();
     }
 
-    public InventoryResponse update(Long id, InventoryRequest request) {
+    public InventoryResponse update(UUID id, InventoryRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

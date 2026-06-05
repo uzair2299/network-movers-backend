@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.admin.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.admin.dto.request.AdminRequest;
 import com.company.networkmovers.modules.admin.dto.response.AdminResponse;
 import com.company.networkmovers.modules.admin.service.AdminService;
@@ -19,7 +21,7 @@ public class AdminFacade {
         return service.create(request);
     }
 
-    public AdminResponse findById(Long id) {
+    public AdminResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class AdminFacade {
         return service.findAll();
     }
 
-    public AdminResponse update(Long id, AdminRequest request) {
+    public AdminResponse update(UUID id, AdminRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

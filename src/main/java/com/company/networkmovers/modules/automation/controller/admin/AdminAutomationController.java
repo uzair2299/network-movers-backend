@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.automation.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.automation.dto.request.AutomationRequest;
 import com.company.networkmovers.modules.automation.dto.response.AutomationResponse;
 import com.company.networkmovers.modules.automation.service.AutomationService;
@@ -23,7 +25,7 @@ public class AdminAutomationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AutomationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AutomationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminAutomationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AutomationResponse> update(@PathVariable Long id, @RequestBody AutomationRequest request) {
+    public ResponseEntity<AutomationResponse> update(@PathVariable UUID id, @RequestBody AutomationRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

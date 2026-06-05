@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserRoleResponse {
     private UUID id;
-    private Long userId;
+    private UUID userId;
     private RoleResponse role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

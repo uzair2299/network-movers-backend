@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.realtime.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.realtime.dto.request.RealtimeRequest;
 import com.company.networkmovers.modules.realtime.dto.response.RealtimeResponse;
 import com.company.networkmovers.modules.realtime.service.RealtimeService;
@@ -23,7 +25,7 @@ public class AdminRealtimeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RealtimeResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RealtimeResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminRealtimeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RealtimeResponse> update(@PathVariable Long id, @RequestBody RealtimeRequest request) {
+    public ResponseEntity<RealtimeResponse> update(@PathVariable UUID id, @RequestBody RealtimeRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

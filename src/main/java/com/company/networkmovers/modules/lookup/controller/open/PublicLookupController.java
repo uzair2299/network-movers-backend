@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.lookup.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.lookup.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.lookup.dto.response.LookupResponse;
 import com.company.networkmovers.modules.lookup.service.LookupService;
@@ -17,7 +19,7 @@ public class PublicLookupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LookupResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<LookupResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

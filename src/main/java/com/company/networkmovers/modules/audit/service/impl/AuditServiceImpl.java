@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.audit.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.audit.entity.AuditEntity;
 import com.company.networkmovers.modules.audit.repository.AuditRepository;
 import com.company.networkmovers.modules.audit.service.AuditService;
@@ -32,7 +34,7 @@ public class AuditServiceImpl implements AuditService {
 
     @Override
     @Transactional(readOnly = true)
-    public AuditResponse findById(Long id) {
+    public AuditResponse findById(UUID id) {
         AuditEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Audit not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    public AuditResponse update(Long id, AuditRequest request) {
+    public AuditResponse update(UUID id, AuditRequest request) {
         AuditEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Audit not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AuditServiceImpl implements AuditService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AuditEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Audit not found with id: " + id));
         repository.delete(entity);

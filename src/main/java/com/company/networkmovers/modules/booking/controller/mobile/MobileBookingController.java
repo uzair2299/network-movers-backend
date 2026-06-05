@@ -1,5 +1,8 @@
 package com.company.networkmovers.modules.booking.controller.mobile;
 
+import java.util.UUID;
+import java.util.List;
+
 import com.company.networkmovers.modules.booking.dto.request.BookingRequest;
 import com.company.networkmovers.modules.booking.dto.response.BookingResponse;
 import com.company.networkmovers.modules.booking.service.BookingService;
@@ -12,8 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/mobile/booking")
@@ -40,24 +41,24 @@ public class MobileBookingController {
     @Operation(summary = "Pageable search of user bookings", description = "Query, filter, paginate, and sort bookings belonging to the currently authenticated user.")
     public ResponseEntity<org.springframework.data.domain.Page<BookingResponse>> getAllForCurrentUser(
             @org.springdoc.core.annotations.ParameterObject com.company.networkmovers.shared.dto.RequestParamDto requestParams) {
-        Long userId = getCurrentUserId();
+        UUID userId = getCurrentUserId();
         return ResponseEntity.ok(service.getAllByUserId(userId, requestParams));
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get booking by ID", description = "Retrieves details of a specific booking belonging to the currently authenticated user.")
     public ResponseEntity<BookingResponse> findByIdForCurrentUser(
-            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id) {
-        Long userId = getCurrentUserId();
+            @Parameter(description = "ID of the booking", required = true) @PathVariable UUID id) {
+        UUID userId = getCurrentUserId();
         return ResponseEntity.ok(service.findByIdAndUserId(id, userId));
     }
 
     @PutMapping("/{id}/status")
     @Operation(summary = "Update booking status", description = "Updates the status of a booking belonging to the current user (e.g. Cancelled) and logs it to the history timeline.")
     public ResponseEntity<BookingResponse> updateStatusForCurrentUser(
-            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id,
+            @Parameter(description = "ID of the booking", required = true) @PathVariable UUID id,
             @RequestBody com.company.networkmovers.modules.booking.dto.request.UpdateBookingStatusRequest request) {
-        Long userId = getCurrentUserId();
+        UUID userId = getCurrentUserId();
         // Verify ownership
         service.findByIdAndUserId(id, userId);
         return ResponseEntity.ok(service.updateStatus(id, request));
@@ -66,14 +67,14 @@ public class MobileBookingController {
     @GetMapping("/{id}/timeline")
     @Operation(summary = "Get booking timeline", description = "Retrieves the full lifecycle history of a specific booking belonging to the current user.")
     public ResponseEntity<List<com.company.networkmovers.modules.booking.dto.response.BookingHistoryResponse>> getBookingTimelineForCurrentUser(
-            @Parameter(description = "ID of the booking", required = true) @PathVariable Long id) {
-        Long userId = getCurrentUserId();
+            @Parameter(description = "ID of the booking", required = true) @PathVariable UUID id) {
+        UUID userId = getCurrentUserId();
         // Verify ownership
         service.findByIdAndUserId(id, userId);
         return ResponseEntity.ok(service.getBookingTimeline(id));
     }
 
-    private Long getCurrentUserId() {
+    private UUID getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()
                 && authentication.getPrincipal() instanceof CustomUserDetails) {

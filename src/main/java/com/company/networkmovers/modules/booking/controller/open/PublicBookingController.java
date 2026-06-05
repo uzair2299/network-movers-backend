@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.booking.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.booking.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.booking.dto.response.BookingResponse;
 import com.company.networkmovers.modules.booking.service.BookingService;
@@ -17,7 +19,7 @@ public class PublicBookingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<BookingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

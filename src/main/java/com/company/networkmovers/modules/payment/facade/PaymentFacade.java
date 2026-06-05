@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.payment.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.payment.dto.request.PaymentRequest;
 import com.company.networkmovers.modules.payment.dto.response.PaymentResponse;
 import com.company.networkmovers.modules.payment.service.PaymentService;
@@ -19,7 +21,7 @@ public class PaymentFacade {
         return service.create(request);
     }
 
-    public PaymentResponse findById(Long id) {
+    public PaymentResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class PaymentFacade {
         return service.findAll();
     }
 
-    public PaymentResponse update(Long id, PaymentRequest request) {
+    public PaymentResponse update(UUID id, PaymentRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

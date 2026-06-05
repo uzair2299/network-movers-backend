@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.geofence.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.geofence.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.geofence.dto.response.GeofenceResponse;
 import com.company.networkmovers.modules.geofence.service.GeofenceService;
@@ -17,7 +19,7 @@ public class PublicGeofenceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GeofenceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<GeofenceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

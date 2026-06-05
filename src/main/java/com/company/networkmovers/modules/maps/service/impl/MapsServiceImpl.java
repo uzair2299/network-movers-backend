@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.maps.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.maps.entity.MapsEntity;
 import com.company.networkmovers.modules.maps.repository.MapsRepository;
 import com.company.networkmovers.modules.maps.service.MapsService;
@@ -32,7 +34,7 @@ public class MapsServiceImpl implements MapsService {
 
     @Override
     @Transactional(readOnly = true)
-    public MapsResponse findById(Long id) {
+    public MapsResponse findById(UUID id) {
         MapsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Maps not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class MapsServiceImpl implements MapsService {
     }
 
     @Override
-    public MapsResponse update(Long id, MapsRequest request) {
+    public MapsResponse update(UUID id, MapsRequest request) {
         MapsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Maps not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class MapsServiceImpl implements MapsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         MapsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Maps not found with id: " + id));
         repository.delete(entity);

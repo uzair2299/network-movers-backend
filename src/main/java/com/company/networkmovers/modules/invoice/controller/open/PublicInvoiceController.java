@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.invoice.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.invoice.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.invoice.dto.response.InvoiceResponse;
 import com.company.networkmovers.modules.invoice.service.InvoiceService;
@@ -17,7 +19,7 @@ public class PublicInvoiceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InvoiceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<InvoiceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

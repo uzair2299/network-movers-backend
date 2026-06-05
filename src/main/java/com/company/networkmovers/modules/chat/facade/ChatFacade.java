@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.chat.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.chat.dto.request.ChatRequest;
 import com.company.networkmovers.modules.chat.dto.response.ChatResponse;
 import com.company.networkmovers.modules.chat.service.ChatService;
@@ -19,7 +21,7 @@ public class ChatFacade {
         return service.create(request);
     }
 
-    public ChatResponse findById(Long id) {
+    public ChatResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ChatFacade {
         return service.findAll();
     }
 
-    public ChatResponse update(Long id, ChatRequest request) {
+    public ChatResponse update(UUID id, ChatRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

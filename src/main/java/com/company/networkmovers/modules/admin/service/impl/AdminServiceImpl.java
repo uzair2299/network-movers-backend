@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.admin.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.admin.entity.AdminEntity;
 import com.company.networkmovers.modules.admin.repository.AdminRepository;
 import com.company.networkmovers.modules.admin.service.AdminService;
@@ -32,7 +34,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     @Transactional(readOnly = true)
-    public AdminResponse findById(Long id) {
+    public AdminResponse findById(UUID id) {
         AdminEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminResponse update(Long id, AdminRequest request) {
+    public AdminResponse update(UUID id, AdminRequest request) {
         AdminEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AdminEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Admin not found with id: " + id));
         repository.delete(entity);

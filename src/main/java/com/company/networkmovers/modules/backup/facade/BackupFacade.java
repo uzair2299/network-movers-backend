@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.backup.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.backup.dto.request.BackupRequest;
 import com.company.networkmovers.modules.backup.dto.response.BackupResponse;
 import com.company.networkmovers.modules.backup.service.BackupService;
@@ -19,7 +21,7 @@ public class BackupFacade {
         return service.create(request);
     }
 
-    public BackupResponse findById(Long id) {
+    public BackupResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class BackupFacade {
         return service.findAll();
     }
 
-    public BackupResponse update(Long id, BackupRequest request) {
+    public BackupResponse update(UUID id, BackupRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

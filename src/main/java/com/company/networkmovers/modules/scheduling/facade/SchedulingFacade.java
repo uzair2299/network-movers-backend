@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.scheduling.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.scheduling.dto.request.SchedulingRequest;
 import com.company.networkmovers.modules.scheduling.dto.response.SchedulingResponse;
 import com.company.networkmovers.modules.scheduling.service.SchedulingService;
@@ -19,7 +21,7 @@ public class SchedulingFacade {
         return service.create(request);
     }
 
-    public SchedulingResponse findById(Long id) {
+    public SchedulingResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class SchedulingFacade {
         return service.findAll();
     }
 
-    public SchedulingResponse update(Long id, SchedulingRequest request) {
+    public SchedulingResponse update(UUID id, SchedulingRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

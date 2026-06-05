@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public interface BookingHistoryRepository extends JpaRepository<BookingHistoryEntity, Long> {
@@ -16,5 +17,5 @@ public interface BookingHistoryRepository extends JpaRepository<BookingHistoryEn
            "LEFT JOIN FETCH h.newStatus ns " +
            "WHERE h.booking.id = :bookingId " +
            "ORDER BY h.createdAt DESC")
-    List<BookingHistoryEntity> findByBookingIdOrderByCreatedAtDescWithDetails(@Param("bookingId") Long bookingId);
+    List<BookingHistoryEntity> findByBookingIdOrderByCreatedAtDescWithDetails(@Param("bookingId") UUID bookingId);
 }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dispatcher.dto.response;
 
+import java.util.UUID;
+
 import lombok.*;
 import java.time.LocalDateTime;
 
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class DispatcherResponse {
-    private Long id;
+    private UUID id;
     private String name;
     private String description;
     private LocalDateTime createdAt;

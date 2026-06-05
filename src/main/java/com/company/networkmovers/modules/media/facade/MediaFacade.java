@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.media.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.media.dto.request.MediaRequest;
 import com.company.networkmovers.modules.media.dto.response.MediaResponse;
 import com.company.networkmovers.modules.media.service.MediaService;
@@ -19,7 +21,7 @@ public class MediaFacade {
         return service.create(request);
     }
 
-    public MediaResponse findById(Long id) {
+    public MediaResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class MediaFacade {
         return service.findAll();
     }
 
-    public MediaResponse update(Long id, MediaRequest request) {
+    public MediaResponse update(UUID id, MediaRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

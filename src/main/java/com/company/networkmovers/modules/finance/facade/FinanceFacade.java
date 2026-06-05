@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.finance.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.finance.dto.request.FinanceRequest;
 import com.company.networkmovers.modules.finance.dto.response.FinanceResponse;
 import com.company.networkmovers.modules.finance.service.FinanceService;
@@ -19,7 +21,7 @@ public class FinanceFacade {
         return service.create(request);
     }
 
-    public FinanceResponse findById(Long id) {
+    public FinanceResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class FinanceFacade {
         return service.findAll();
     }
 
-    public FinanceResponse update(Long id, FinanceRequest request) {
+    public FinanceResponse update(UUID id, FinanceRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

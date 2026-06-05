@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.review.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.review.dto.request.ReviewRequest;
 import com.company.networkmovers.modules.review.dto.response.ReviewResponse;
 import com.company.networkmovers.modules.review.service.ReviewService;
@@ -23,7 +25,7 @@ public class AdminReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReviewResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ReviewResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminReviewController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReviewResponse> update(@PathVariable Long id, @RequestBody ReviewRequest request) {
+    public ResponseEntity<ReviewResponse> update(@PathVariable UUID id, @RequestBody ReviewRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

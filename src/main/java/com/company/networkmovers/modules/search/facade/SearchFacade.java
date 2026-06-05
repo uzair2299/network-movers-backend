@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.search.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.search.dto.request.SearchRequest;
 import com.company.networkmovers.modules.search.dto.response.SearchResponse;
 import com.company.networkmovers.modules.search.service.SearchService;
@@ -19,7 +21,7 @@ public class SearchFacade {
         return service.create(request);
     }
 
-    public SearchResponse findById(Long id) {
+    public SearchResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class SearchFacade {
         return service.findAll();
     }
 
-    public SearchResponse update(Long id, SearchRequest request) {
+    public SearchResponse update(UUID id, SearchRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

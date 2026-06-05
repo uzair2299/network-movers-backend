@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.vehicle.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.vehicle.dto.request.VehicleRequest;
 import com.company.networkmovers.modules.vehicle.dto.response.VehicleResponse;
 import com.company.networkmovers.modules.vehicle.service.VehicleService;
@@ -19,7 +21,7 @@ public class VehicleFacade {
         return service.create(request);
     }
 
-    public VehicleResponse findById(Long id) {
+    public VehicleResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class VehicleFacade {
         return service.findAll();
     }
 
-    public VehicleResponse update(Long id, VehicleRequest request) {
+    public VehicleResponse update(UUID id, VehicleRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

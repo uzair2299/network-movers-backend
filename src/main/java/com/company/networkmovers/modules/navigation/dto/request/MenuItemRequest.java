@@ -3,6 +3,7 @@ package com.company.networkmovers.modules.navigation.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -25,7 +26,7 @@ public class MenuItemRequest {
     @NotNull(message = "Sort order is required")
     private Integer sortOrder;
 
-    private Long permissionId;
+    private UUID permissionId;
 
     @Builder.Default
     private boolean active = true;

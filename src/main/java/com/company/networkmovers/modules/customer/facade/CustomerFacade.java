@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.customer.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.customer.dto.request.CustomerRequest;
 import com.company.networkmovers.modules.customer.dto.response.CustomerResponse;
 import com.company.networkmovers.modules.customer.service.CustomerService;
@@ -19,7 +21,7 @@ public class CustomerFacade {
         return service.create(request);
     }
 
-    public CustomerResponse findById(Long id) {
+    public CustomerResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class CustomerFacade {
         return service.findAll();
     }
 
-    public CustomerResponse update(Long id, CustomerRequest request) {
+    public CustomerResponse update(UUID id, CustomerRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

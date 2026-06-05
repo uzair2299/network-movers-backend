@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.driver.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.driver.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.driver.dto.response.DriverResponse;
 import com.company.networkmovers.modules.driver.service.DriverService;
@@ -17,7 +19,7 @@ public class PublicDriverController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DriverResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DriverResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.review.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.review.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.review.dto.response.ReviewResponse;
 import com.company.networkmovers.modules.review.service.ReviewService;
@@ -17,7 +19,7 @@ public class PublicReviewController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReviewResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ReviewResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

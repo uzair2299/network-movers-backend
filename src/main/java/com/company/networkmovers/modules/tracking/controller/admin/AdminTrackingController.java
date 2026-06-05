@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.tracking.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.tracking.dto.request.TrackingRequest;
 import com.company.networkmovers.modules.tracking.dto.response.TrackingResponse;
 import com.company.networkmovers.modules.tracking.service.TrackingService;
@@ -23,7 +25,7 @@ public class AdminTrackingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TrackingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<TrackingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminTrackingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TrackingResponse> update(@PathVariable Long id, @RequestBody TrackingRequest request) {
+    public ResponseEntity<TrackingResponse> update(@PathVariable UUID id, @RequestBody TrackingRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

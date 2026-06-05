@@ -4,6 +4,7 @@ import com.company.networkmovers.modules.property.dto.response.MoveStatusRespons
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class BookingHistoryResponse {
     private Long id;
-    private Long bookingId;
+    private UUID bookingId;
     private MoveStatusResponse previousStatus;
     private MoveStatusResponse newStatus;
     private String notes;

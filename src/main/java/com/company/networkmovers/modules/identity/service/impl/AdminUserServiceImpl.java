@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,7 +80,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserResponse update(Long id, AdminUserRequest request) {
+    public AdminUserResponse update(UUID id, AdminUserRequest request) {
         Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -124,7 +125,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserResponse toggleActive(Long id) {
+    public AdminUserResponse toggleActive(UUID id) {
         Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -139,7 +140,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public void softDelete(Long id) {
+    public void softDelete(UUID id) {
         Long currentUserId = com.company.networkmovers.security.util.SecurityUtils.getCurrentUserId();
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -203,7 +204,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public AdminUserResponse findById(Long id) {
+    public AdminUserResponse findById(UUID id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         List<String> roles = userRoleRepository.findByUserId(user.getId()).stream()
@@ -212,7 +213,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         return mapToResponse(user, user.getProfile(), roles);
     }
 
-    private void assignRoles(Long userId, List<String> roleNames) {
+    private void assignRoles(UUID userId, List<String> roleNames) {
         List<UserRole> existingUserRoles = userRoleRepository.findByUserId(userId);
         userRoleRepository.deleteAll(existingUserRoles);
 

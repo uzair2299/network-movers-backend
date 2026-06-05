@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.recommendation.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.recommendation.entity.RecommendationEntity;
 import com.company.networkmovers.modules.recommendation.repository.RecommendationRepository;
 import com.company.networkmovers.modules.recommendation.service.RecommendationService;
@@ -32,7 +34,7 @@ public class RecommendationServiceImpl implements RecommendationService {
 
     @Override
     @Transactional(readOnly = true)
-    public RecommendationResponse findById(Long id) {
+    public RecommendationResponse findById(UUID id) {
         RecommendationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recommendation not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public RecommendationResponse update(Long id, RecommendationRequest request) {
+    public RecommendationResponse update(UUID id, RecommendationRequest request) {
         RecommendationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recommendation not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         RecommendationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Recommendation not found with id: " + id));
         repository.delete(entity);

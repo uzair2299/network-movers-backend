@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.report.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.report.entity.ReportEntity;
 import com.company.networkmovers.modules.report.repository.ReportRepository;
 import com.company.networkmovers.modules.report.service.ReportService;
@@ -32,7 +34,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     @Transactional(readOnly = true)
-    public ReportResponse findById(Long id) {
+    public ReportResponse findById(UUID id) {
         ReportEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReportResponse update(Long id, ReportRequest request) {
+    public ReportResponse update(UUID id, ReportRequest request) {
         ReportEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ReportEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Report not found with id: " + id));
         repository.delete(entity);

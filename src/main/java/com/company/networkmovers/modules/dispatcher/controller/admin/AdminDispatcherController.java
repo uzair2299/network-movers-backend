@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.dispatcher.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.dispatcher.dto.request.DispatcherRequest;
 import com.company.networkmovers.modules.dispatcher.dto.response.DispatcherResponse;
 import com.company.networkmovers.modules.dispatcher.service.DispatcherService;
@@ -23,7 +25,7 @@ public class AdminDispatcherController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DispatcherResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DispatcherResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminDispatcherController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DispatcherResponse> update(@PathVariable Long id, @RequestBody DispatcherRequest request) {
+    public ResponseEntity<DispatcherResponse> update(@PathVariable UUID id, @RequestBody DispatcherRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

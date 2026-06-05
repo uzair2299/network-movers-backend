@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.ai.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.ai.dto.request.AiRequest;
 import com.company.networkmovers.modules.ai.dto.response.AiResponse;
 import com.company.networkmovers.modules.ai.service.AiService;
@@ -19,7 +21,7 @@ public class AiFacade {
         return service.create(request);
     }
 
-    public AiResponse findById(Long id) {
+    public AiResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class AiFacade {
         return service.findAll();
     }
 
-    public AiResponse update(Long id, AiRequest request) {
+    public AiResponse update(UUID id, AiRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

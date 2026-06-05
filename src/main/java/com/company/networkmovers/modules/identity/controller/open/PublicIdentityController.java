@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.identity.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.identity.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.identity.dto.response.IdentityResponse;
 import com.company.networkmovers.modules.identity.service.IdentityService;
@@ -17,7 +19,7 @@ public class PublicIdentityController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<IdentityResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<IdentityResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

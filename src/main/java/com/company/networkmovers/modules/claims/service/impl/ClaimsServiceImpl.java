@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.claims.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.claims.entity.ClaimsEntity;
 import com.company.networkmovers.modules.claims.repository.ClaimsRepository;
 import com.company.networkmovers.modules.claims.service.ClaimsService;
@@ -32,7 +34,7 @@ public class ClaimsServiceImpl implements ClaimsService {
 
     @Override
     @Transactional(readOnly = true)
-    public ClaimsResponse findById(Long id) {
+    public ClaimsResponse findById(UUID id) {
         ClaimsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Claims not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ClaimsServiceImpl implements ClaimsService {
     }
 
     @Override
-    public ClaimsResponse update(Long id, ClaimsRequest request) {
+    public ClaimsResponse update(UUID id, ClaimsRequest request) {
         ClaimsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Claims not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ClaimsServiceImpl implements ClaimsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ClaimsEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Claims not found with id: " + id));
         repository.delete(entity);

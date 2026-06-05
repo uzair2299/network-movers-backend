@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.geofence.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.geofence.dto.request.GeofenceRequest;
 import com.company.networkmovers.modules.geofence.dto.response.GeofenceResponse;
 import com.company.networkmovers.modules.geofence.service.GeofenceService;
@@ -23,7 +25,7 @@ public class AdminGeofenceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GeofenceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<GeofenceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminGeofenceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GeofenceResponse> update(@PathVariable Long id, @RequestBody GeofenceRequest request) {
+    public ResponseEntity<GeofenceResponse> update(@PathVariable UUID id, @RequestBody GeofenceRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

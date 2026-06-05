@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.identity.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.identity.entity.IdentityEntity;
 import com.company.networkmovers.modules.identity.repository.IdentityRepository;
 import com.company.networkmovers.modules.identity.service.IdentityService;
@@ -32,7 +34,7 @@ public class IdentityServiceImpl implements IdentityService {
 
     @Override
     @Transactional(readOnly = true)
-    public IdentityResponse findById(Long id) {
+    public IdentityResponse findById(UUID id) {
         IdentityEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Identity not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class IdentityServiceImpl implements IdentityService {
     }
 
     @Override
-    public IdentityResponse update(Long id, IdentityRequest request) {
+    public IdentityResponse update(UUID id, IdentityRequest request) {
         IdentityEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Identity not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class IdentityServiceImpl implements IdentityService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         IdentityEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Identity not found with id: " + id));
         repository.delete(entity);

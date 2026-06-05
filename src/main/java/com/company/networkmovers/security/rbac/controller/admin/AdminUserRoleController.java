@@ -55,7 +55,7 @@ public class AdminUserRoleController {
     @GetMapping("/user/{userId}")
     @Operation(summary = "Get roles for user", description = "Retrieves all roles currently assigned to a specific user.")
     public ResponseEntity<List<UserRoleResponse>> getRolesForUser(
-            @Parameter(description = "ID of the user", required = true) @PathVariable Long userId) {
+            @Parameter(description = "ID of the user", required = true) @PathVariable UUID userId) {
         return ResponseEntity.ok(userRoleService.getRolesForUser(userId));
     }
 

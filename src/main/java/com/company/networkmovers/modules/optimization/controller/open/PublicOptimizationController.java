@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.optimization.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.optimization.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.optimization.dto.response.OptimizationResponse;
 import com.company.networkmovers.modules.optimization.service.OptimizationService;
@@ -17,7 +19,7 @@ public class PublicOptimizationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OptimizationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<OptimizationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

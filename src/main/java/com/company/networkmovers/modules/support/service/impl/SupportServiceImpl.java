@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.support.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.support.entity.SupportEntity;
 import com.company.networkmovers.modules.support.repository.SupportRepository;
 import com.company.networkmovers.modules.support.service.SupportService;
@@ -32,7 +34,7 @@ public class SupportServiceImpl implements SupportService {
 
     @Override
     @Transactional(readOnly = true)
-    public SupportResponse findById(Long id) {
+    public SupportResponse findById(UUID id) {
         SupportEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Support not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class SupportServiceImpl implements SupportService {
     }
 
     @Override
-    public SupportResponse update(Long id, SupportRequest request) {
+    public SupportResponse update(UUID id, SupportRequest request) {
         SupportEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Support not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class SupportServiceImpl implements SupportService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         SupportEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Support not found with id: " + id));
         repository.delete(entity);

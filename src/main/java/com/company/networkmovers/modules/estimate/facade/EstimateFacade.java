@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.estimate.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.estimate.dto.request.EstimateRequest;
 import com.company.networkmovers.modules.estimate.dto.response.EstimateResponse;
 import com.company.networkmovers.modules.estimate.service.EstimateService;
@@ -19,7 +21,7 @@ public class EstimateFacade {
         return service.create(request);
     }
 
-    public EstimateResponse findById(Long id) {
+    public EstimateResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class EstimateFacade {
         return service.findAll();
     }
 
-    public EstimateResponse update(Long id, EstimateRequest request) {
+    public EstimateResponse update(UUID id, EstimateRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

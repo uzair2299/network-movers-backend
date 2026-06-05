@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.leave.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.leave.entity.LeaveEntity;
 import com.company.networkmovers.modules.leave.repository.LeaveRepository;
 import com.company.networkmovers.modules.leave.service.LeaveService;
@@ -32,7 +34,7 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     @Transactional(readOnly = true)
-    public LeaveResponse findById(Long id) {
+    public LeaveResponse findById(UUID id) {
         LeaveEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Leave not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public LeaveResponse update(Long id, LeaveRequest request) {
+    public LeaveResponse update(UUID id, LeaveRequest request) {
         LeaveEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Leave not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         LeaveEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Leave not found with id: " + id));
         repository.delete(entity);

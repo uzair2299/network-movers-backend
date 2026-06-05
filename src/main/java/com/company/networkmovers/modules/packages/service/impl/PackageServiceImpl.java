@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.packages.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.packages.entity.PackageEntity;
 import com.company.networkmovers.modules.packages.repository.PackageRepository;
 import com.company.networkmovers.modules.packages.service.PackageService;
@@ -32,7 +34,7 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     @Transactional(readOnly = true)
-    public PackageResponse findById(Long id) {
+    public PackageResponse findById(UUID id) {
         PackageEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Package not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public PackageResponse update(Long id, PackageRequest request) {
+    public PackageResponse update(UUID id, PackageRequest request) {
         PackageEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Package not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class PackageServiceImpl implements PackageService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         PackageEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Package not found with id: " + id));
         repository.delete(entity);

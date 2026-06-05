@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.analytics.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.analytics.dto.request.AnalyticsRequest;
 import com.company.networkmovers.modules.analytics.dto.response.AnalyticsResponse;
 import com.company.networkmovers.modules.analytics.service.AnalyticsService;
@@ -23,7 +25,7 @@ public class AdminAnalyticsController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnalyticsResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AnalyticsResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminAnalyticsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnalyticsResponse> update(@PathVariable Long id, @RequestBody AnalyticsRequest request) {
+    public ResponseEntity<AnalyticsResponse> update(@PathVariable UUID id, @RequestBody AnalyticsRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

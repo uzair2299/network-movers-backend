@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.recommendation.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.recommendation.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.recommendation.dto.response.RecommendationResponse;
 import com.company.networkmovers.modules.recommendation.service.RecommendationService;
@@ -17,7 +19,7 @@ public class PublicRecommendationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RecommendationResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<RecommendationResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

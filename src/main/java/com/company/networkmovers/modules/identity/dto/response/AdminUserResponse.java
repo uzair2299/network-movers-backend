@@ -4,13 +4,15 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class AdminUserResponse {
-    private Long id;
+    private UUID id;
     private String username;
     private String email;
     private boolean enabled;

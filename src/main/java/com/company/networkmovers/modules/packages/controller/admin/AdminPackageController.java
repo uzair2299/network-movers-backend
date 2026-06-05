@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.packages.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.packages.dto.request.PackageRequest;
 import com.company.networkmovers.modules.packages.dto.response.PackageResponse;
 import com.company.networkmovers.modules.packages.service.PackageService;
@@ -23,7 +25,7 @@ public class AdminPackageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PackageResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<PackageResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminPackageController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PackageResponse> update(@PathVariable Long id, @RequestBody PackageRequest request) {
+    public ResponseEntity<PackageResponse> update(@PathVariable UUID id, @RequestBody PackageRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

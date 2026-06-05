@@ -24,7 +24,7 @@ public class JpaAuditingConfig {
 
             Object principal = authentication.getPrincipal();
             if (principal instanceof CustomUserDetails) {
-                return Optional.of(((CustomUserDetails) principal).getId());
+                return Optional.of(((CustomUserDetails) principal).getAuditId());
             }
 
             return Optional.empty();

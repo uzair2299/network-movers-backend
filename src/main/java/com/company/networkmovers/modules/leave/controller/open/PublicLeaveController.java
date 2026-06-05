@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.leave.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.leave.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.leave.dto.response.LeaveResponse;
 import com.company.networkmovers.modules.leave.service.LeaveService;
@@ -17,7 +19,7 @@ public class PublicLeaveController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<LeaveResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<LeaveResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

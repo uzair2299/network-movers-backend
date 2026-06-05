@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.partner.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.partner.dto.request.PartnerRequest;
 import com.company.networkmovers.modules.partner.dto.response.PartnerResponse;
 import com.company.networkmovers.modules.partner.service.PartnerService;
@@ -19,7 +21,7 @@ public class PartnerFacade {
         return service.create(request);
     }
 
-    public PartnerResponse findById(Long id) {
+    public PartnerResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class PartnerFacade {
         return service.findAll();
     }
 
-    public PartnerResponse update(Long id, PartnerRequest request) {
+    public PartnerResponse update(UUID id, PartnerRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

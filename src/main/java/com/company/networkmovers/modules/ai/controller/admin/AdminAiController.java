@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.ai.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.ai.dto.request.AiRequest;
 import com.company.networkmovers.modules.ai.dto.response.AiResponse;
 import com.company.networkmovers.modules.ai.service.AiService;
@@ -23,7 +25,7 @@ public class AdminAiController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AiResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AiResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminAiController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AiResponse> update(@PathVariable Long id, @RequestBody AiRequest request) {
+    public ResponseEntity<AiResponse> update(@PathVariable UUID id, @RequestBody AiRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

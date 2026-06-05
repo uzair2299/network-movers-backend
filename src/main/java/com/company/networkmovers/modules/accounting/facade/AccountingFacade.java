@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.accounting.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.accounting.dto.request.AccountingRequest;
 import com.company.networkmovers.modules.accounting.dto.response.AccountingResponse;
 import com.company.networkmovers.modules.accounting.service.AccountingService;
@@ -19,7 +21,7 @@ public class AccountingFacade {
         return service.create(request);
     }
 
-    public AccountingResponse findById(Long id) {
+    public AccountingResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class AccountingFacade {
         return service.findAll();
     }
 
-    public AccountingResponse update(Long id, AccountingRequest request) {
+    public AccountingResponse update(UUID id, AccountingRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

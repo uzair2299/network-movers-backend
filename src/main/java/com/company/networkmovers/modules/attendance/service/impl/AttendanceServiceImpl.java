@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.attendance.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.attendance.entity.AttendanceEntity;
 import com.company.networkmovers.modules.attendance.repository.AttendanceRepository;
 import com.company.networkmovers.modules.attendance.service.AttendanceService;
@@ -32,7 +34,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     @Transactional(readOnly = true)
-    public AttendanceResponse findById(Long id) {
+    public AttendanceResponse findById(UUID id) {
         AttendanceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Attendance not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public AttendanceResponse update(Long id, AttendanceRequest request) {
+    public AttendanceResponse update(UUID id, AttendanceRequest request) {
         AttendanceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Attendance not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AttendanceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Attendance not found with id: " + id));
         repository.delete(entity);

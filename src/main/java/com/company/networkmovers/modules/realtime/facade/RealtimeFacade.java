@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.realtime.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.realtime.dto.request.RealtimeRequest;
 import com.company.networkmovers.modules.realtime.dto.response.RealtimeResponse;
 import com.company.networkmovers.modules.realtime.service.RealtimeService;
@@ -19,7 +21,7 @@ public class RealtimeFacade {
         return service.create(request);
     }
 
-    public RealtimeResponse findById(Long id) {
+    public RealtimeResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class RealtimeFacade {
         return service.findAll();
     }
 
-    public RealtimeResponse update(Long id, RealtimeRequest request) {
+    public RealtimeResponse update(UUID id, RealtimeRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

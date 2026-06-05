@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.subscription.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.subscription.dto.request.SubscriptionRequest;
 import com.company.networkmovers.modules.subscription.dto.response.SubscriptionResponse;
 import com.company.networkmovers.modules.subscription.service.SubscriptionService;
@@ -19,7 +21,7 @@ public class SubscriptionFacade {
         return service.create(request);
     }
 
-    public SubscriptionResponse findById(Long id) {
+    public SubscriptionResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class SubscriptionFacade {
         return service.findAll();
     }
 
-    public SubscriptionResponse update(Long id, SubscriptionRequest request) {
+    public SubscriptionResponse update(UUID id, SubscriptionRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

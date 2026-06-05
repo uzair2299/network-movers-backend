@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.backup.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.backup.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.backup.dto.response.BackupResponse;
 import com.company.networkmovers.modules.backup.service.BackupService;
@@ -17,7 +19,7 @@ public class PublicBackupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BackupResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<BackupResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

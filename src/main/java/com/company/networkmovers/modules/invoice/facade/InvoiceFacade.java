@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.invoice.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.invoice.dto.request.InvoiceRequest;
 import com.company.networkmovers.modules.invoice.dto.response.InvoiceResponse;
 import com.company.networkmovers.modules.invoice.service.InvoiceService;
@@ -19,7 +21,7 @@ public class InvoiceFacade {
         return service.create(request);
     }
 
-    public InvoiceResponse findById(Long id) {
+    public InvoiceResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class InvoiceFacade {
         return service.findAll();
     }
 
-    public InvoiceResponse update(Long id, InvoiceRequest request) {
+    public InvoiceResponse update(UUID id, InvoiceRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

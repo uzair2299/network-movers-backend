@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.finance.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.finance.dto.request.FinanceRequest;
 import com.company.networkmovers.modules.finance.dto.response.FinanceResponse;
 import com.company.networkmovers.modules.finance.service.FinanceService;
@@ -23,7 +25,7 @@ public class AdminFinanceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FinanceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FinanceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminFinanceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FinanceResponse> update(@PathVariable Long id, @RequestBody FinanceRequest request) {
+    public ResponseEntity<FinanceResponse> update(@PathVariable UUID id, @RequestBody FinanceRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.booking.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.booking.dto.request.BookingRequest;
 import com.company.networkmovers.modules.booking.dto.response.BookingResponse;
 import com.company.networkmovers.modules.booking.service.BookingService;
@@ -19,7 +21,7 @@ public class BookingFacade {
         return service.create(request);
     }
 
-    public BookingResponse findById(Long id) {
+    public BookingResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class BookingFacade {
         return service.getAllActive(requestParams);
     }
 
-    public BookingResponse update(Long id, BookingRequest request) {
+    public BookingResponse update(UUID id, BookingRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

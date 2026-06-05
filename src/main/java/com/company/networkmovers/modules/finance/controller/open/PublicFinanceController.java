@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.finance.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.finance.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.finance.dto.response.FinanceResponse;
 import com.company.networkmovers.modules.finance.service.FinanceService;
@@ -17,7 +19,7 @@ public class PublicFinanceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FinanceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FinanceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

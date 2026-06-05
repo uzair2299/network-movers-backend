@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.driver.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.driver.dto.request.DriverRequest;
 import com.company.networkmovers.modules.driver.dto.response.DriverResponse;
 import com.company.networkmovers.modules.driver.service.DriverService;
@@ -23,7 +25,7 @@ public class AdminDriverController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DriverResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DriverResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminDriverController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DriverResponse> update(@PathVariable Long id, @RequestBody DriverRequest request) {
+    public ResponseEntity<DriverResponse> update(@PathVariable UUID id, @RequestBody DriverRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

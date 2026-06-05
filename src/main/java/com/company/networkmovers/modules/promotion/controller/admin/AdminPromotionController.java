@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.promotion.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.promotion.dto.request.PromotionRequest;
 import com.company.networkmovers.modules.promotion.dto.response.PromotionResponse;
 import com.company.networkmovers.modules.promotion.service.PromotionService;
@@ -23,7 +25,7 @@ public class AdminPromotionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PromotionResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<PromotionResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminPromotionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PromotionResponse> update(@PathVariable Long id, @RequestBody PromotionRequest request) {
+    public ResponseEntity<PromotionResponse> update(@PathVariable UUID id, @RequestBody PromotionRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

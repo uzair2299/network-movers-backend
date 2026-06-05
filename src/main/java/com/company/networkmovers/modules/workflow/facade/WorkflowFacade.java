@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.workflow.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.workflow.dto.request.WorkflowRequest;
 import com.company.networkmovers.modules.workflow.dto.response.WorkflowResponse;
 import com.company.networkmovers.modules.workflow.service.WorkflowService;
@@ -19,7 +21,7 @@ public class WorkflowFacade {
         return service.create(request);
     }
 
-    public WorkflowResponse findById(Long id) {
+    public WorkflowResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class WorkflowFacade {
         return service.findAll();
     }
 
-    public WorkflowResponse update(Long id, WorkflowRequest request) {
+    public WorkflowResponse update(UUID id, WorkflowRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

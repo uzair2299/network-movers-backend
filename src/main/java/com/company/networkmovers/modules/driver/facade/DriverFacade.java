@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.driver.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.driver.dto.request.DriverRequest;
 import com.company.networkmovers.modules.driver.dto.response.DriverResponse;
 import com.company.networkmovers.modules.driver.service.DriverService;
@@ -19,7 +21,7 @@ public class DriverFacade {
         return service.create(request);
     }
 
-    public DriverResponse findById(Long id) {
+    public DriverResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class DriverFacade {
         return service.findAll();
     }
 
-    public DriverResponse update(Long id, DriverRequest request) {
+    public DriverResponse update(UUID id, DriverRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

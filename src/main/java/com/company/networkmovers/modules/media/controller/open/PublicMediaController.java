@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.media.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.media.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.media.dto.response.MediaResponse;
 import com.company.networkmovers.modules.media.service.MediaService;
@@ -17,7 +19,7 @@ public class PublicMediaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MediaResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<MediaResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

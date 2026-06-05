@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.analytics.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.analytics.dto.request.AnalyticsRequest;
 import com.company.networkmovers.modules.analytics.dto.response.AnalyticsResponse;
 import com.company.networkmovers.modules.analytics.service.AnalyticsService;
@@ -19,7 +21,7 @@ public class AnalyticsFacade {
         return service.create(request);
     }
 
-    public AnalyticsResponse findById(Long id) {
+    public AnalyticsResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class AnalyticsFacade {
         return service.findAll();
     }
 
-    public AnalyticsResponse update(Long id, AnalyticsRequest request) {
+    public AnalyticsResponse update(UUID id, AnalyticsRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

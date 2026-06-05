@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.hr.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.hr.entity.HrEntity;
 import com.company.networkmovers.modules.hr.repository.HrRepository;
 import com.company.networkmovers.modules.hr.service.HrService;
@@ -32,7 +34,7 @@ public class HrServiceImpl implements HrService {
 
     @Override
     @Transactional(readOnly = true)
-    public HrResponse findById(Long id) {
+    public HrResponse findById(UUID id) {
         HrEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Hr not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class HrServiceImpl implements HrService {
     }
 
     @Override
-    public HrResponse update(Long id, HrRequest request) {
+    public HrResponse update(UUID id, HrRequest request) {
         HrEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Hr not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class HrServiceImpl implements HrService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         HrEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Hr not found with id: " + id));
         repository.delete(entity);

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.automation.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.automation.entity.AutomationEntity;
 import com.company.networkmovers.modules.automation.repository.AutomationRepository;
 import com.company.networkmovers.modules.automation.service.AutomationService;
@@ -32,7 +34,7 @@ public class AutomationServiceImpl implements AutomationService {
 
     @Override
     @Transactional(readOnly = true)
-    public AutomationResponse findById(Long id) {
+    public AutomationResponse findById(UUID id) {
         AutomationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Automation not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AutomationServiceImpl implements AutomationService {
     }
 
     @Override
-    public AutomationResponse update(Long id, AutomationRequest request) {
+    public AutomationResponse update(UUID id, AutomationRequest request) {
         AutomationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Automation not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AutomationServiceImpl implements AutomationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AutomationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Automation not found with id: " + id));
         repository.delete(entity);

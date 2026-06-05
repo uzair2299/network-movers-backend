@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.review.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.review.entity.ReviewEntity;
 import com.company.networkmovers.modules.review.repository.ReviewRepository;
 import com.company.networkmovers.modules.review.service.ReviewService;
@@ -32,7 +34,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional(readOnly = true)
-    public ReviewResponse findById(Long id) {
+    public ReviewResponse findById(UUID id) {
         ReviewEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewResponse update(Long id, ReviewRequest request) {
+    public ReviewResponse update(UUID id, ReviewRequest request) {
         ReviewEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         ReviewEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with id: " + id));
         repository.delete(entity);

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.automation.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.automation.dto.request.AutomationRequest;
 import com.company.networkmovers.modules.automation.dto.response.AutomationResponse;
 import com.company.networkmovers.modules.automation.service.AutomationService;
@@ -19,7 +21,7 @@ public class AutomationFacade {
         return service.create(request);
     }
 
-    public AutomationResponse findById(Long id) {
+    public AutomationResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class AutomationFacade {
         return service.findAll();
     }
 
-    public AutomationResponse update(Long id, AutomationRequest request) {
+    public AutomationResponse update(UUID id, AutomationRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

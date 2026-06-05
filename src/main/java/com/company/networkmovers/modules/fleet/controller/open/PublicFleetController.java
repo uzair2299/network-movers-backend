@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.fleet.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.fleet.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.fleet.dto.response.FleetResponse;
 import com.company.networkmovers.modules.fleet.service.FleetService;
@@ -17,7 +19,7 @@ public class PublicFleetController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FleetResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FleetResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.hr.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.hr.dto.request.HrRequest;
 import com.company.networkmovers.modules.hr.dto.response.HrResponse;
 import com.company.networkmovers.modules.hr.service.HrService;
@@ -19,7 +21,7 @@ public class HrFacade {
         return service.create(request);
     }
 
-    public HrResponse findById(Long id) {
+    public HrResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class HrFacade {
         return service.findAll();
     }
 
-    public HrResponse update(Long id, HrRequest request) {
+    public HrResponse update(UUID id, HrRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

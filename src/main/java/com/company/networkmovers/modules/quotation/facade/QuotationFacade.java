@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.quotation.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.quotation.dto.request.QuotationRequest;
 import com.company.networkmovers.modules.quotation.dto.response.QuotationResponse;
 import com.company.networkmovers.modules.quotation.service.QuotationService;
@@ -19,7 +21,7 @@ public class QuotationFacade {
         return service.create(request);
     }
 
-    public QuotationResponse findById(Long id) {
+    public QuotationResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class QuotationFacade {
         return service.findAll();
     }
 
-    public QuotationResponse update(Long id, QuotationRequest request) {
+    public QuotationResponse update(UUID id, QuotationRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

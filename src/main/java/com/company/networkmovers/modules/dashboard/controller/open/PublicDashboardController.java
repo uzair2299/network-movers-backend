@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.dashboard.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.dashboard.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.dashboard.dto.response.DashboardResponse;
 import com.company.networkmovers.modules.dashboard.service.DashboardService;
@@ -17,7 +19,7 @@ public class PublicDashboardController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DashboardResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DashboardResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

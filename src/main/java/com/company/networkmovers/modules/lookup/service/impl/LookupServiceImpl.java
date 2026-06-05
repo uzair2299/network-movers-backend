@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.lookup.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.lookup.entity.LookupEntity;
 import com.company.networkmovers.modules.lookup.repository.LookupRepository;
 import com.company.networkmovers.modules.lookup.service.LookupService;
@@ -32,7 +34,7 @@ public class LookupServiceImpl implements LookupService {
 
     @Override
     @Transactional(readOnly = true)
-    public LookupResponse findById(Long id) {
+    public LookupResponse findById(UUID id) {
         LookupEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Lookup not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class LookupServiceImpl implements LookupService {
     }
 
     @Override
-    public LookupResponse update(Long id, LookupRequest request) {
+    public LookupResponse update(UUID id, LookupRequest request) {
         LookupEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Lookup not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class LookupServiceImpl implements LookupService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         LookupEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Lookup not found with id: " + id));
         repository.delete(entity);

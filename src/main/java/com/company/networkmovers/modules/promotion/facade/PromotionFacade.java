@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.promotion.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.promotion.dto.request.PromotionRequest;
 import com.company.networkmovers.modules.promotion.dto.response.PromotionResponse;
 import com.company.networkmovers.modules.promotion.service.PromotionService;
@@ -19,7 +21,7 @@ public class PromotionFacade {
         return service.create(request);
     }
 
-    public PromotionResponse findById(Long id) {
+    public PromotionResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class PromotionFacade {
         return service.findAll();
     }
 
-    public PromotionResponse update(Long id, PromotionRequest request) {
+    public PromotionResponse update(UUID id, PromotionRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.contract.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.contract.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.contract.dto.response.ContractResponse;
 import com.company.networkmovers.modules.contract.service.ContractService;
@@ -17,7 +19,7 @@ public class PublicContractController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ContractResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<ContractResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

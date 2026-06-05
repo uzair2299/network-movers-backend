@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.contract.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.contract.dto.request.ContractRequest;
 import com.company.networkmovers.modules.contract.dto.response.ContractResponse;
 import com.company.networkmovers.modules.contract.service.ContractService;
@@ -19,7 +21,7 @@ public class ContractFacade {
         return service.create(request);
     }
 
-    public ContractResponse findById(Long id) {
+    public ContractResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class ContractFacade {
         return service.findAll();
     }
 
-    public ContractResponse update(Long id, ContractRequest request) {
+    public ContractResponse update(UUID id, ContractRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

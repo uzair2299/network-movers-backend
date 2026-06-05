@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.scheduling.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.scheduling.dto.request.SchedulingRequest;
 import com.company.networkmovers.modules.scheduling.dto.response.SchedulingResponse;
 import com.company.networkmovers.modules.scheduling.service.SchedulingService;
@@ -23,7 +25,7 @@ public class AdminSchedulingController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SchedulingResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<SchedulingResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminSchedulingController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SchedulingResponse> update(@PathVariable Long id, @RequestBody SchedulingRequest request) {
+    public ResponseEntity<SchedulingResponse> update(@PathVariable UUID id, @RequestBody SchedulingRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

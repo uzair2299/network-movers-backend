@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.coupon.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.coupon.entity.CouponEntity;
 import com.company.networkmovers.modules.coupon.repository.CouponRepository;
 import com.company.networkmovers.modules.coupon.service.CouponService;
@@ -32,7 +34,7 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     @Transactional(readOnly = true)
-    public CouponResponse findById(Long id) {
+    public CouponResponse findById(UUID id) {
         CouponEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Coupon not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public CouponResponse update(Long id, CouponRequest request) {
+    public CouponResponse update(UUID id, CouponRequest request) {
         CouponEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Coupon not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         CouponEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Coupon not found with id: " + id));
         repository.delete(entity);

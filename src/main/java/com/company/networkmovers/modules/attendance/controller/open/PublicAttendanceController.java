@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.attendance.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.attendance.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.attendance.dto.response.AttendanceResponse;
 import com.company.networkmovers.modules.attendance.service.AttendanceService;
@@ -17,7 +19,7 @@ public class PublicAttendanceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AttendanceResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<AttendanceResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.partner.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.partner.entity.PartnerEntity;
 import com.company.networkmovers.modules.partner.repository.PartnerRepository;
 import com.company.networkmovers.modules.partner.service.PartnerService;
@@ -32,7 +34,7 @@ public class PartnerServiceImpl implements PartnerService {
 
     @Override
     @Transactional(readOnly = true)
-    public PartnerResponse findById(Long id) {
+    public PartnerResponse findById(UUID id) {
         PartnerEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Partner not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public PartnerResponse update(Long id, PartnerRequest request) {
+    public PartnerResponse update(UUID id, PartnerRequest request) {
         PartnerEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Partner not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class PartnerServiceImpl implements PartnerService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         PartnerEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Partner not found with id: " + id));
         repository.delete(entity);

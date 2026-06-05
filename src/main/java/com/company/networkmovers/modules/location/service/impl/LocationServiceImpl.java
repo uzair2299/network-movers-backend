@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.location.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.location.entity.LocationEntity;
 import com.company.networkmovers.modules.location.repository.LocationRepository;
 import com.company.networkmovers.modules.location.service.LocationService;
@@ -32,7 +34,7 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     @Transactional(readOnly = true)
-    public LocationResponse findById(Long id) {
+    public LocationResponse findById(UUID id) {
         LocationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public LocationResponse update(Long id, LocationRequest request) {
+    public LocationResponse update(UUID id, LocationRequest request) {
         LocationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         LocationEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
         repository.delete(entity);

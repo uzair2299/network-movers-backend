@@ -1,4 +1,6 @@
-package com.company.networkmovers.modules.dispatch.controller.open; // Pluralized subpackage to prevent name conflicts
+package com.company.networkmovers.modules.dispatch.controller.open;
+
+import java.util.UUID; // Pluralized subpackage to prevent name conflicts
 
 import com.company.networkmovers.modules.dispatch.dto.response.DispatchResponse;
 import com.company.networkmovers.modules.dispatch.service.DispatchService;
@@ -17,7 +19,7 @@ public class PublicDispatchController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DispatchResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<DispatchResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 

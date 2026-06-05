@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.movingitem.facade;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.movingitem.dto.request.MovingitemRequest;
 import com.company.networkmovers.modules.movingitem.dto.response.MovingitemResponse;
 import com.company.networkmovers.modules.movingitem.service.MovingitemService;
@@ -19,7 +21,7 @@ public class MovingitemFacade {
         return service.create(request);
     }
 
-    public MovingitemResponse findById(Long id) {
+    public MovingitemResponse findById(UUID id) {
         return service.findById(id);
     }
 
@@ -27,11 +29,11 @@ public class MovingitemFacade {
         return service.findAll();
     }
 
-    public MovingitemResponse update(Long id, MovingitemRequest request) {
+    public MovingitemResponse update(UUID id, MovingitemRequest request) {
         return service.update(id, request);
     }
 
-    public void delete(Long id) {
+    public void delete(UUID id) {
         service.delete(id);
     }
 }

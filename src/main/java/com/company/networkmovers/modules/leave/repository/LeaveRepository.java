@@ -1,9 +1,11 @@
 package com.company.networkmovers.modules.leave.repository;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.leave.entity.LeaveEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LeaveRepository extends JpaRepository<LeaveEntity, Long> {
+public interface LeaveRepository extends JpaRepository<LeaveEntity, UUID> {
 }

@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.tracking.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.tracking.entity.TrackingEntity;
 import com.company.networkmovers.modules.tracking.repository.TrackingRepository;
 import com.company.networkmovers.modules.tracking.service.TrackingService;
@@ -32,7 +34,7 @@ public class TrackingServiceImpl implements TrackingService {
 
     @Override
     @Transactional(readOnly = true)
-    public TrackingResponse findById(Long id) {
+    public TrackingResponse findById(UUID id) {
         TrackingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tracking not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class TrackingServiceImpl implements TrackingService {
     }
 
     @Override
-    public TrackingResponse update(Long id, TrackingRequest request) {
+    public TrackingResponse update(UUID id, TrackingRequest request) {
         TrackingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tracking not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class TrackingServiceImpl implements TrackingService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         TrackingEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tracking not found with id: " + id));
         repository.delete(entity);

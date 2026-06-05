@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.finance.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.finance.entity.FinanceEntity;
 import com.company.networkmovers.modules.finance.repository.FinanceRepository;
 import com.company.networkmovers.modules.finance.service.FinanceService;
@@ -32,7 +34,7 @@ public class FinanceServiceImpl implements FinanceService {
 
     @Override
     @Transactional(readOnly = true)
-    public FinanceResponse findById(Long id) {
+    public FinanceResponse findById(UUID id) {
         FinanceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Finance not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class FinanceServiceImpl implements FinanceService {
     }
 
     @Override
-    public FinanceResponse update(Long id, FinanceRequest request) {
+    public FinanceResponse update(UUID id, FinanceRequest request) {
         FinanceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Finance not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class FinanceServiceImpl implements FinanceService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         FinanceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Finance not found with id: " + id));
         repository.delete(entity);

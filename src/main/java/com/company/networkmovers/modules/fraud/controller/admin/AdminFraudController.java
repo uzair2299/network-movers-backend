@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.fraud.controller.admin;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.fraud.dto.request.FraudRequest;
 import com.company.networkmovers.modules.fraud.dto.response.FraudResponse;
 import com.company.networkmovers.modules.fraud.service.FraudService;
@@ -23,7 +25,7 @@ public class AdminFraudController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FraudResponse> findById(@PathVariable Long id) {
+    public ResponseEntity<FraudResponse> findById(@PathVariable UUID id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
@@ -33,12 +35,12 @@ public class AdminFraudController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FraudResponse> update(@PathVariable Long id, @RequestBody FraudRequest request) {
+    public ResponseEntity<FraudResponse> update(@PathVariable UUID id, @RequestBody FraudRequest request) {
         return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

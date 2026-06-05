@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.ai.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.ai.entity.AiEntity;
 import com.company.networkmovers.modules.ai.repository.AiRepository;
 import com.company.networkmovers.modules.ai.service.AiService;
@@ -32,7 +34,7 @@ public class AiServiceImpl implements AiService {
 
     @Override
     @Transactional(readOnly = true)
-    public AiResponse findById(Long id) {
+    public AiResponse findById(UUID id) {
         AiEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ai not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class AiServiceImpl implements AiService {
     }
 
     @Override
-    public AiResponse update(Long id, AiRequest request) {
+    public AiResponse update(UUID id, AiRequest request) {
         AiEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ai not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class AiServiceImpl implements AiService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         AiEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ai not found with id: " + id));
         repository.delete(entity);

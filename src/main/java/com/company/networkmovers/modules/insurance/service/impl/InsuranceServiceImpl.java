@@ -1,5 +1,7 @@
 package com.company.networkmovers.modules.insurance.service.impl;
 
+import java.util.UUID;
+
 import com.company.networkmovers.modules.insurance.entity.InsuranceEntity;
 import com.company.networkmovers.modules.insurance.repository.InsuranceRepository;
 import com.company.networkmovers.modules.insurance.service.InsuranceService;
@@ -32,7 +34,7 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     @Override
     @Transactional(readOnly = true)
-    public InsuranceResponse findById(Long id) {
+    public InsuranceResponse findById(UUID id) {
         InsuranceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Insurance not found with id: " + id));
         return mapper.toResponse(entity);
@@ -47,7 +49,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
     @Override
-    public InsuranceResponse update(Long id, InsuranceRequest request) {
+    public InsuranceResponse update(UUID id, InsuranceRequest request) {
         InsuranceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Insurance not found with id: " + id));
         entity.setName(request.getName());
@@ -57,7 +59,7 @@ public class InsuranceServiceImpl implements InsuranceService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         InsuranceEntity entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Insurance not found with id: " + id));
         repository.delete(entity);
