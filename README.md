@@ -407,7 +407,9 @@ spring.flyway.clean-on-validation-error=true
 | **Staging/QA** | `false` | `false` (or `true` only on fresh ephemeral test DBs) | Moderate |
 | **Production** | `true` (default) | `false` (default) | Critical |
 
-#### Recommended Development Configuration
+#### Recommended Configurations by Environment
+
+##### Development
 
 To facilitate rapid iteration and schema prototyping in the local **Development** environment, apply the following properties in your local profile (e.g. `application-dev.properties`):
 
@@ -419,6 +421,18 @@ spring.flyway.validate-on-migrate=false
 
 > [!TIP]
 > This setup allows you to quickly reset and rebuild your schema automatically when changes are made.
+
+##### Production
+
+For production environments, prioritize data integrity and safety. Keep clean disabled, validate schemas on startup, and never enable automatic cleaning on error.
+
+```properties
+spring.flyway.clean-disabled=true
+spring.flyway.validate-on-migrate=true
+```
+
+> [!CAUTION]
+> **Never** enable `spring.flyway.clean-on-validation-error=true` in production, as any validation failure (such as a checksum mismatch) will automatically and permanently wipe your production database.
 
 ### Resetting / Dropping Database
 
