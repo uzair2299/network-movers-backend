@@ -10,6 +10,7 @@ import com.company.networkmovers.security.rbac.UserRoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class SecurityDataSeeder implements CommandLineRunner {
@@ -30,18 +31,25 @@ public class SecurityDataSeeder implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         // Seed default roles if they don't exist
         Role adminRole = roleRepository.findByName("ROLE_ADMIN")
                 .orElseGet(() -> roleRepository.save(Role.builder()
                         .name("ROLE_ADMIN")
+                        .code("ROLE_ADMIN")
                         .description("Administrator Role")
+                        .active(true)
+                        .deleted(false)
                         .build()));
 
         Role customerRole = roleRepository.findByName("ROLE_CUSTOMER")
                 .orElseGet(() -> roleRepository.save(Role.builder()
                         .name("ROLE_CUSTOMER")
+                        .code("ROLE_CUSTOMER")
                         .description("Default Customer Role")
+                        .active(true)
+                        .deleted(false)
                         .build()));
 
         // Seed default admin user if none exists
@@ -51,6 +59,7 @@ public class SecurityDataSeeder implements CommandLineRunner {
                     .email("admin@company.com")
                     .password(passwordEncoder.encode("adminpassword"))
                     .enabled(true)
+                    .deleted(false)
                     .build();
 
             UserProfile profile = UserProfile.builder()
@@ -59,6 +68,7 @@ public class SecurityDataSeeder implements CommandLineRunner {
                     .lastName("User")
                     .phoneNumber("+123456789")
                     .address("Admin HQ")
+                    .deleted(false)
                     .build();
             admin.setProfile(profile);
 
@@ -79,6 +89,7 @@ public class SecurityDataSeeder implements CommandLineRunner {
                     .email("customer@company.com")
                     .password(passwordEncoder.encode("customerpassword"))
                     .enabled(true)
+                    .deleted(false)
                     .build();
 
             UserProfile profile = UserProfile.builder()
@@ -87,6 +98,7 @@ public class SecurityDataSeeder implements CommandLineRunner {
                     .lastName("User")
                     .phoneNumber("+987654321")
                     .address("Customer Address")
+                    .deleted(false)
                     .build();
             customer.setProfile(profile);
 

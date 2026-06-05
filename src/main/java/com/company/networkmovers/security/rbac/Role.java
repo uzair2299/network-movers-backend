@@ -10,6 +10,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = "sec_roles", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"})
 })
+@SQLRestriction("deleted = false")
 @Getter
 @Setter
 @NoArgsConstructor
