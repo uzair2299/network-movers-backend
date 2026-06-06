@@ -5,7 +5,7 @@ import com.company.networkmovers.modules.navigation.dto.response.MenuItemRespons
 import com.company.networkmovers.modules.navigation.entity.MenuItem;
 import com.company.networkmovers.modules.navigation.exception.NavigationException;
 import com.company.networkmovers.modules.navigation.repository.MenuItemRepository;
-import com.company.networkmovers.security.rbac.RolePermissionRepository;
+import com.company.networkmovers.modules.rbac.repository.RolePermissionRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
