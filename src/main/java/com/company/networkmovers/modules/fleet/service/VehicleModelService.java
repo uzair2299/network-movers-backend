@@ -2,20 +2,7 @@ package com.company.networkmovers.modules.fleet.service;
 
 import com.company.networkmovers.modules.fleet.dto.request.VehicleModelRequest;
 import com.company.networkmovers.modules.fleet.dto.response.VehicleModelResponse;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.company.networkmovers.shared.service.GenericLookupService;
 
-import java.util.UUID;
-
-public interface VehicleModelService {
-
-    VehicleModelResponse create(VehicleModelRequest request);
-
-    VehicleModelResponse update(UUID id, VehicleModelRequest request);
-
-    VehicleModelResponse getById(UUID id);
-
-    Page<VehicleModelResponse> search(String query, Pageable pageable);
-
-    void delete(UUID id);
+public interface VehicleModelService extends GenericLookupService<VehicleModelRequest, VehicleModelResponse> {
 }
