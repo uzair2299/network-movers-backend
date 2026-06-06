@@ -1,7 +1,9 @@
 package com.company.networkmovers.modules.rbac.entity;
 
+import com.company.networkmovers.shared.entity.BaseUuidSoftDeleteEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "sec_role_permissions", uniqueConstraints = {
@@ -11,12 +13,8 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class RolePermission {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@SuperBuilder
+public class RolePermission extends BaseUuidSoftDeleteEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
@@ -25,4 +23,8 @@ public class RolePermission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id", nullable = false)
     private Permission permission;
+
+    @Column(name = "active", nullable = false)
+    @Builder.Default
+    private boolean active = true;
 }
