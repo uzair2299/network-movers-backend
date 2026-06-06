@@ -9,14 +9,19 @@ import com.company.networkmovers.modules.fleet.mapper.VehicleMapper;
 import com.company.networkmovers.modules.fleet.repository.VehicleModelRepository;
 import com.company.networkmovers.modules.fleet.repository.VehicleRepository;
 import com.company.networkmovers.modules.fleet.service.VehicleService;
+import com.company.networkmovers.shared.dto.RequestParamDto;
 import com.company.networkmovers.shared.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service("fleetVehicleServiceImpl")
 @RequiredArgsConstructor
@@ -96,11 +101,32 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<VehicleResponse> search(String query, Pageable pageable) {
-        if (query == null || query.isBlank()) {
+    public List<VehicleResponse> getAllActive() {
+        return repository.findAll().stream()
+                .filter(Vehicle::isActive)
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VehicleResponse> getAll(RequestParamDto requestParams) {
+        String[] sortParams = requestParams.getSort().split(",");
+        String sortField = sortParams[0];
+        Sort.Direction direction = Sort.Direction.ASC;
+        if (sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1])) {
+            direction = Sort.Direction.DESC;
+        }
+        Pageable pageable = PageRequest.of(
+                requestParams.getPage(),
+                requestParams.getSize(),
+                Sort.by(direction, sortField)
+        );
+        String search = requestParams.getSearch();
+        if (search == null || search.isBlank()) {
             return repository.findAll(pageable).map(mapper::toResponse);
         }
-        return repository.findBySearch(query, pageable).map(mapper::toResponse);
+        return repository.findBySearch(search, pageable).map(mapper::toResponse);
     }
 
     @Override
@@ -114,6 +140,8 @@ public class VehicleServiceImpl implements VehicleService {
     public void delete(UUID id) {
         Vehicle entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id " + id));
-        repository.delete(entity);
+        // Consistent with AbstractLookupService, set active = false for delete
+        entity.setActive(false);
+        repository.save(entity);
     }
 }
