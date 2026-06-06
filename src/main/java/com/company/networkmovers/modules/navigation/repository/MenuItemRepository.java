@@ -35,4 +35,9 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
     boolean existsByParentIdAndDeletedFalse(Long parentId);
 
     List<MenuItem> findAllByDeletedFalseOrderBySortOrderAsc();
+
+    @Query("SELECT m FROM MenuItem m WHERE m.deleted = false AND (LOWER(m.name) LIKE LOWER(CONCAT('%', :search, '%')) OR LOWER(m.path) LIKE LOWER(CONCAT('%', :search, '%')))")
+    org.springframework.data.domain.Page<MenuItem> findBySearch(@Param("search") String search, org.springframework.data.domain.Pageable pageable);
+
+    org.springframework.data.domain.Page<MenuItem> findByDeletedFalse(org.springframework.data.domain.Pageable pageable);
 }

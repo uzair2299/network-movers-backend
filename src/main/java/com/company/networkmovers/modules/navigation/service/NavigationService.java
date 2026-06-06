@@ -6,8 +6,8 @@ import com.company.networkmovers.modules.navigation.entity.MenuItem;
 import com.company.networkmovers.modules.navigation.exception.NavigationException;
 import com.company.networkmovers.modules.navigation.repository.MenuItemRepository;
 import com.company.networkmovers.security.context.CustomUserDetails;
-import com.company.networkmovers.security.rbac.Permission;
-import com.company.networkmovers.security.rbac.RolePermissionRepository;
+import com.company.networkmovers.modules.rbac.entity.Permission;
+import com.company.networkmovers.modules.rbac.repository.RolePermissionRepository;
 import jakarta.persistence.EntityManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.company.networkmovers.shared.dto.RequestParamDto;
 
 @Service
 public class NavigationService {
@@ -70,6 +72,29 @@ public class NavigationService {
                 .stream()
                 .map(this::toFlatResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public org.springframework.data.domain.Page<MenuItemResponse> getAll(RequestParamDto requestParams) {
+        String[] sortParams = requestParams.getSort().split(",");
+        String sortField = sortParams[0];
+        org.springframework.data.domain.Sort.Direction direction = org.springframework.data.domain.Sort.Direction.ASC;
+        if (sortParams.length > 1 && "desc".equalsIgnoreCase(sortParams[1])) {
+            direction = org.springframework.data.domain.Sort.Direction.DESC;
+        }
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(
+                requestParams.getPage(),
+                requestParams.getSize(),
+                org.springframework.data.domain.Sort.by(direction, sortField)
+        );
+        String search = requestParams.getSearch();
+        org.springframework.data.domain.Page<MenuItem> entityPage;
+        if (search == null || search.isBlank()) {
+            entityPage = menuItemRepository.findByDeletedFalse(pageable);
+        } else {
+            entityPage = menuItemRepository.findBySearch(search, pageable);
+        }
+        return entityPage.map(this::toFlatResponse);
     }
 
     @Transactional(readOnly = true)

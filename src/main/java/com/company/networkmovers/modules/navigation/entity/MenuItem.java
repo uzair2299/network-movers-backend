@@ -1,6 +1,6 @@
 package com.company.networkmovers.modules.navigation.entity;
 
-import com.company.networkmovers.security.rbac.Permission;
+import com.company.networkmovers.modules.rbac.entity.Permission;
 import com.company.networkmovers.shared.entity.BaseSoftDeleteEntity;
 import jakarta.persistence.*;
 import lombok.*;
