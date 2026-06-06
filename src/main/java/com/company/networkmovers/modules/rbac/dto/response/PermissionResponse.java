@@ -13,6 +13,9 @@ public class PermissionResponse {
     private String code;
     private String name;
     private String description;
+    private UUID resourceId;
+    private String resourceName;
+    private String resourceCode;
     private boolean active;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -16,4 +16,8 @@ public class Permission extends BaseLookupEntity {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "resource_id")
+    private Resource resource;
 }

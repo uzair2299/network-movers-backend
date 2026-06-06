@@ -1,7 +1,9 @@
 package com.company.networkmovers.modules.rbac.service.impl;
 
 import com.company.networkmovers.modules.rbac.entity.Permission;
+import com.company.networkmovers.modules.rbac.entity.Resource;
 import com.company.networkmovers.modules.rbac.repository.PermissionRepository;
+import com.company.networkmovers.modules.rbac.repository.ResourceRepository;
 import com.company.networkmovers.modules.rbac.dto.request.PermissionRequest;
 import com.company.networkmovers.modules.rbac.dto.response.PermissionResponse;
 import com.company.networkmovers.modules.rbac.service.PermissionService;
@@ -17,9 +19,13 @@ public class PermissionServiceImpl
         extends AbstractLookupService<Permission, PermissionRequest, PermissionResponse, PermissionRepository> 
         implements PermissionService {
 
-    public PermissionServiceImpl(PermissionRepository repository, 
-                                 @Qualifier("modulesPermissionMapper") GenericMapper<Permission, PermissionRequest, PermissionResponse> mapper) {
+    private final ResourceRepository resourceRepository;
+
+    public PermissionServiceImpl(PermissionRepository repository,
+                                 @Qualifier("modulesPermissionMapper") GenericMapper<Permission, PermissionRequest, PermissionResponse> mapper,
+                                 @Qualifier("modulesResourceRepository") ResourceRepository resourceRepository) {
         super(repository, mapper);
+        this.resourceRepository = resourceRepository;
     }
 
     @Override
@@ -33,5 +39,12 @@ public class PermissionServiceImpl
         entity.setCode(request.getCode());
         entity.setDescription(request.getDescription());
         entity.setActive(request.isActive());
+
+        if (request.getResourceId() != null) {
+            Resource resource = resourceRepository.findById(request.getResourceId()).orElse(null);
+            entity.setResource(resource);
+        } else {
+            entity.setResource(null);
+        }
     }
 }
