@@ -1,8 +1,9 @@
 package com.company.networkmovers.modules.rbac.controller.admin;
 
-import com.company.networkmovers.modules.navigation.dto.request.MenuItemRequest;
-import com.company.networkmovers.modules.navigation.dto.response.MenuItemResponse;
-import com.company.networkmovers.modules.navigation.service.NavigationService;
+import com.company.networkmovers.modules.rbac.dto.request.ModuleRequest;
+import com.company.networkmovers.modules.rbac.dto.response.ModuleResponse;
+import com.company.networkmovers.modules.rbac.service.ModuleService;
+import com.company.networkmovers.shared.controller.AbstractLookupController;
 import com.company.networkmovers.shared.dto.RequestParamDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,81 +12,96 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController("modulesAdminModuleController")
 @RequestMapping("/api/v1/admin/rbac/modules")
-@Tag(name = "Admin Modules", description = "Admin API for managing system modules / menu items")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
-public class AdminModuleController {
+@Tag(name = "Admin Modules", description = "Admin API for managing System Modules")
+public class AdminModuleController extends AbstractLookupController<ModuleRequest, ModuleResponse> {
 
-    private final NavigationService navigationService;
+    private final ModuleService moduleService;
 
-    public AdminModuleController(NavigationService navigationService) {
-        this.navigationService = navigationService;
+    public AdminModuleController(@Qualifier("modulesModuleServiceImpl") ModuleService service) {
+        super(service);
+        this.moduleService = service;
     }
 
+    @Override
     @PostMapping
-    @Operation(summary = "Create a new Module/MenuItem", description = "Creates a new system menu item (module). Section must be SIDEBAR, TOPBAR, or PROFILE. Requires ROLE_ADMIN.")
+    @Operation(summary = "Create a new Module", description = "Creates a new system module. Requires ROLE_ADMIN.")
     @ApiResponses({
         @ApiResponse(responseCode = "201", description = "Module created successfully",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MenuItemResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Validation failed or invalid section", content = @Content)
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModuleResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Validation failed", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)
     })
-    public ResponseEntity<MenuItemResponse> create(@Valid @RequestBody MenuItemRequest request) {
-        MenuItemResponse created = navigationService.createMenuItem(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<ModuleResponse> create(@RequestBody ModuleRequest request) {
+        return new ResponseEntity<>(moduleService.create(request), HttpStatus.CREATED);
     }
 
+    @Override
     @PutMapping("/{id}")
-    @Operation(summary = "Update an existing Module/MenuItem", description = "Updates fields of an existing menu item (module) by its ID. Requires ROLE_ADMIN.")
+    @Operation(summary = "Update an existing Module", description = "Updates fields of an existing module by ID. Requires ROLE_ADMIN.")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Module updated successfully",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MenuItemResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Validation failed, item not found, invalid section, or self-referencing parent", content = @Content)
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModuleResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Validation failed or module not found", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)
     })
-    public ResponseEntity<MenuItemResponse> update(
-            @Parameter(description = "ID of the menu item to update", required = true) @PathVariable Long id,
-            @Valid @RequestBody MenuItemRequest request) {
-        return ResponseEntity.ok(navigationService.updateMenuItem(id, request));
+    public ResponseEntity<ModuleResponse> update(
+            @Parameter(description = "ID of the module to update", required = true) @PathVariable UUID id,
+            @RequestBody ModuleRequest request) {
+        return ResponseEntity.ok(moduleService.update(id, request));
     }
 
+    @Override
     @GetMapping("/{id}")
-    @Operation(summary = "Get Module/MenuItem by ID", description = "Retrieves details of a single menu item (module) by its ID. Requires ROLE_ADMIN.")
+    @Operation(summary = "Get Module by ID", description = "Retrieves details of a single module by its unique ID. Requires ROLE_ADMIN.")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Module details returned successfully",
-            content = @Content(mediaType = "application/json", schema = @Schema(implementation = MenuItemResponse.class))),
-        @ApiResponse(responseCode = "400", description = "Module not found", content = @Content)
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModuleResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Module not found", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)
     })
-    public ResponseEntity<MenuItemResponse> getById(
-            @Parameter(description = "ID of the menu item to retrieve", required = true) @PathVariable Long id) {
-        return ResponseEntity.ok(navigationService.getItemById(id));
+    public ResponseEntity<ModuleResponse> getById(
+            @Parameter(description = "ID of the module to retrieve", required = true) @PathVariable UUID id) {
+        return ResponseEntity.ok(moduleService.getById(id));
     }
 
+    @Override
     @GetMapping
-    @Operation(summary = "Search Modules/MenuItems with pagination", description = "Returns a paginated list of menu items matching the optional search filter. Requires ROLE_ADMIN.")
+    @Operation(summary = "Search Modules with pagination", description = "Returns a paginated list of modules matching optional search filter. Requires ROLE_ADMIN.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Paginated list of modules returned successfully")
+        @ApiResponse(responseCode = "200", description = "Paginated list of modules returned successfully"),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)
     })
-    public ResponseEntity<Page<MenuItemResponse>> getAll(
+    public ResponseEntity<Page<ModuleResponse>> getAll(
             @org.springdoc.core.annotations.ParameterObject RequestParamDto requestParams) {
-        return ResponseEntity.ok(navigationService.getAll(requestParams));
+        return ResponseEntity.ok(moduleService.getAll(requestParams));
     }
 
+    @Override
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete Module/MenuItem", description = "Soft-deletes a menu item. Returns 400 if the item has active child submenus. Requires ROLE_ADMIN.")
+    @Operation(summary = "Delete Module", description = "Soft-deletes (deactivates) a module by its ID. Requires ROLE_ADMIN.")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "Module deleted successfully"),
-        @ApiResponse(responseCode = "400", description = "Cannot delete — item has active child submenus", content = @Content)
+        @ApiResponse(responseCode = "400", description = "Module not found", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Forbidden", content = @Content)
     })
     public ResponseEntity<Void> delete(
-            @Parameter(description = "ID of the menu item to soft-delete", required = true) @PathVariable Long id) {
-        navigationService.softDeleteMenuItem(id);
+            @Parameter(description = "ID of the module to delete", required = true) @PathVariable UUID id) {
+        moduleService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
