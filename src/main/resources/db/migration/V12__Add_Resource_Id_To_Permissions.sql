@@ -1,5 +1,2 @@
--- V12: Add resource_id FK to sec_permissions
-ALTER TABLE sec_permissions
-    ADD COLUMN IF NOT EXISTS resource_id UUID,
-    ADD CONSTRAINT fk_permissions_resource
-        FOREIGN KEY (resource_id) REFERENCES sec_resources(id);
+-- No-op: consolidated into V1__Initial_Schema.sql and V2__Seed_Data.sql
+SELECT 1;

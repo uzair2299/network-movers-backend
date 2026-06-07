@@ -1,7 +1,2 @@
-ALTER TABLE sec_resources
-ADD COLUMN module_id UUID;
-
-ALTER TABLE sec_resources
-ADD CONSTRAINT fk_resources_module
-FOREIGN KEY (module_id) REFERENCES modules(id)
-ON DELETE SET NULL;
+-- No-op: consolidated into V1__Initial_Schema.sql and V2__Seed_Data.sql
+SELECT 1;
