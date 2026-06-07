@@ -1,3 +1,3 @@
--- V14: Add Role Permissions menu item under RBAC
-INSERT INTO sec_menu_items (id, name, icon, path, section, parent_id, sort_order, active)
-VALUES (1156, 'Role Permissions', 'link', '/system/rbac/role-permissions', 'SIDEBAR', 1115, 45, TRUE);
+-- V14: Role Permissions menu item is already included in V8__Add_RBAC_Menu_Items.sql (id=1165).
+-- This migration is intentionally left as a no-op to preserve the migration sequence.
+SELECT 1;
