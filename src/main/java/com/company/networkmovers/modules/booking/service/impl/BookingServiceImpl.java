@@ -2,6 +2,7 @@ package com.company.networkmovers.modules.booking.service.impl;
 
 import java.util.UUID;
 
+import com.company.networkmovers.common.util.CodeGeneratorUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.company.networkmovers.security.context.CustomUserDetails;
@@ -48,6 +49,9 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingResponse create(BookingRequest request) {
         BookingEntity entity = mapper.toEntity(request);
+
+        // Generate and set unique booking code
+        entity.setCode(CodeGeneratorUtil.generate8DigitCode());
 
         // Always initialize new bookings with the 'REQUESTED' status on the backend
         MoveStatus defaultStatus = moveStatusRepository.findByCode("REQUESTED")
