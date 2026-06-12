@@ -52,22 +52,64 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public List<UserRoleResponse> assignRolesBulk(BulkUserRoleRequest request) {
-        List<UserRole> mappingsToSave = new ArrayList<>();
+    public List<UserRoleResponse> updateRolesBulk(BulkUserRoleRequest request) {
+        UUID userId = request.getUserId();
+        List<UUID> targetRoleIds = request.getRoleIds() != null ? request.getRoleIds() : new ArrayList<>();
 
-        for (UUID roleId : request.getRoleIds()) {
+        /*
+         * Implement delta reconciliation:
+         * Retrieve all current UserRole mappings for userId.
+         * Compute differences:
+         * rolesToRemove: existing mappings whose role ID is not in requested roleIds.
+         * roleIdsToAdd: requested roleIds not present in current user roles.
+         * Delete rolesToRemove records.
+         * Create and save new UserRole mappings for roleIdsToAdd.
+         * Fetch and return the updated list of UserRoleResponse objects.
+         */
+
+        // Retrieve all current UserRole mappings for userId.
+        List<UserRole> existingUserRoles = userRoleRepository.findByUserId(userId);
+
+        // Compute differences:
+        // rolesToRemove: existing mappings whose role ID is not in requested roleIds.
+        List<UserRole> rolesToRemove = existingUserRoles.stream()
+                .filter(ur -> !targetRoleIds.contains(ur.getRole().getId()))
+                .collect(Collectors.toList());
+
+        // roleIdsToAdd: requested roleIds not present in current user roles.
+        List<UUID> existingRoleIds = existingUserRoles.stream()
+                .map(ur -> ur.getRole().getId())
+                .collect(Collectors.toList());
+
+        List<UUID> roleIdsToAdd = targetRoleIds.stream()
+                .filter(id -> !existingRoleIds.contains(id))
+                .collect(Collectors.toList());
+
+        // Delete rolesToRemove records.
+        if (!rolesToRemove.isEmpty()) {
+            userRoleRepository.deleteAll(rolesToRemove);
+        }
+
+        // Create and save new UserRole mappings for roleIdsToAdd.
+        List<UserRole> newMappings = new ArrayList<>();
+        for (UUID roleId : roleIdsToAdd) {
             Role role = roleRepository.findById(roleId)
                     .orElseThrow(() -> new RuntimeException("Role not found with ID: " + roleId));
             
             UserRole userRole = UserRole.builder()
-                    .userId(request.getUserId())
+                    .userId(userId)
                     .role(role)
                     .build();
-            mappingsToSave.add(userRole);
+            newMappings.add(userRole);
+        }
+        if (!newMappings.isEmpty()) {
+            userRoleRepository.saveAll(newMappings);
         }
 
-        List<UserRole> saved = userRoleRepository.saveAll(mappingsToSave);
-        return saved.stream().map(userRoleMapper::toResponse).collect(Collectors.toList());
+        // Fetch and return the updated list of UserRoleResponse objects.
+        return userRoleRepository.findByUserId(userId).stream()
+                .map(userRoleMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

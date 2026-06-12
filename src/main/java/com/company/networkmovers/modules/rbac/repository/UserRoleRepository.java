@@ -15,6 +15,7 @@ import java.util.UUID;
 public interface UserRoleRepository extends JpaRepository<UserRole, UUID> {
     List<UserRole> findByUserId(UUID userId);
     List<UserRole> findByRoleId(UUID roleId);
+    void deleteByUserId(UUID userId);
 
     @Query("SELECT ur FROM UserRole ur WHERE ur.userId = :userId")
     Page<UserRole> findByUserIdPage(@Param("userId") UUID userId, Pageable pageable);

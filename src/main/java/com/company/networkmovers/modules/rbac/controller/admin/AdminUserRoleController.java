@@ -42,13 +42,13 @@ public class AdminUserRoleController {
         return ResponseEntity.ok(userRoleService.assignRole(request));
     }
 
-    @PostMapping("/bulk")
-    @Operation(summary = "Assign multiple roles to a user", description = "Creates mappings for multiple roles to a single user in bulk. Requires ROLE_ADMIN.")
+    @PutMapping("/bulk")
+    @Operation(summary = "Bulk update roles for a user", description = "Updates roles for a single user by adding new ones and removing omitted ones in bulk. Requires ROLE_ADMIN.")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Roles assigned successfully")
+        @ApiResponse(responseCode = "200", description = "Roles updated successfully")
     })
-    public ResponseEntity<List<UserRoleResponse>> assignRolesBulk(@RequestBody BulkUserRoleRequest request) {
-        return ResponseEntity.ok(userRoleService.assignRolesBulk(request));
+    public ResponseEntity<List<UserRoleResponse>> updateRolesBulk(@RequestBody BulkUserRoleRequest request) {
+        return ResponseEntity.ok(userRoleService.updateRolesBulk(request));
     }
 
     @DeleteMapping("/{id}")

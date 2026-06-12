@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface UserRoleService {
     UserRoleResponse assignRole(UserRoleRequest request);
-    List<UserRoleResponse> assignRolesBulk(BulkUserRoleRequest request);
+    List<UserRoleResponse> updateRolesBulk(BulkUserRoleRequest request);
     void unassignRole(UUID id);
     void unassignRolesBulk(List<UUID> ids);
     List<UserRoleResponse> getRolesForUser(UUID userId);
