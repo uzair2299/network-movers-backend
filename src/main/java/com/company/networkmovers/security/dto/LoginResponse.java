@@ -21,6 +21,7 @@ public class LoginResponse {
     private String phoneNumber;
     private String profilePictureUrl;
     private String address;
+    private List<String> permissions;
 
     @com.fasterxml.jackson.annotation.JsonProperty("access_token")
     public String getAccessToken() {

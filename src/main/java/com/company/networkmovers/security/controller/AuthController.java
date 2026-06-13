@@ -11,6 +11,7 @@ import com.company.networkmovers.modules.rbac.entity.Role;
 import com.company.networkmovers.modules.rbac.repository.RoleRepository;
 import com.company.networkmovers.modules.rbac.entity.UserRole;
 import com.company.networkmovers.modules.rbac.repository.UserRoleRepository;
+import com.company.networkmovers.modules.rbac.repository.RolePermissionRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,6 +43,7 @@ public class AuthController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final UserRoleRepository userRoleRepository;
+    private final RolePermissionRepository rolePermissionRepository;
     private final PasswordEncoder passwordEncoder;
 
     public AuthController(AuthenticationManager authenticationManager,
@@ -49,12 +51,14 @@ public class AuthController {
                           UserRepository userRepository,
                           RoleRepository roleRepository,
                           UserRoleRepository userRoleRepository,
+                          RolePermissionRepository rolePermissionRepository,
                           PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userRoleRepository = userRoleRepository;
+        this.rolePermissionRepository = rolePermissionRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -74,6 +78,11 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
+        List<String> permissions = List.of();
+        if (!roles.isEmpty()) {
+            permissions = rolePermissionRepository.findPermissionNamesByRoleNames(roles);
+        }
+
         User user = userRepository.findByUsernameWithProfile(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found: " + userDetails.getUsername()));
 
@@ -81,6 +90,7 @@ public class AuthController {
                 .token(token)
                 .username(userDetails.getUsername())
                 .roles(roles)
+                .permissions(permissions)
                 .firstName(user.getProfile() != null ? user.getProfile().getFirstName() : null)
                 .lastName(user.getProfile() != null ? user.getProfile().getLastName() : null)
                 .email(user.getEmail())
