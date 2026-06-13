@@ -99,11 +99,6 @@ public class MoveStatusWorkflowServiceImpl implements MoveStatusWorkflowService 
                 transitionEntity = existingMap.get(reqTrans.getId());
             } else {
                 transitionEntity = new MoveStatusTransition();
-                if (reqTrans.getId() != null) {
-                    transitionEntity.setId(reqTrans.getId());
-                } else {
-                    transitionEntity.setId(UUID.randomUUID());
-                }
             }
 
             MoveStatus fromStatus = moveStatusRepository.findById(reqTrans.getFromStatusId())
