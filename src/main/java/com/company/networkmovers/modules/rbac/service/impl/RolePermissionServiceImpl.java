@@ -1,5 +1,6 @@
 package com.company.networkmovers.modules.rbac.service.impl;
 
+import com.company.networkmovers.modules.rbac.dto.request.BulkRolePermissionRequest;
 import com.company.networkmovers.modules.rbac.dto.request.RolePermissionRequest;
 import com.company.networkmovers.modules.rbac.dto.response.RolePermissionResponse;
 import com.company.networkmovers.modules.rbac.entity.Permission;
@@ -15,8 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service("modulesRolePermissionServiceImpl")
@@ -57,6 +57,77 @@ public class RolePermissionServiceImpl implements RolePermissionService {
                 .build();
 
         return toResponse(rolePermissionRepository.save(entity));
+    }
+
+    @Override
+    @Transactional
+    public List<RolePermissionResponse> assignBulk(BulkRolePermissionRequest request) {
+        if (request.getRoleId() == null) {
+            throw new IllegalArgumentException("Role ID cannot be null");
+        }
+        Role role = roleRepository.findById(request.getRoleId())
+                .orElseThrow(() -> new IllegalArgumentException("Role not found: " + request.getRoleId()));
+
+        List<UUID> reqPermissionIds = request.getPermissionIds() != null ? request.getPermissionIds() : Collections.emptyList();
+
+        // 1. Fetch all active permissions in bulk
+        List<Permission> activePermissions = reqPermissionIds.isEmpty() ? Collections.emptyList()
+                : permissionRepository.findAllActiveByIds(reqPermissionIds);
+
+        // Validate all requested permission IDs are valid active permissions
+        if (activePermissions.size() != reqPermissionIds.size()) {
+            Set<UUID> foundIds = activePermissions.stream().map(Permission::getId).collect(Collectors.toSet());
+            List<UUID> missingIds = reqPermissionIds.stream().filter(id -> !foundIds.contains(id)).collect(Collectors.toList());
+            throw new IllegalArgumentException("Permissions not found or inactive with IDs: " + missingIds);
+        }
+
+        Map<UUID, Permission> permissionMap = activePermissions.stream()
+                .collect(Collectors.toMap(Permission::getId, p -> p));
+
+        // 2. Fetch all existing mappings for the role (including soft-deleted ones) in a single optimized query
+        List<RolePermission> existingMappings = rolePermissionRepository.findByRoleIdIncludingDeleted(request.getRoleId());
+
+        Map<UUID, RolePermission> mappingByPermissionId = existingMappings.stream()
+                .collect(Collectors.toMap(rp -> rp.getPermission().getId(), rp -> rp, (rp1, rp2) -> rp1));
+
+        Set<UUID> requestedIdsSet = new HashSet<>(reqPermissionIds);
+
+        // 3. Identify and soft-delete active assignments NOT in the request
+        for (RolePermission existing : existingMappings) {
+            if (!existing.isDeleted() && !requestedIdsSet.contains(existing.getPermission().getId())) {
+                existing.delete(null); // Soft-delete
+                existing.setActive(false);
+                rolePermissionRepository.save(existing);
+            }
+        }
+
+        List<RolePermission> activeResults = new ArrayList<>();
+
+        // 4. Save or update requested assignments
+        for (UUID permId : reqPermissionIds) {
+            RolePermission mapping = mappingByPermissionId.get(permId);
+            Permission permission = permissionMap.get(permId);
+
+            if (mapping == null) {
+                // Create new assignment
+                mapping = RolePermission.builder()
+                        .role(role)
+                        .permission(permission)
+                        .active(true)
+                        .build();
+            } else {
+                // Restore or activate existing
+                if (mapping.isDeleted()) {
+                    mapping.restore();
+                }
+                mapping.setActive(true);
+            }
+            activeResults.add(rolePermissionRepository.save(mapping));
+        }
+
+        return activeResults.stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

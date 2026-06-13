@@ -1,5 +1,6 @@
 package com.company.networkmovers.modules.rbac.controller.admin;
 
+import com.company.networkmovers.modules.rbac.dto.request.BulkRolePermissionRequest;
 import com.company.networkmovers.modules.rbac.dto.request.RolePermissionRequest;
 import com.company.networkmovers.modules.rbac.dto.response.RolePermissionResponse;
 import com.company.networkmovers.modules.rbac.service.RolePermissionService;
@@ -43,6 +44,18 @@ public class AdminRolePermissionController {
     })
     public ResponseEntity<RolePermissionResponse> assign(@RequestBody RolePermissionRequest request) {
         return ResponseEntity.ok(rolePermissionService.assign(request));
+    }
+
+    @PostMapping("/bulk")
+    @Operation(summary = "Assign permissions to role in bulk",
+               description = "Synchronizes the permissions assigned to a role. Permissions not included in the payload will be soft-deleted. Requires ROLE_ADMIN.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Permissions synchronized successfully",
+            content = @Content(mediaType = "application/json", schema = @Schema(implementation = RolePermissionResponse.class))),
+        @ApiResponse(responseCode = "400", description = "Role or Permission IDs invalid", content = @Content)
+    })
+    public ResponseEntity<List<RolePermissionResponse>> assignBulk(@RequestBody BulkRolePermissionRequest request) {
+        return ResponseEntity.ok(rolePermissionService.assignBulk(request));
     }
 
     @DeleteMapping("/{id}")
