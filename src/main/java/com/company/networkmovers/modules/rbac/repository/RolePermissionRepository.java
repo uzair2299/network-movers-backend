@@ -17,6 +17,13 @@ public interface RolePermissionRepository extends JpaRepository<RolePermission, 
     @Query("SELECT DISTINCT rp.permission.name FROM RolePermission rp WHERE rp.role.name IN :roleNames AND rp.deleted = false AND rp.active = true")
     List<String> findPermissionNamesByRoleNames(@Param("roleNames") List<String> roleNames);
 
+    @Query("SELECT DISTINCT rp FROM RolePermission rp " +
+           "JOIN FETCH rp.permission p " +
+           "LEFT JOIN FETCH p.resource res " +
+           "LEFT JOIN FETCH res.module mod " +
+           "WHERE rp.role.name IN :roleNames AND rp.deleted = false AND rp.active = true")
+    List<RolePermission> findActiveByRoleNames(@Param("roleNames") List<String> roleNames);
+
     /** All active (non-deleted) role-permission assignments for a given role */
     @Query("SELECT rp FROM RolePermission rp WHERE rp.role.id = :roleId AND rp.deleted = false")
     List<RolePermission> findByRoleId(@Param("roleId") UUID roleId);

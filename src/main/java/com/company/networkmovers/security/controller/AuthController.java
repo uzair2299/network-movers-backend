@@ -28,8 +28,12 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
+import com.company.networkmovers.modules.rbac.entity.RolePermission;
+import com.company.networkmovers.modules.rbac.entity.Permission;
+import com.company.networkmovers.modules.rbac.entity.Resource;
+import com.company.networkmovers.modules.rbac.entity.Module;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -78,9 +82,85 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        List<String> permissions = List.of();
+        List<LoginResponse.ModulePermission> modulePermissions = new ArrayList<>();
         if (!roles.isEmpty()) {
-            permissions = rolePermissionRepository.findPermissionNamesByRoleNames(roles);
+            List<RolePermission> activeRolePermissions = rolePermissionRepository.findActiveByRoleNames(roles);
+
+            Map<String, Module> modulesMap = new HashMap<>();
+            Map<String, Resource> resourcesMap = new HashMap<>();
+            Map<String, Map<String, Set<String>>> moduleResourceActions = new HashMap<>();
+
+            for (RolePermission rp : activeRolePermissions) {
+                Permission p = rp.getPermission();
+                if (p == null || !p.isActive() || p.isDeleted()) continue;
+
+                Resource res = p.getResource();
+                Module mod = (res != null) ? res.getModule() : null;
+
+                String moduleCode = (mod != null) ? mod.getCode() : "GLOBAL";
+                String resourceCode = (res != null) ? res.getCode() : "SYSTEM";
+
+                String action = "READ";
+                String permCode = p.getCode();
+                if (permCode != null) {
+                    int lastUnderscore = permCode.lastIndexOf('_');
+                    if (lastUnderscore != -1 && lastUnderscore < permCode.length() - 1) {
+                        action = permCode.substring(lastUnderscore + 1).toUpperCase();
+                    }
+                }
+
+                if (mod != null) {
+                    modulesMap.put(moduleCode, mod);
+                }
+                if (res != null) {
+                    resourcesMap.put(resourceCode, res);
+                }
+
+                moduleResourceActions
+                        .computeIfAbsent(moduleCode, k -> new HashMap<>())
+                        .computeIfAbsent(resourceCode, k -> new HashSet<>())
+                        .add(action);
+            }
+
+            for (Map.Entry<String, Map<String, Set<String>>> modEntry : moduleResourceActions.entrySet()) {
+                String modCode = modEntry.getKey();
+                Module modEntity = modulesMap.get(modCode);
+                String modName = (modEntity != null) ? modEntity.getName() : "Global";
+
+                List<LoginResponse.ResourcePermission> resourcesList = new ArrayList<>();
+
+                for (Map.Entry<String, Set<String>> resEntry : modEntry.getValue().entrySet()) {
+                    String resCode = resEntry.getKey();
+                    Resource resEntity = resourcesMap.get(resCode);
+                    String resName = (resEntity != null) ? resEntity.getName() : "System";
+
+                    Set<String> assignedActions = resEntry.getValue();
+
+                    Map<String, Boolean> actionsMap = new HashMap<>();
+                    actionsMap.put("CREATE", assignedActions.contains("CREATE"));
+                    actionsMap.put("READ", assignedActions.contains("READ"));
+                    actionsMap.put("UPDATE", assignedActions.contains("UPDATE"));
+                    actionsMap.put("DELETE", assignedActions.contains("DELETE"));
+
+                    for (String act : assignedActions) {
+                        if (!actionsMap.containsKey(act)) {
+                            actionsMap.put(act, true);
+                        }
+                    }
+
+                    resourcesList.add(LoginResponse.ResourcePermission.builder()
+                            .code(resCode)
+                            .name(resName)
+                            .actions(actionsMap)
+                            .build());
+                }
+
+                modulePermissions.add(LoginResponse.ModulePermission.builder()
+                        .code(modCode)
+                        .name(modName)
+                        .resources(resourcesList)
+                        .build());
+            }
         }
 
         User user = userRepository.findByUsernameWithProfile(userDetails.getUsername())
@@ -90,7 +170,7 @@ public class AuthController {
                 .token(token)
                 .username(userDetails.getUsername())
                 .roles(roles)
-                .permissions(permissions)
+                .permissions(modulePermissions)
                 .firstName(user.getProfile() != null ? user.getProfile().getFirstName() : null)
                 .lastName(user.getProfile() != null ? user.getProfile().getLastName() : null)
                 .email(user.getEmail())
